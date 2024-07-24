@@ -1,0 +1,266 @@
+{
+  "status": "success",
+  "message": "List appswith subcategory",
+  "data": [
+    {
+      "id": 15,
+      "app_name": "PiEvent",
+      "alias": "pievent",
+      "category": [
+        {
+          "id": 8,
+          "category_name": "Investasi",
+          "alias": "investasi",
+          "subcategory": []
+        },
+        {
+          "id": 6,
+          "category_name": "Finansial",
+          "alias": "finansial",
+          "subcategory": [
+            {
+              "id": 17,
+              "subcategory_name": "Teknologi",
+              "alias": "teknologi"
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "category_name": "Teknologi",
+          "alias": "teknologi",
+          "subcategory": [
+            {
+              "id": 10,
+              "subcategory_name": "Network",
+              "alias": "network"
+            },
+            {
+              "id": 11,
+              "subcategory_name": "Infrastructure",
+              "alias": "infrastructure"
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "category_name": "Kesehatan",
+          "alias": "kesehatan",
+          "subcategory": []
+        },
+        {
+          "id": 13,
+          "category_name": "Bisnis",
+          "alias": "bisnis",
+          "subcategory": []
+        },
+        {
+          "id": 14,
+          "category_name": "Karir",
+          "alias": "karir",
+          "subcategory": []
+        },
+        {
+          "id": 15,
+          "category_name": "Edukasi",
+          "alias": "edukasi",
+          "subcategory": []
+        },
+        {
+          "id": 16,
+          "category_name": "Lainnya",
+          "alias": "lainnya",
+          "subcategory": []
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "app_name": "PiCircle",
+      "alias": "picircle",
+      "category": [
+        {
+          "id": 18,
+          "category_name": "Forum",
+          "alias": "forum",
+          "subcategory": [
+            {
+              "id": 16,
+              "subcategory_name": "Broadcast",
+              "alias": "network"
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "category_name": "Directory",
+          "alias": "directory",
+          "subcategory": [
+            {
+              "id": 15,
+              "subcategory_name": "IT",
+              "alias": "it"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "app_name": "PiSpace",
+      "alias": "pispace",
+      "category": []
+    },
+    {
+      "id": 13,
+      "app_name": "PiMarket",
+      "alias": "pimarket",
+      "category": []
+    },
+    {
+      "id": 14,
+      "app_name": "PiCapital",
+      "alias": "picapital",
+      "category": [
+        {
+          "id": 19,
+          "category_name": "Banking",
+          "alias": "banking",
+          "subcategory": []
+        },
+        {
+          "id": 20,
+          "category_name": "Venture Capital",
+          "alias": "venturecapital",
+          "subcategory": []
+        },
+        {
+          "id": 21,
+          "category_name": "Crowd Funding",
+          "alias": "crowdfunding",
+          "subcategory": [
+            {
+              "id": 12,
+              "subcategory_name": "Kategori A",
+              "alias": "kategoria"
+            },
+            {
+              "id": 13,
+              "subcategory_name": "Kategori B",
+              "alias": "kategorib"
+            },
+            {
+              "id": 14,
+              "subcategory_name": "Kategori C",
+              "alias": "kategoric"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "app_name": "PiNews",
+      "alias": "pinews",
+      "category": [
+        {
+          "id": 22,
+          "category_name": "Financial & Economic",
+          "alias": "financialeconomic",
+          "subcategory": []
+        },
+        {
+          "id": 23,
+          "category_name": "Market Update",
+          "alias": "marketupdate",
+          "subcategory": []
+        },
+        {
+          "id": 24,
+          "category_name": "PiNSpire",
+          "alias": "pinspire",
+          "subcategory": []
+        },
+        {
+          "id": 25,
+          "category_name": "Business",
+          "alias": "business",
+          "subcategory": []
+        },
+        {
+          "id": 26,
+          "category_name": "Lifestyle",
+          "alias": "lifestyle",
+          "subcategory": []
+        },
+        {
+          "id": 27,
+          "category_name": "Technology",
+          "alias": "technology",
+          "subcategory": []
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "app_name": "PiCast",
+      "alias": "picast",
+      "category": []
+    },
+    {
+      "id": 10,
+      "app_name": "PiLearning",
+      "alias": "pilearning",
+      "category": [
+        {
+          "id": 2,
+          "category_name": "Article",
+          "alias": "article",
+          "subcategory": [
+            {
+              "id": 1,
+              "subcategory_name": "Pendidikan",
+              "alias": "pendidikan"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "category_name": "Webinar",
+          "alias": "webinar",
+          "subcategory": [
+            {
+              "id": 9,
+              "subcategory_name": "Public Speaking",
+              "alias": "publicspeaking"
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "category_name": "Seminar",
+          "alias": "seminar",
+          "subcategory": []
+        },
+        {
+          "id": 10,
+          "category_name": "Workshop",
+          "alias": "workshop",
+          "subcategory": [
+            {
+              "id": 8,
+              "subcategory_name": "TEST",
+              "alias": "test"
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "category_name": "Online Course",
+          "alias": "onlinecourse",
+          "subcategory": []
+        }
+      ]
+    }
+  ]
+}
