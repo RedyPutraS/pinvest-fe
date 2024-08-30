@@ -5,9 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        - VERSION=0.0.1-RELEASE
-    image: redyputras/pinvest:0.0.3-RELEASE
+    image: pinvest
     ports:
       - "3001:3001"
     environment:
