@@ -1,0 +1,1 @@
+2024/09/02 13:12:25 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/mighty-foxes-count-knowlingly.a276.dcdg.xyz/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/mighty-foxes-count-knowlingly.a276.dcdg.xyz/fullchain.pem, r) error:10000080:BIO routines::no such file)
