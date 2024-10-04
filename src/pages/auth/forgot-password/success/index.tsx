@@ -16,10 +16,10 @@ const errorPage = ({}: Props) => {
           />
         </div>
         <div className="mx-auto flex-1 pl-4 text-center">
-          <div className="text-xl font-medium">Reset Password Success</div>
-          <div>Your password has been successfully changed</div>
+          <div className="text-xl font-medium">Reset Kata Sandi Berhasil</div>
+          <div>Kata sandi Anda telah berhasil diubah</div>
           <div className="my-4 rounded-md bg-pv-blue-dark p-2 text-white">
-            <Link href="/auth/login">Login</Link>
+            <Link href="/auth/login">Masuk</Link>
           </div>
         </div>
       </div>

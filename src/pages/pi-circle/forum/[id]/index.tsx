@@ -50,12 +50,19 @@ function PiCircleDetail({ id, adsParam }: Props) {
   const likeShare = () => {
     postLike
       .mutateAsync(id)
-      .then(() => {
-        toast({
-          title: "Forum like berhasil!",
-        });
+      .then((response) => {
+        if (response.status === 'success') {
+          toast({
+            title: "Suka Forum berhasil!",
+          });
+        } else if (response.status === 'deleted') {
+          toast({
+            title: "hapus Suka forum berhasil!",
+          });
+        }
       })
-      .catch(() => {
+      .catch((response) => {
+        console.log(response);
         toast({
           title: "Forum like gagal!",
         });

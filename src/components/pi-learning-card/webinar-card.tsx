@@ -15,6 +15,7 @@ import type { AxiosError } from "axios";
 import { useRemoveFromWishlistItem } from "modules/wishlist/api/remove-wishlist-item";
 import useStore from "app/store";
 import { useAuthStore } from "hooks/use-auth-store";
+import { useEffect } from "react";
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   event: any;
@@ -37,7 +38,6 @@ export function WebinarCard({
   const wishlistRemove = useRemoveFromWishlistItem({ id: wishlistId ?? 0 });
   const toggle = useDisclosure({ isOpen: !event.added_to_wishlist });
   const { incrementW, decrementW } = useStore();
-
   const handleRemoveFromWishlist = () => {
     wishlistRemove
       .mutateAsync({
@@ -60,7 +60,7 @@ export function WebinarCard({
         try {
           if (
             e.response?.data.message ===
-            "The item has been added to the wishlist."
+            "Barang sudah ditambahkan ke daftar keinginan."
           ) {
             message = "Gagal mengeluarkan item dari wishlist";
           }
@@ -86,7 +86,7 @@ export function WebinarCard({
         try {
           if (
             e.response?.data.message ===
-            "The item has been added to the wishlist."
+            "Barang sudah ditambahkan ke daftar keinginan."
           ) {
             message = "Item sudah ada di wishlist";
           }
@@ -201,7 +201,11 @@ export function WebinarCard({
                 href={overrideLink || `/pi-learning/${category}/${event.id}`}
               >
                 <button className="rounded-lg bg-pv-blue-dark px-3 py-1 text-sm font-semibold text-pv-white-pure hover:opacity-60 md:block xl:px-6 xl:py-2">
-                  <span className="font-normal">Beli</span>
+                  {event.purchased ? (
+                    <span className="font-normal">Tonton</span>
+                  ) : (
+                    <span className="font-normal">Beli</span>
+                  )}
                 </button>
               </Link>
             </div>

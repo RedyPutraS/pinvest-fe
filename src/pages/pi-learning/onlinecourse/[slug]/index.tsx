@@ -145,7 +145,7 @@ const OnlineCoursePage = ({ params }: Props) => {
         try {
           if (
             e.response?.data.message ===
-            "The item has been added to the wishlist."
+            "Barang sudah ditambahkan ke daftar keinginan."
           ) {
             message = "Gagal mengeluarkan item dari wishlist";
           }

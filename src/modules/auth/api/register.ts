@@ -14,8 +14,8 @@ export const registerBodySchema = z.object({
   email: z.string().refine((value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), {
     message: "Email tidak valid",
   }),
-  password: z.string().min(8, "Minimal 8 karakter/angka"),
-  confirm_password: z.string().min(8, "Minimal 8 karakter/angka"),
+  password: z.string().min(8, "Minimal 8 karakter/numerik"),
+  confirm_password: z.string().min(8, "Minimal 8 karakter/numerik"),
   phone: z.string().min(11, "Tidak valid"),
   birthdate: z.string(),
   gender: z.string(),

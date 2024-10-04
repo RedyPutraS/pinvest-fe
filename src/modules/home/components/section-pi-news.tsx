@@ -90,8 +90,6 @@ const SectionPiNews = ({ data }: Props) => {
                               <div className="col-span-3">
                               {piNews.data && piNews.data[0] && (
                                 <>
-                                {console.log("ahjsaj",piNews.data)
-                                }
                                   <PiNewsHeadlineCard
                                     article={piNews.data[0]}
                                   />

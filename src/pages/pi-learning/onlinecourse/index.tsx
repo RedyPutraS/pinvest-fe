@@ -29,26 +29,30 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const Learning = ({ params, appParams }: Props) => {
   const router = useRouter();
   const app = useApp(appParams);
+  console.log(appParams);
+  
   const APP = "pilearning";
   const [search1, setSearch] = useState<string>();
   const [sort, setSort] = useState<string>();
   const [category, setCategory] = useState<string>();
+
   const reset = () => {
     setSort(undefined);
     setCategory(undefined);
     setSearch(undefined);
+    router.push({ query: {} }, undefined, { shallow: true });
   };
-
+  
   const handleSortChange = (sort: string) => {
     const { query } = router;
     setSort(sort);
-    router.push({ query: { ...query, sort } });
+    // router.push({ query: { ...query, sort } }, undefined, { shallow: true });
   };
-
+  
   const handleCategoryChange = (category: string) => {
     const { query } = router;
     setCategory(category);
-    router.push({ query: { ...query, category } });
+    // router.push({ query: { ...query, category } }, undefined, { shallow: true });
   };
 
   const handleChangeTab = (page: number) => {
@@ -63,9 +67,11 @@ const Learning = ({ params, appParams }: Props) => {
     ...params,
     page: active,
     search: search1?.toString() ?? "",
-    sort: sort?.toString() ?? "",
+    sort: sort?.toString() ?? "new",
     category: category?.toString() ?? "",
   });
+  const total_page = onlinecourses.data?.page.total_page ?? 0;
+  // console.log('onlinecourses',onlinecourses);
   const initActiveTab = useMemo(
     () =>
       app.data?.category.findIndex(
@@ -73,6 +79,8 @@ const Learning = ({ params, appParams }: Props) => {
       ),
     [app.data?.category]
   );
+
+  
 
   const getItemProps = (index: string) =>
     ({
@@ -116,7 +124,7 @@ const Learning = ({ params, appParams }: Props) => {
           {/* <p className="mt-4 text-2xl">Kursus untuk membantu anda memulai</p> */}
           <div className="mt-5 flex-wrap gap-5 xl:flex">
             <div className="flex flex-1 justify-end xl:gap-5">
-              <Select onValueChange={handleSortChange}>
+              <Select value={sort} onValueChange={handleSortChange}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Terbaru" />
                 </SelectTrigger>
@@ -128,7 +136,7 @@ const Learning = ({ params, appParams }: Props) => {
                 </SelectContent>
               </Select>
 
-              <Select onValueChange={handleCategoryChange}>
+              <Select value={category} onValueChange={handleCategoryChange}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Kategori" />
                 </SelectTrigger>
@@ -165,92 +173,114 @@ const Learning = ({ params, appParams }: Props) => {
             ))}
           </div>
         </Tabs>
-        <div className="mt-5 hidden justify-center xl:flex">
-          <Button
-            variant="text"
-            color="blue-gray"
-            className="flex items-center gap-2 rounded-full"
-            onClick={prev}
-            disabled={active === "1"}
-          >
-            <div className="flex">
-              <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-              <span className="ml-2">Sebelumnya</span>
-            </div>
-          </Button>
+        {
+          total_page > 1 && (
+            <>
+              <div className="mt-5 hidden justify-center xl:flex">
+                {
+                  Number(active) !== 1 && (
+                    <Button
+                      variant="text"
+                      color="blue-gray"
+                      className="flex items-center gap-2 rounded-full"
+                      onClick={prev}
+                      disabled={active === "1"}
+                    >
+                      <div className="flex">
+                        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
+                        {/* <span className="ml-2">Sebelumnya</span> */}
+                      </div>
+                    </Button>
+                  )
+                }
 
-          <div className="mx-4 flex items-center gap-2">
-            {onlinecourses?.data?.page?.links[0]?.label == null ? (
-              <Button {...getItemProps("1")}>
-                {onlinecourses?.data?.page?.current_page}
-              </Button>
-            ) : (
-              onlinecourses?.data?.page?.links?.map((items, i) => (
-                <Button key={i} {...getItemProps(items?.label)}>
-                  {items?.label}
-                </Button>
-              ))
-            )}
-          </div>
-          <Button
-            variant="text"
-            color="blue-gray"
-            className="flex items-center gap-2 rounded-full"
-            onClick={next}
-            disabled={
-              active == onlinecourses?.data?.page?.total_page.toString()
-            }
-          >
-            <div className="flex">
-              <span className="mr-2">Selanjutnya</span>
-              <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-            </div>
-          </Button>
-        </div>
-        <div className="mx-auto mt-5 flex justify-center xl:hidden">
-          <Button
-            variant="text"
-            color="blue-gray"
-            className="flex items-center gap-2 rounded-full px-3 text-xs"
-            onClick={prev}
-            disabled={active === "1"}
-          >
-            <div className="flex">
-              <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-              <span className="ml-2">Sebelumnya</span>
-            </div>
-          </Button>
+                <div className="mx-4 flex items-center gap-2">
+                  {onlinecourses?.data?.page?.links[0]?.label == null ? (
+                    <Button {...getItemProps("1")}>
+                      {onlinecourses?.data?.page?.current_page}
+                    </Button>
+                  ) : (
+                    onlinecourses?.data?.page?.links?.map((items, i) => (
+                      <Button key={i} {...getItemProps(items?.label)}>
+                        {items?.label}
+                      </Button>
+                    ))
+                  )}
+                </div>
+                {
+                  Number(active) !== total_page && (
+                    <Button
+                      variant="text"
+                      color="blue-gray"
+                      className="flex items-center gap-2 rounded-full"
+                      onClick={next}
+                      disabled={
+                        active == onlinecourses?.data?.page?.total_page.toString()
+                      }
+                    >
+                      <div className="flex">
+                        {/* <span className="mr-2">Selanjutnya</span> */}
+                        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                      </div>
+                    </Button>
+                  )
+                }
+              </div>
+              <div className="mx-auto mt-5 flex justify-center xl:hidden">
+              {
+                Number(active) !== 1 && (
+                  <Button
+                    variant="text"
+                    color="blue-gray"
+                    className="flex items-center gap-2 rounded-full px-3 text-xs"
+                    onClick={prev}
+                    disabled={active === "1"}
+                  >
+                    <div className="flex">
+                      <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
+                      {/* <span className="ml-2">Sebelumnya</span> */}
+                    </div>
+                  </Button>
+                )
+              }
 
-          <div className="mx-4 flex items-center gap-2">
-            {onlinecourses?.data?.page?.links[0]?.label == null ? (
-              <Button {...getItemProps("1")}>
-                {onlinecourses?.data?.page?.current_page}
-              </Button>
-            ) : (
-              <Button
-                {...getItemProps(
-                  onlinecourses?.data?.page?.current_page.toString()
-                )}
-              >
-                {onlinecourses?.data?.page?.current_page}
-              </Button>
-            )}
-          </div>
-          <Button
-            variant="text"
-            color="blue-gray"
-            className="flex items-center gap-2 rounded-full px-3 text-xs"
-            onClick={next}
-            disabled={
-              active == onlinecourses?.data?.page?.total_page.toString()
-            }
-          >
-            <div className="flex">
-              <span className="mr-2">Selanjutnya</span>
-              <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-            </div>
-          </Button>
-        </div>
+                <div className="mx-4 flex items-center gap-2">
+                  {onlinecourses?.data?.page?.links[0]?.label == null ? (
+                    <Button {...getItemProps("1")}>
+                      {onlinecourses?.data?.page?.current_page}
+                    </Button>
+                  ) : (
+                    <Button
+                      {...getItemProps(
+                        onlinecourses?.data?.page?.current_page.toString()
+                      )}
+                    >
+                      {onlinecourses?.data?.page?.current_page}
+                    </Button>
+                  )}
+                </div>
+                {
+                  Number(active) !== total_page && (
+                    <Button
+                      variant="text"
+                      color="blue-gray"
+                      className="flex items-center gap-2 rounded-full px-3 text-xs"
+                      onClick={next}
+                      disabled={
+                        active == onlinecourses?.data?.page?.total_page.toString()
+                      }
+                    >
+                      <div className="flex">
+                        {/* <span className="mr-2">Selanjutnya</span> */}
+                        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                      </div>
+                    </Button>
+                  )
+                }
+              </div>
+            </>
+          )
+        }
       </section>
     </>
   );

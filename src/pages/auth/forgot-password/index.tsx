@@ -27,7 +27,7 @@ const NewPasswordPage = ({}: Props) => {
   const onSubmit = (form: NewPasswordBodyType) => {
     if (form.confirm_new_password != form.new_password) {
       toast({
-        title: "The Confirm New Password and New Password must match.",
+        title: "Konfirmasi Kata Sandi Baru dan Kata Sandi Baru harus sama.",
       });
     } else {
       postNewPassword
@@ -54,7 +54,7 @@ const NewPasswordPage = ({}: Props) => {
             pathname: "/auth/forgot",
           });
           toast({
-            title: "Reset Password Failed, Please Try Again!",
+            title: "Reset Kata Sandi Gagal, Silakan Coba Lagi!",
           });
         });
     }
@@ -80,11 +80,11 @@ const NewPasswordPage = ({}: Props) => {
             disabled={postNewPassword.isLoading}
           />
 
-          <label>Password Baru</label>
+          <label>Kata Sandi Baru</label>
           <Input
             className="cols-span-12"
             {...register("new_password")}
-            placeholder="Password Baru"
+            placeholder="Kata Sandi Baru"
             name="new_password"
             type={isShowPassword ? "text" : "password"}
             disabled={postNewPassword.isLoading}

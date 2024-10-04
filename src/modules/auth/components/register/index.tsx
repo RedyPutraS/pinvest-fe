@@ -67,7 +67,7 @@ export const Register = () => {
     if (age >= 18) {
       if (form.password != form.confirm_password) {
         toast({
-          title: "The confirm password and password must match.",
+          title: "Konfirmasi kata sandi dan kata sandi harus cocok.",
         });
       } else {
         postRegister

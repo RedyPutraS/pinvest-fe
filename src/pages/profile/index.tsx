@@ -124,7 +124,7 @@ const ProfilePage = ({}: Props) => {
       .then((e) => {
         const message = e.message;
         toast({
-          title: "Message: (" + message + ")",
+          title: message,
         });
         router.push("/profile");
       })
@@ -425,7 +425,7 @@ const ProfilePage = ({}: Props) => {
                           {errors.phone?.message}
                         </p>
                         <label htmlFor="birthdate" className="ml-2">
-                          Tanggal Ulang Tahun
+                          Tanggal Lahir
                         </label>
                         <Controller
                           control={control}
@@ -571,7 +571,7 @@ const ProfilePage = ({}: Props) => {
                 <input
                   className="ms-2 relative flex w-11/12 overflow-hidden border-b border-slate-300 bg-transparent bg-white p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900"
                   {...register2("confirm_new_password")}
-                  placeholder="Password"
+                  placeholder="Konfirmasi Kata Sandi Baru"
                   id="confirm_new_password"
                   disabled={postPassword.isLoading}
                   type={isShowPassword3 ? "text" : "password"}

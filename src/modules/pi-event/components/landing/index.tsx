@@ -15,6 +15,9 @@ const LandingPiEvent = ({ time = null, type = null }: Props) => {
   const [active, setActive] = React.useState("1");
 
   const events = useEvents({ time, type, page: "1" });
+  const total_page = events.data?.page.total_page ?? 0;
+  console.log("Pievent", events);
+  
   const getItemProps = (index: string) =>
     ({
       variant: active === index ? "filled" : "text",
@@ -48,46 +51,58 @@ const LandingPiEvent = ({ time = null, type = null }: Props) => {
           <PiEventCard key={event.id} event={event as never} />
         ))}
       </div>
-      <div className="mt-5 flex justify-center">
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="flex items-center gap-2 rounded-full text-[10px] lg:text-[14px]"
-          onClick={prev}
-          disabled={active === "1"}
-        >
-          <div className="flex">
-            <ArrowLeftIcon strokeWidth={2} className="h-3 w-3 lg:h4 lg:w-4" />{" "}
-            <span className="ml-2 hidden md:block">Sebelumnya</span>
-          </div>
-        </Button>
+      {
+        total_page > 1 && (
+          <div className="mt-5 flex justify-center">
+            {
+              Number(active) !== 1 && (
+                <Button
+                  variant="text"
+                  color="blue-gray"
+                  className="flex items-center gap-2 rounded-full text-[10px] lg:text-[14px]"
+                  onClick={prev}
+                  disabled={active === "1"}
+                >
+                  <div className="flex">
+                    <ArrowLeftIcon strokeWidth={2} className="h-3 w-3 lg:h4 lg:w-4" />{" "}
+                    {/* <span className="ml-2 hidden md:block">Sebelumnya</span> */}
+                  </div>
+                </Button>
+              )
+            }
 
-        <div className="mx-4 flex items-center gap-2 text-[10px] lg:text-[14px]">
-          {events?.data?.page?.links[0]?.label == null ? (
-            <Button {...getItemProps("1")}>
-              {events?.data?.page?.current_page}
-            </Button>
-          ) : (
-            events?.data?.page?.links?.map((items, i) => (
-              <Button key={i} {...getItemProps(items?.label)}>
-                {items?.label}
-              </Button>
-            ))
-          )}
-        </div>
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="flex items-center gap-2 rounded-full text-[10px] lg:text-[14px]"
-          onClick={next}
-          disabled={active == events?.data?.page?.total_page.toString()}
-        >
-          <div className="flex">
-            <span className="mr-2 hidden md:block">Selanjutnya</span>
-            <ArrowRightIcon strokeWidth={2} className="h-3 w-3 lg:h4 lg:w-4" />
+            <div className="mx-4 flex items-center gap-2 text-[10px] lg:text-[14px]">
+              {events?.data?.page?.links[0]?.label == null ? (
+                <Button {...getItemProps("1")}>
+                  {events?.data?.page?.current_page}
+                </Button>
+              ) : (
+                events?.data?.page?.links?.map((items, i) => (
+                  <Button key={i} {...getItemProps(items?.label)}>
+                    {items?.label}
+                  </Button>
+                ))
+              )}
+            </div>
+            {
+              Number(active) !== total_page && (
+                <Button
+                  variant="text"
+                  color="blue-gray"
+                  className="flex items-center gap-2 rounded-full text-[10px] lg:text-[14px]"
+                  onClick={next}
+                  disabled={active == events?.data?.page?.total_page.toString()}
+                >
+                  <div className="flex">
+                    {/* <span className="mr-2 hidden md:block">Selanjutnya</span> */}
+                    <ArrowRightIcon strokeWidth={2} className="h-3 w-3 lg:h4 lg:w-4" />
+                  </div>
+                </Button>
+              )
+            }
           </div>
-        </Button>
-      </div>
+        )
+      }
     </div>
   );
 };

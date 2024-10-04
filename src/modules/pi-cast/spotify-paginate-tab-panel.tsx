@@ -12,7 +12,11 @@ const SpotifyPaginateTabPanel = () => {
     page: active,
     limit: 5,
   });
+
+  const total_page = data?.page.total_page ?? 0;
+  // console.log("picast spotify", data);
   const { data: detail } = usePiCastSpotifyDetailPlaylist();
+  
   const getItemProps = (index: string) =>
     ({
       variant: active === index ? "filled" : "text",
@@ -38,6 +42,9 @@ const SpotifyPaginateTabPanel = () => {
 
     setActive((activeNumber - 1).toString());
   };
+
+  console.log(data?.data);
+  
   return (
     <div>
       <div className="mt-4 hidden grid-cols-4 gap-4 xl:grid">
@@ -64,89 +71,111 @@ const SpotifyPaginateTabPanel = () => {
               </>
             )
           )}
-          <div className="mt-5 hidden justify-center xl:flex">
-            <Button
-              variant="text"
-              color="blue-gray"
-              className="flex items-center gap-2 rounded-full"
-              onClick={prev}
-              disabled={active === "1"}
-            >
-              <div className="flex">
-                <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-                <span className="ml-2">Sebelumnya</span>
-              </div>
-            </Button>
-
-            <div className="mx-4 flex items-center gap-2">
-              {data?.page?.links[0]?.label == null ? (
-                <Button {...getItemProps("1")}>
-                  {data?.page?.current_page}
-                </Button>
-              ) : (
-                data?.page?.links?.map(
-                  (
-                    items: {
-                      label: string;
-                    },
-                    i: React.Key | null | undefined
-                  ) => (
-                    <Button key={i} {...getItemProps(items.label)}>
-                      {items?.label}
+          {
+            total_page > 1 && (
+              <>
+                <div className="mt-5 hidden justify-center xl:flex">
+                {
+                  Number(active) !== 1 && (
+                    <Button
+                      variant="text"
+                      color="blue-gray"
+                      className="flex items-center gap-2 rounded-full"
+                      onClick={prev}
+                      disabled={active === "1"}
+                    >
+                      <div className="flex">
+                        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
+                        {/* <span className="ml-2">Sebelumnya</span> */}
+                      </div>
                     </Button>
                   )
-                )
-              )}
-            </div>
-            <Button
-              variant="text"
-              color="blue-gray"
-              className="flex items-center gap-2 rounded-full"
-              onClick={next}
-              disabled={active == data?.page?.total_page.toString()}
-            >
-              <div className="flex">
-                <span className="mr-2">Selanjutnya</span>
-                <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-              </div>
-            </Button>
-          </div>
-          <div className="mx-auto mt-5 flex justify-center xl:hidden">
-            <Button
-              variant="text"
-              color="blue-gray"
-              className="flex items-center gap-2 rounded-full px-3 text-xs"
-              onClick={prev}
-              disabled={active === "1"}
-            >
-              <div className="flex">
-                <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-                <span className="ml-2">Sebelumnya</span>
-              </div>
-            </Button>
+                }
 
-            <div className="mx-4 flex items-center gap-2">
-              {data?.page?.links[0]?.label == null ? (
-                <Button {...getItemProps("1")}>
-                  {data?.page?.current_page}
-                </Button>
-              ) : (
-                <Button {...getItemProps(data?.page?.current_page.toString())}>
-                  {data?.page?.current_page}
-                </Button>
-              )}
-            </div>
-            <Button
-              variant="text"
-              color="blue-gray"
-              className="flex items-center gap-2 rounded-full px-3 text-xs"
-              onClick={next}
-              disabled={active == data?.page?.total_page.toString()}
-            >
-              Next
-              <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-            </Button>
-          </div>
+                  <div className="mx-4 flex items-center gap-2">
+                    {data?.page?.links[0]?.label == null ? (
+                      <Button {...getItemProps("1")}>
+                        {data?.page?.current_page}
+                      </Button>
+                    ) : (
+                      data?.page?.links?.map(
+                        (
+                          items: {
+                            label: string;
+                          },
+                          i: React.Key | null | undefined
+                        ) => (
+                          <Button key={i} {...getItemProps(items.label)}>
+                            {items?.label}
+                          </Button>
+                        )
+                      )
+                    )}
+                  </div>
+                  {
+                    Number(active) !== total_page && (
+                      <Button
+                        variant="text"
+                        color="blue-gray"
+                        className="flex items-center gap-2 rounded-full"
+                        onClick={next}
+                        disabled={active == data?.page?.total_page.toString()}
+                      >
+                        <div className="flex">
+                          {/* <span className="mr-2">Selanjutnya</span> */}
+                          <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                        </div>
+                      </Button>
+                    )
+                  }
+                </div>
+                <div className="mx-auto mt-5 flex justify-center xl:hidden">
+                  {
+                    Number(active) !== 1 && (
+                      <Button
+                        variant="text"
+                        color="blue-gray"
+                        className="flex items-center gap-2 rounded-full px-3 text-xs"
+                        onClick={prev}
+                        disabled={active === "1"}
+                      >
+                        <div className="flex">
+                          <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
+                          {/* <span className="ml-2">Sebelumnya</span> */}
+                        </div>
+                      </Button>
+                    )
+                  }
+
+                  <div className="mx-4 flex items-center gap-2">
+                    {data?.page?.links[0]?.label == null ? (
+                      <Button {...getItemProps("1")}>
+                        {data?.page?.current_page}
+                      </Button>
+                    ) : (
+                      <Button {...getItemProps(data?.page?.current_page.toString())}>
+                        {data?.page?.current_page}
+                      </Button>
+                    )}
+                  </div>
+                  {
+                    Number(active) !== total_page && (
+                      <Button
+                        variant="text"
+                        color="blue-gray"
+                        className="flex items-center gap-2 rounded-full px-3 text-xs"
+                        onClick={next}
+                        disabled={active == data?.page?.total_page.toString()}
+                      >
+                        Next
+                        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                      </Button>
+                    )
+                  }
+                </div>
+              </>
+            )
+          }
         </div>
 
         <div className="break-words xl:col-span-1">
@@ -157,7 +186,7 @@ const SpotifyPaginateTabPanel = () => {
           <div className="h-6"></div>
           <iframe
             src={`https://open.spotify.com/embed/show/${
-              detail?.id || ""
+              "5jQrAzM0nDtQmOF21a7ZZp" || ""
             }?utm_source=generator&theme=0`}
             width="100%"
             height="152"

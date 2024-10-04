@@ -16,12 +16,12 @@ const errorPage = ({}: Props) => {
           />
         </div>
         <div className="mx-auto flex-1 pl-4 text-center">
-          <div className="text-xl font-medium">Reset Password Failed!</div>
+          <div className="text-xl font-medium">Reset Kata Sandi Gagal!</div>
           <div>
-            Please, Check Your Email Again or Back to Forgot Password Page
+          Silakan Periksa Email Anda Lagi atau Kembali ke Halaman Lupa Kata Sandi
           </div>
           <div className="my-4 rounded-md bg-pv-blue-dark p-2 text-white">
-            <Link href="/auth/forgot">Forgot Password</Link>
+            <Link href="/auth/forgot">Lupa Kata Sandi</Link>
           </div>
         </div>
       </div>

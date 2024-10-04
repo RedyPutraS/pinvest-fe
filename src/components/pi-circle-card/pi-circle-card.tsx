@@ -33,23 +33,23 @@ export function PiCircleCard({ article, className, overrideLink }: Props) {
           />
         </CardImage>
         <CardBody className="p-2 xl:p-4">
+          <div className="flex items-start justify-between">
+            <Link href={`/pi-circle/${article.id}`}>
+              <div className="text-md h-5 font-semibold text-gray-600 line-clamp-1 xl:min-h-[70px] xl:text-2xl xl:line-clamp-2">
+                {article.title}
+              </div>
+            </Link>
+            <ShareButton
+              path={overrideLink ?? `/pi-circle/${article.id}`}
+              className="md:w-7 xl:w-10"
+            />
+          </div>
           <div
             className="cursor-pointer "
             onClick={() =>
               router.push(overrideLink ?? `/pi-circle/${article.id}`)
             }
           >
-            <div className="flex items-start justify-between">
-              <Link href={`/pi-circle/${article.id}`}>
-                <div className="text-md h-5 font-semibold text-gray-600 line-clamp-1 xl:min-h-[70px] xl:text-2xl xl:line-clamp-2">
-                  {article.title}
-                </div>
-              </Link>
-              <ShareButton
-                path={overrideLink ?? `/pi-circle/${article.id}`}
-                className="w-6 xl:w-10"
-              />
-            </div>
             <p className="mt-4 text-neutral-400 line-clamp-3">
               {article.description}
             </p>

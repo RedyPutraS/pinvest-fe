@@ -28,8 +28,8 @@ const Learning = ({ appParams }: Props) => {
   const router = useRouter();
   const app = useApp(appParams);
   const [search1, setSearch] = useState<string>();
-  const [filter, setFilter] = useState<string>();
-  const [category, setCategory] = useState<string>();
+  const [filter, setFilter] = useState<string>("new"); // Default value "new"
+  const [category, setCategory] = useState<string>(""); // Default value ""
 
   const handleSortChange = (sort: string) => {
     setFilter(sort);
@@ -38,11 +38,13 @@ const Learning = ({ appParams }: Props) => {
   const handleCategoryChange = (category: string) => {
     setCategory(category);
   };
+
   const reset = () => {
-    setFilter(undefined);
-    setCategory(undefined);
+    setFilter("new");
+    setCategory("");
     setSearch(undefined);
   };
+
   const handleChangeTab = (page: number) => {
     const category = app.data?.category[page]?.alias;
     router.push({ pathname: category }, undefined, {
@@ -66,6 +68,9 @@ const Learning = ({ appParams }: Props) => {
     filter: null,
     sort: filter?.toString() ?? "",
   });
+  console.log("Article", articleRelated.data);
+  const total_page = articleRelated.data?.page.total_page ?? 0;
+  // const [page, setPage] = useState(1);
   const subCategory = app.data?.category.find(
     (category) => category.alias === "article"
   );
@@ -93,6 +98,8 @@ const Learning = ({ appParams }: Props) => {
 
     setActive((activeNumber - 1).toString());
   };
+  console.log(total_page === Number(active));
+  
 
   return (
     <>
@@ -108,33 +115,31 @@ const Learning = ({ appParams }: Props) => {
 
           <div className="mt-5 flex-wrap xl:flex">
             <div className="flex flex-1 justify-end">
-              <Select onValueChange={handleSortChange}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Terbaru" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="new">Terbaru</SelectItem>
-                  <SelectItem value="popular">Terpopuler</SelectItem>
-                </SelectContent>
-              </Select>
+            <Select value={filter} onValueChange={handleSortChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Terbaru" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="new">Terbaru</SelectItem>
+                <SelectItem value="popular">Terpopuler</SelectItem>
+              </SelectContent>
+            </Select>
 
-              <Select onValueChange={handleCategoryChange}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Kategori" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="">Semua</SelectItem>
-                  {subCategory?.subcategory?.map((subCat) => (
-                    <SelectItem
-                      value={subCat.subcategory_name.toLocaleLowerCase()}
-                    >
-                      {subCat.subcategory_name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <Select value={category} onValueChange={handleCategoryChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Kategori" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="">Semua</SelectItem>
+                {subCategory?.subcategory?.map((subCat) => (
+                  <SelectItem key={subCat.subcategory_name} value={subCat.subcategory_name.toLocaleLowerCase()}>
+                    {subCat.subcategory_name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-              <button onClick={reset}>Reset</button>
+            <button onClick={reset}>Reset</button>
             </div>
           </div>
 
@@ -154,90 +159,110 @@ const Learning = ({ appParams }: Props) => {
             ))}
           </div>
         </Tabs>
-        <div className="mt-5 hidden justify-center xl:flex">
-          <Button
-            variant="text"
-            color="blue-gray"
-            className="flex items-center gap-2 rounded-full"
-            onClick={prev}
-            disabled={active === "1"}
-          >
-            <div className="flex">
-              <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-              <span className="ml-2">Sebelumnya</span>
-            </div>
-          </Button>
+        {total_page > 1 && (
+          <>
+            <div className="mt-5 hidden justify-center xl:flex">
+              {
+                Number(active) !== 1 && (
+                  <Button
+                    variant="text"
+                    color="blue-gray"
+                    className="flex items-center gap-2 rounded-full"
+                    onClick={prev}
+                    disabled={active === "1"}
+                  >
+                    <div className="flex">
+                      <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
+                      {/* <span className="ml-2">Sebelumnya</span> */}
+                    </div>
+                  </Button>
+                )
+              }
 
-          <div className="mx-4 items-center gap-2">
-            {articleRelated?.data?.page?.links[0]?.label == null ? (
-              <Button {...getItemProps("1")}>
-                {articleRelated?.data?.page?.current_page}
-              </Button>
-            ) : (
-              articleRelated?.data?.page?.links?.map((items) => (
-                <Button {...getItemProps(items?.label)}>{items?.label}</Button>
-              ))
-            )}
-          </div>
-          <Button
-            variant="text"
-            color="blue-gray"
-            className="flex items-center gap-2 rounded-full"
-            onClick={next}
-            disabled={
-              active == articleRelated?.data?.page?.total_page.toString()
-            }
-          >
-            <div className="flex">
-              <span className="mr-2">Selanjutnya</span>
-              <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-            </div>
-          </Button>
-        </div>
-        <div className="mx-auto mt-5 flex justify-center xl:hidden">
-          <Button
-            variant="text"
-            color="blue-gray"
-            className="flex items-center gap-2 rounded-full px-3 text-xs"
-            onClick={prev}
-            disabled={active === "1"}
-          >
-            <div className="flex">
-              <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-              <span className="ml-2">Sebelumnya</span>
-            </div>
-          </Button>
-
-          <div className="mx-4 flex items-center gap-2">
-            {articleRelated?.data?.page?.links[0]?.label == null ? (
-              <Button {...getItemProps("1")}>
-                {articleRelated?.data?.page?.current_page}
-              </Button>
-            ) : (
-              <Button
-                {...getItemProps(
-                  articleRelated?.data?.page?.current_page.toString()
+              <div className="mx-4 items-center gap-2">
+                {articleRelated?.data?.page?.links[0]?.label == null ? (
+                  <Button {...getItemProps("1")}>
+                    {articleRelated?.data?.page?.current_page}
+                  </Button>
+                ) : (
+                  articleRelated?.data?.page?.links?.map((items) => (
+                    <Button {...getItemProps(items?.label)}>{items?.label}</Button>
+                  ))
                 )}
-              >
-                {articleRelated?.data?.page?.current_page}
-              </Button>
-            )}
-          </div>
-          <Button
-            variant="text"
-            color="blue-gray"
-            className="flex items-center gap-2 rounded-full px-3 text-xs"
-            onClick={next}
-            disabled={
-              active == articleRelated?.data?.page?.total_page.toString()
-            }
-          >
-            <div className="flex">
-              <span className="mr-2">Selanjutnya</span>
-              <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+              </div>
+              {
+                Number(active) !== total_page && (
+                  <Button
+                    variant="text"
+                    color="blue-gray"
+                    className="flex items-center gap-2 rounded-full"
+                    onClick={next}
+                    disabled={
+                      active == articleRelated?.data?.page?.total_page.toString()
+                    }
+                  >
+                    <div className="flex">
+                      {/* <span className="mr-2">Selanjutnya</span> */}
+                      <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                    </div>
+                  </Button>
+                )
+              }
             </div>
-          </Button>
-        </div>
+            <div className="mx-auto mt-5 flex justify-center xl:hidden">
+              {
+                Number(active) !== 1 && (
+                  <Button
+                    variant="text"
+                    color="blue-gray"
+                    className="flex items-center gap-2 rounded-full px-3 text-xs"
+                    onClick={prev}
+                    disabled={active === "1"}
+                  >
+                    <div className="flex">
+                      <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
+                      {/* <span className="ml-2">Sebelumnya</span> */}
+                    </div>
+                  </Button>
+                )
+              }
+
+              <div className="mx-4 flex items-center gap-2">
+                {articleRelated?.data?.page?.links[0]?.label == null ? (
+                  <Button {...getItemProps("1")}>
+                    {articleRelated?.data?.page?.current_page}
+                  </Button>
+                ) : (
+                  <Button
+                    {...getItemProps(
+                      articleRelated?.data?.page?.current_page.toString()
+                    )}
+                  >
+                    {articleRelated?.data?.page?.current_page}
+                  </Button>
+                )}
+              </div>
+              {
+                Number(active) !== total_page && (
+                  <Button
+                    variant="text"
+                    color="blue-gray"
+                    className="flex items-center gap-2 rounded-full px-3 text-xs"
+                    onClick={next}
+                    disabled={
+                      active == articleRelated?.data?.page?.total_page.toString()
+                    }
+                  >
+                    <div className="flex">
+                      {/* <span className="mr-2">Selanjutnya</span> */}
+                      <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                    </div>
+                  </Button>
+                )
+              }
+            </div>
+          </>
+        )}
       </section>
     </>
   );

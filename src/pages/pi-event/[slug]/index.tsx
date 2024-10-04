@@ -58,7 +58,7 @@ const EventDetail: NextPage<Props> = ({ params }) => {
       <section className="mx-auto mb-8 w-screen p-3 xl:max-w-[1440px] xl:px-[70px]">
         <Cover coverUrl={event.data?.cover_image ?? ""} />
 
-        <h1 className="mt-4 text-2xl text-gray-600 lg:text-6xl">
+        <h1 className="mt-10 text-2xl text-gray-600 lg:text-4xl">
           {event.data?.title}
         </h1>
         <div className="mt-2 flex justify-between"></div>
@@ -128,7 +128,7 @@ const EventDetail: NextPage<Props> = ({ params }) => {
 
                         <Link
                           target="_blank"
-                          className=" ml-2 whitespace-nowrap text-sm "
+                          className=" ml-2 whitespace-nowrap text-sm text-blue-700"
                           href={url ?? ""}
                         >
                           {event?.data?.type == "offline" ? "Lihat Maps" : ""}

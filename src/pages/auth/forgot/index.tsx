@@ -55,7 +55,7 @@ const ForgotPasswordPage = ({}: Props) => {
             type="email"
             disabled={postForgot.isLoading}
           />
-          <p className="text-xs text-stone-600">Memerlukan alamat email.</p>
+          <p className="text-xs mt-5 text-red-500">Memerlukan alamat email.</p>
 
           <p className="mt-4">{errors.email?.message}</p>
 

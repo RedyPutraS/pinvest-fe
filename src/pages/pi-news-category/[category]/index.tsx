@@ -25,13 +25,14 @@ const PiNewsCategory = () => {
   );
   const router = useRouter();
   const { category } = router.query;
-  console.log(category);
   
   const piNews = usePiNews({
     page: 1,
     limit: 100,
     category: category as any,
   });
+  // console.log("Pinews",piNews);
+  
   return (
     <>
       <div className="sticky left-0 right-0 top-14 z-20 flex h-16 justify-center bg-white xl:top-20">

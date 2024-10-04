@@ -5,6 +5,7 @@ import type { BannerParams } from "../api/banner";
 import { useBanner } from "../api/banner";
 import { Spinner } from "components/spinner";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 type Props = {
   tab?: string;

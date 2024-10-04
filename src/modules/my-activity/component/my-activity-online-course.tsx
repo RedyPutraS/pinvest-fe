@@ -27,7 +27,7 @@ const MyActivityCardOnlineCourse = ({ items }: Props) => {
               </h1>
               <h3 className="font-semibold xl:text-base">
                 <p className="font-normal">
-                  Duration : {items?.product?.duration ?? ""}
+                  Durasi : {items?.product?.duration ?? ""}
                 </p>
               </h3>
             </div>

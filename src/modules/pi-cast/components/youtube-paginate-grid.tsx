@@ -115,7 +115,7 @@ const YoutubePaginateGrid = ({ title, category, type, search }: Props) => {
             >
               <div className="flex">
                 <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-                <span className="ml-2">Sebelumnya</span>
+                {/* <span className="ml-2">Sebelumnya</span> */}
               </div>
             </Button>
             <div className="mx-4 flex items-center gap-2">
@@ -131,7 +131,7 @@ const YoutubePaginateGrid = ({ title, category, type, search }: Props) => {
               disabled={active == data?.data?.nextPageToken}
             >
               <div className="flex">
-                <span className="mr-2">Selanjutnya</span>
+                {/* <span className="mr-2">Selanjutnya</span> */}
                 <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
               </div>
             </Button>

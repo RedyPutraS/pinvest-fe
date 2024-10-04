@@ -62,7 +62,7 @@ const PiSpace = () => {
                   {article.title}
                 </div>
                 <div className="mb-5">{article.description}</div>
-                <button
+                {/* <button
                   className="h-11 rounded-lg bg-pv-blue-dark px-8 py-2 text-sm font-light text-pv-white-pure hover:bg-pv-blue-light"
                   onClick={() => {
                     auth.user
@@ -71,7 +71,7 @@ const PiSpace = () => {
                   }}
                 >
                   Inquiry
-                </button>
+                </button> */}
               </div>
             </div>
             <div

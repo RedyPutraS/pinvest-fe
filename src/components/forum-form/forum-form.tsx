@@ -128,6 +128,20 @@ function ForumForm({ refetch }: Props) {
                 setFormData({ ...formData, thumbnail_image: file });
               }}
             />
+            <p className="mt-1"></p>
+            <small className="w-[10px]">
+              <ul>
+                <li>
+                  - Widht 417px x Height 235px (16:9 Landscape)
+                </li>
+                <li>
+                  - Format JPG, PNG dan JPEG 
+                </li>
+                <li>
+                  - Ukuran maksimal 7MB 
+                </li>
+              </ul>
+            </small>
             <p className="my-3">Cover Image</p>
             <FileUploader
               file={formData.cover_image}
@@ -136,13 +150,27 @@ function ForumForm({ refetch }: Props) {
                 setFormData({ ...formData, cover_image: file });
               }}
             />
+            <p className="mt-1"></p>
+            <small className="w-[10px]">
+              <ul>
+                <li>
+                  - Widht 615px x Height 237px (16:9 Landscape)
+                </li>
+                <li>
+                  - Format JPG, PNG dan JPEG 
+                </li>
+                <li>
+                  - Ukuran maksimal 7MB 
+                </li>
+              </ul>
+            </small>
             <input
               type="text"
               name="title"
               value={formData.title}
               onChange={handleChange}
               placeholder="Judul"
-              className="mb-2 w-full border-b-[1px] border-pv-grey-medium1 px-4 py-2 hover:border-pv-grey-medium2 focus:outline-none focus:ring-1"
+              className="mb-2 w-full border-b-[1px] border-pv-grey-medium1 px-4 py-2 hover:border-pv-grey-medium2 focus:outline-none focus:ring-1 mt-2"
             />
 
             <textarea

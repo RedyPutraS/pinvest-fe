@@ -14,6 +14,7 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const Transaction = ({ param }: Props) => {
   const [params, setParams] = useState(param);
   const { data } = useTransactionList(params);
+  
   const router = useRouter();
   const { list } = transactionFilter();
   const { incrementN } = useStore();

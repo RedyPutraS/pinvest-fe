@@ -17,7 +17,10 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const Index = ({ params }: Props) => {
   const router = useRouter();
   const { data } = useTransactionDetail(params);
-
+  
+  if (!data) {
+    return <div>Loading...</div>;
+  }
   return (
     <PageBody>
       <div className="bg-pv-white-light p-6 xl:mb-8">
@@ -81,7 +84,7 @@ const Index = ({ params }: Props) => {
                     </>
                   ) : (
                     <h1 className="font-semibold xl:text-lg">
-                      <p className="font-normal">Duration :</p>
+                      <p className="font-normal">Durasi :</p>
                       {detail?.product.duration}
                     </h1>
                   )}
@@ -169,7 +172,9 @@ const Index = ({ params }: Props) => {
               </div>
             </div>
             <div className="flex flex-col gap-2 rounded p-4">
-              {detail?.ticket_pass_item?.length !== 0 ? (
+            {transactionFilter().getName(data?.payment_progress) === "Sukses" && (
+              <>
+                {detail?.ticket_pass_item?.length !== 0 ? (
                 <AccordionTransaksi title={detail?.product?.title ?? "null"}>
                   {detail.online_course_id !== null ? (
                     <span className="my-2 grid grid-flow-row-dense hover:text-xl xl:grid-cols-1">
@@ -209,33 +214,34 @@ const Index = ({ params }: Props) => {
                           {item.start_time} - {item.end_time}
                         </p>
                         <span className="self-center py-2 text-right">
-                          {detail.transaction_type == "membership" ? (
-                            <span></span>
-                          ) : detail.transaction_type == "event" &&
-                            detail.online == true ? (
-                            <Button
-                              onClick={() => {
-                                window.open(item?.url_meeting ?? "", "_blank");
-                              }}
-                              size="s"
-                              className="text-sm font-normal xl:text-base"
-                            >
-                              Gabung Sekarang
-                            </Button>
-                          ) : (
-                            <Button
-                              size="s"
-                              onClick={() =>
-                                downloadTicket(
-                                  detail.id,
-                                  `E-Ticket ${data.order_id}`
-                                )
-                              }
-                              className="text-sm font-normal xl:text-base"
-                            >
-                              Unduh Tiket
-                            </Button>
-                          )}
+                          {transactionFilter().getName(data?.payment_progress)}
+                        {transactionFilter().getName(data?.payment_progress) === "Sukses" && (
+                          <>
+                            {detail.transaction_type === "membership" ? (
+                              <span></span>
+                            ) : detail.transaction_type === "event" && detail.online === true ? (
+                              <Button
+                                onClick={() => {
+                                  window.open(item?.url_meeting ?? "", "_blank");
+                                }}
+                                size="s"
+                                className="text-sm font-normal xl:text-base"
+                              >
+                                Gabung Sekarang
+                              </Button>
+                            ) : (
+                              <Button
+                                size="s"
+                                onClick={() =>
+                                  downloadTicket(detail.id, `E-Ticket ${data?.order_id}`)
+                                }
+                                className="text-sm font-normal xl:text-base"
+                              >
+                                Unduh Tiket
+                              </Button>
+                            )}
+                          </>
+                        )}
                         </span>
                       </span>
                     </h1>
@@ -340,6 +346,9 @@ const Index = ({ params }: Props) => {
                   )}
                 </div>
               )}
+              </>
+            )}
+              
             </div>
           </div>
         ))}

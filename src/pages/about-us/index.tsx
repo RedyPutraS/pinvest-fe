@@ -37,7 +37,7 @@ const AboutUs = ({ params }: Props) => {
                 "https://www.google.com/maps/place/Neo+Soho+Central+Park/@-6.1749577,106.7874385,17z/data=!3m1!4b1!4m6!3m5!1s0x2e69f65ee1c07a31:0x2c4c67f4d94e8e65!8m2!3d-6.174963!4d106.7900134!16s%2Fg%2F11c5214j3m?entry=ttu"
               }
               target="_blank"
-              className="text-sm text-pv-blue-dark"
+              className="text-sm text-blue-700"
             >
               Lihat Maps
             </Link>

@@ -24,7 +24,7 @@ const Payment = ({ orderId }: Props) => {
 
   useEffect(() => {
     if (!data?.expired_at) return;
-
+    
     const timer = setInterval(() => {
       const now = new Date();
       const dateString = format(
@@ -40,6 +40,11 @@ const Payment = ({ orderId }: Props) => {
     return () => clearInterval(timer);
   }, [data]);
 
+  const dateString2 = data?.expired_at ?? ""; // Misalnya "2024-09-26 10:29:35"
+  const date2 = new Date(dateString2.replace(" ", "T")); // Mengganti spasi dengan 'T' agar sesuai dengan format ISO
+  const expiredAt2 = date2.getTime();
+  const now2 = new Date().getTime();
+
   return (
     <PageBody>
       <Head>
@@ -47,14 +52,24 @@ const Payment = ({ orderId }: Props) => {
       </Head>
       <Typo.H5 className="text-center">Selesaikan pembayaran dalam</Typo.H5>
       <p className="mt-4 text-center text-xl font-bold text-pv-orange">
-        {countdownDuration?.hours?.toString().padStart(2, "0")}:
-        {countdownDuration?.minutes?.toString().padStart(2, "0")}:
-        {countdownDuration?.seconds?.toString().padStart(2, "0")}
+        {
+          expiredAt2 < now2 ? (
+            <>
+              <Typo.H5 className="text-center">Sudah Melewati Batas Akhir</Typo.H5>
+            </>
+          ) : (
+            <>
+              {countdownDuration?.hours?.toString().padStart(2, "0")}:
+              {countdownDuration?.minutes?.toString().padStart(2, "0")}:
+              {countdownDuration?.seconds?.toString().padStart(2, "0")}
+            </>
+          )
+        }
       </p>
       <p className="mt-4 text-center text-sm">Batas Akhir Pembayaran</p>
       <p className="mt-2 text-center">
         {data?.expired_at &&
-          format(Date.parse(data?.expired_at), "yyyy-MM-dd HH:mm:ss")}
+          format(Date.parse(data?.expired_at), "dd-MM-yyyy HH:mm:ss")}
       </p>
 
       <div className="m-auto mt-10 rounded-xl border border-pv-grey-medium3 md:w-[683px]">
@@ -89,7 +104,7 @@ const Payment = ({ orderId }: Props) => {
                       ?.virtual_account_number ?? ""
                   );
                   toast({
-                    title: "Copied to clipboard!",
+                    title: "Disalin ke papan klip!",
                   });
                 } catch (err) {}
               }}
@@ -113,7 +128,7 @@ const Payment = ({ orderId }: Props) => {
                     data?.virtual_account?.amount?.toString() ?? "0"
                   );
                   toast({
-                    title: "Copied to clipboard!",
+                    title: "Disalin ke papan klip!",
                   });
                 } catch (err) {}
               }}
@@ -125,9 +140,14 @@ const Payment = ({ orderId }: Props) => {
       </div>
 
       <div className="mt-6 flex justify-center gap-5">
-        <Button onClick={() => router.push("/transaction")}>
-          Cek Status Pembayaran
-        </Button>
+      <Button onClick={() => {
+        if (data?.order_id) {
+          const encodedOrderId = encodeURIComponent(data.order_id);
+          router.push(`/transaction/${encodedOrderId}`);
+        }
+      }}>
+        Detail Pembayaran
+      </Button>
         <Button onClick={() => router.push("/")}>Kembali ke Homepage</Button>
       </div>
 

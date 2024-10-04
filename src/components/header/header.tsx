@@ -283,7 +283,7 @@ export default function Header({ onSearch }: Props) {
               <Popover>
                 <PopoverTrigger>
                   <MiniProfile
-                    name={`${account.data?.first_name} ${account.data?.last_name}`}
+                    name={`${account.data?.first_name} ${account.data?.last_name ?? '' }`}
                     profilePicture={account.data?.profile_picture ?? ""}
                   />
                 </PopoverTrigger>

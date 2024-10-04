@@ -46,8 +46,8 @@ export const useProfilePict = () =>
   );
 
 export const profileBodySchema = z.object({
-  firstName: z.string().min(3, "Minimal 3 karakter"),
-  lastName: z.string().min(3, "Minimal 3 karakter"),
+  firstName: z.string().min(2, "Minimal 2 karakter"),
+  lastName: z.string(),
   email: z.string().email(),
   phone: z.string().min(3, "Tidak valid"),
   birthdate: z.string(),
@@ -85,12 +85,12 @@ const passwordSchema = z.object({
 
 export const passwordBodySchema = z
   .object({
-    password: z.string().min(8, "Minimal 8 karakter"),
-    new_password: z.string().min(8, "Minimal 8 karakter"),
+    password: z.string().min(8, "Minimal 8 karakter/numerik"),
+    new_password: z.string().min(8, "Minimal 8 karakter/numerik"),
     confirm_new_password: z.string(),
   })
   .refine((data) => data.new_password === data.confirm_new_password, {
-    message: "Password baru tidak sama",
+    message: "Kata Sandi baru tidak sama",
     path: ["confirm_new_password"],
   });
 

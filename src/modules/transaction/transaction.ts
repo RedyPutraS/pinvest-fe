@@ -81,7 +81,7 @@ type Params = {
 
 export const getTransactionDetail = async ({ id }: Params) => {
   const { data } = await axios.get(
-    `/transaction/detail?order_id=${encodeURIComponent(id)}`
+    `/transaction/detailV3?order_id=${encodeURIComponent(id)}`
   );
 
   return schema.parse(data).data;

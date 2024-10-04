@@ -16,6 +16,7 @@ export interface OnlineCourseItem {
   subcategory_name_alias: string;
   description: string;
   price: number;
+  purchased: boolean;
   event_id: number;
   title: string;
   ticket_pass: boolean;
@@ -72,6 +73,7 @@ export const onlineCourseItemSchema = z.object({
   subcategory_name_alias: z.string().nullish(),
   description: z.string().nullish(),
   price: z.number(),
+  purchased: z.boolean().nullish(),
   event_id: z.number().nullish(),
   title: z.string(),
   ticket_pass: z.boolean().nullish(),
@@ -112,7 +114,7 @@ export const getOnlineCourse = async ({
   const { data } = await axios.get("/pilearning/online-course", {
     params: { limit, start },
   });
-
+  
   return schema.parse(data).data;
 };
 

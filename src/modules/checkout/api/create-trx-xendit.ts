@@ -48,6 +48,9 @@ export const creatTransactionBodySchema = z.object({
   qty: z.number(),
   voucher: z.string().nullish(),
   total: z.number().nullish(),
+  subTotal: z.number().nullish(),      // Menambahkan subTotal
+  totalInCart: z.number().nullish(),   // Menambahkan totalInCart
+  hargaPromo: z.number().nullish(), 
 });
 
 export type CreateTransactionBodyType = z.infer<
@@ -63,6 +66,9 @@ export const createTrxXendit = async (body: CreateTransactionBodyType) => {
     qty: body.qty,
     voucher: body.voucher,
     total: body.total,
+    subTotal: body.subTotal,      // Tambahkan subTotal
+    totalInCart: body.total,      // Tambahkan totalInCart
+    hargaPromo: body.hargaPromo,  // Tambahkan hargaPromo
   });
 
   return schema.parse(data).data;

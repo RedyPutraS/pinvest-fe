@@ -18,7 +18,7 @@ const MyActivityCardMembership = ({ items }: Props) => {
               />
             </div>
             <div className="col-span-2 ml-8 flex flex-col xl:mr-4">
-              <p>Duration:</p>
+              <p>Durasi:</p>
               <h1 className="font-semibold xl:text-2xl">
                 {items?.product.title ?? ""}
               </h1>

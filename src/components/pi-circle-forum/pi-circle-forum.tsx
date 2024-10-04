@@ -15,8 +15,8 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
 export const PiCircleForum = () => {
   const [subcategory, setSubCategory] = useState<string>();
-  const [sort, setFilter] = useState<string>();
-  const [search, setSearch] = useState<string>();
+  const [sort, setFilter] = useState<string>("new");
+  const [search, setSearch] = useState<string>("");
   const [active, setActive] = React.useState("1");
 
   const { data } = usePiCircleArticle({
@@ -28,9 +28,13 @@ export const PiCircleForum = () => {
     page: active,
   });
 
+  const total_page = data?.page.total_page ?? 0;
+
   const { data: categories, refetch } = usePiCircleSubCategory({
     categoryId: "18",
   });
+  console.log(categories);
+  
 
   const handleSortChange = (sort: string) => {
     setFilter(sort);
@@ -41,9 +45,9 @@ export const PiCircleForum = () => {
   };
 
   const reset = () => {
-    setFilter(undefined);
+    setFilter("new");
     setSubCategory(undefined);
-    setSearch(undefined);
+    setSearch("");
   };
 
   const getItemProps = (index: string) =>
@@ -74,8 +78,8 @@ export const PiCircleForum = () => {
   return (
     <div>
       <div className="flex gap-5 xl:mt-5 xl:flex-wrap">
-        <div className="flex flex-1 justify-end">
-          <Select onValueChange={handleSortChange}>
+        <div className="flex flex-1 justify-end space-x-2">
+          <Select value={sort} onValueChange={handleSortChange}>
             <SelectTrigger className="w-fit">
               <SelectValue placeholder="Terbaru" />
             </SelectTrigger>
@@ -87,7 +91,7 @@ export const PiCircleForum = () => {
             </SelectContent>
           </Select>
 
-          <Select onValueChange={handleCategoryChange}>
+          <Select value={subcategory} onValueChange={handleCategoryChange}>
             <SelectTrigger className="w-fit">
               <SelectValue placeholder="Kategori" />
             </SelectTrigger>
@@ -126,80 +130,102 @@ export const PiCircleForum = () => {
           ))}
         </div>
       </div>
-      <div className="mt-5 hidden justify-center xl:flex">
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="flex items-center gap-2 rounded-full"
-          onClick={prev}
-          disabled={active === "1"}
-        >
-          <div className="flex">
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-            <span className="ml-2">Sebelumnya</span>
-          </div>
-        </Button>
+      {
+        total_page > 1 && (
+          <>
+            <div className="mt-5 hidden justify-center xl:flex">
+            {
+              Number(active) !== 1 && (
+                <Button
+                  variant="text"
+                  color="blue-gray"
+                  className="flex items-center gap-2 rounded-full"
+                  onClick={prev}
+                  disabled={active === "1"}
+                >
+                  <div className="flex">
+                    <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
+                    {/* <span className="ml-2">Sebelumnya</span> */}
+                  </div>
+                </Button>
+              )
+            }
 
-        <div className="mx-4 flex items-center gap-2">
-          {data?.page?.links[0]?.label == null ? (
-            <Button {...getItemProps("1")}>{data?.page?.current_page}</Button>
-          ) : (
-            data?.page?.links?.map((items, i) => (
-              <Button key={i} {...getItemProps(items?.label)}>
-                {items?.label}
-              </Button>
-            ))
-          )}
-        </div>
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="flex items-center gap-2 rounded-full"
-          onClick={next}
-          disabled={active == data?.page?.total_page.toString()}
-        >
-          <div className="flex">
-            <span className="mr-2">Selanjutnya</span>
-            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-          </div>
-        </Button>
-      </div>
-      <div className="mx-auto mt-5 flex justify-center xl:hidden">
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="flex items-center gap-2 rounded-full px-3 text-xs"
-          onClick={prev}
-          disabled={active === "1"}
-        >
-          <div className="flex">
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-            <span className="ml-2">Sebelumnya</span>
-          </div>
-        </Button>
+              <div className="mx-4 flex items-center gap-2">
+                {data?.page?.links[0]?.label == null ? (
+                  <Button {...getItemProps("1")}>{data?.page?.current_page}</Button>
+                ) : (
+                  data?.page?.links?.map((items, i) => (
+                    <Button key={i} {...getItemProps(items?.label)}>
+                      {items?.label}
+                    </Button>
+                  ))
+                )}
+              </div>
 
-        <div className="mx-4 flex items-center gap-2">
-          {data?.page?.links[0]?.label == null ? (
-            <Button {...getItemProps("1")}>{data?.page?.current_page}</Button>
-          ) : (
-            <Button {...getItemProps(data?.page?.current_page.toString())}>
-              {data?.page?.current_page}
-            </Button>
-          )}
-        </div>
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="flex items-center gap-2 rounded-full px-3 text-xs"
-          onClick={next}
-          disabled={active == data?.page?.total_page.toString()}
-        >
-          <div className="flex">
-            <span className="mr-2">Selanjutnya</span>
-            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-          </div>
-        </Button>
-      </div>
+              {
+                Number(active) !== total_page && (
+                  <Button
+                    variant="text"
+                    color="blue-gray"
+                    className="flex items-center gap-2 rounded-full"
+                    onClick={next}
+                    disabled={active == data?.page?.total_page.toString()}
+                  >
+                    <div className="flex">
+                      {/* <span className="mr-2">Selanjutnya</span> */}
+                      <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                    </div>
+                  </Button>
+                )
+              }
+            </div>
+            <div className="mx-auto mt-5 flex justify-center xl:hidden">
+            {
+              Number(active) !== 1 && (
+                <Button
+                  variant="text"
+                  color="blue-gray"
+                  className="flex items-center gap-2 rounded-full px-3 text-xs"
+                  onClick={prev}
+                  disabled={active === "1"}
+                >
+                  <div className="flex">
+                    <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
+                    {/* <span className="ml-2">Sebelumnya</span> */}
+                  </div>
+                </Button>
+              )
+            }
+              <div className="mx-4 flex items-center gap-2">
+                {data?.page?.links[0]?.label == null ? (
+                  <Button {...getItemProps("1")}>{data?.page?.current_page}</Button>
+                ) : (
+                  <Button {...getItemProps(data?.page?.current_page.toString())}>
+                    {data?.page?.current_page}
+                  </Button>
+                )}
+              </div>
+              {
+                Number(active) !== total_page && (
+                  <Button
+                    variant="text"
+                    color="blue-gray"
+                    className="flex items-center gap-2 rounded-full px-3 text-xs"
+                    onClick={next}
+                    disabled={active == data?.page?.total_page.toString()}
+                  >
+                    <div className="flex">
+                      {/* <span className="mr-2">Selanjutnya</span> */}
+                      <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                    </div>
+                  </Button>
+                )
+              }
+            </div>
+          </>
+        )
+      }
     </div>
   );
 };

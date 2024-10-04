@@ -129,7 +129,7 @@ export const postForum = async (id: string) => {
     `/picircle/likeshare/${id}?type=article&feature=like`,
     {}
   );
-  return schema.parse(data).data;
+  return schema.parse(data);
 };
 export const usePostLike = () =>
   useMutation(["forum-usePostLike"], (id: string) => postForum(id));

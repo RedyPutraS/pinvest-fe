@@ -29,6 +29,15 @@ import { currencyFormatter } from "utils/helpers/formatter";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const Checkout: React.FC<Props> = ({ voucher }) => {
+  const storedData = sessionStorage.getItem('checkoutData');
+  const [checkoutData, setCheckoutData] = useState({
+    subTotal: 0,
+    biayaAdmin: 0,
+    diskon: 0,
+    hargaPromo: 0,
+    total: 0,
+    voucher: 0,
+  });
   const { incrementN, decrementC } = useStore();
   const { toast } = useToast();
   const router = useRouter();
@@ -40,6 +49,7 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
     intruction: { name: string; panduan: string[] }[];
   }>();
   const bankModal = useDisclosure();
+  
 
   const {
     data: checkoutInfo,
@@ -50,6 +60,27 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
     voucher,
     membership_duration_id: router.query.id as string,
   });
+  
+  useEffect(() => {
+    // Ambil data dari sessionStorage    
+    console.log(checkoutData);
+    
+  }, [checkoutData]);
+
+  useEffect(() => {
+    // Ambil data dari sessionStorage    
+    if (storedData) {
+      try {
+        const checkoutData1 = JSON.parse(storedData);
+        setCheckoutData(checkoutData1);
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+      }
+    } else {
+      console.log('No checkout data found in sessionStorage');
+    }
+  }, [storedData]);
+  
 
   const listBank = useListBankXendit({});
   const createTrx = useCreateTrxXendit();
@@ -57,7 +88,11 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
   const handleCreateTransaction = () => {
     createTrx
       .mutateAsync({
-        total: checkoutInfo?.total_price ?? 0,
+        // total: checkoutInfo?.total_price ?? 0,
+        subTotal: checkoutData.subTotal,
+        totalInCart: checkoutData.total,
+        hargaPromo: checkoutData.hargaPromo,
+        total: checkoutData.total + (bank?.fee ?? 0),
         bank_code: bank?.bankCode ?? "014",
         voucher,
         type: checkoutInfo?.items[0]?.type,
@@ -68,7 +103,7 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
       .then((res) => {
         decrementC();
         toast({
-          title: "Please Wait!",
+          title: "Harap tunggu!",
         });
         incrementN();
         {
@@ -91,7 +126,7 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
         });
       });
     toast({
-      title: "Process...",
+      title: "Proses...",
     });
   };
 
@@ -119,6 +154,8 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
           <div className="col-span-12 md:col-span-8 lg:col-span-9">
             {checkoutInfo &&
               checkoutInfo.items.map((item: any, index: any) => {
+                // console.log(checkoutInfo);
+                
                 if (item.type === "event") {
                   return (
                     <EventCartItem
@@ -183,9 +220,9 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
 
           <div className="col-span-12 w-full p-4 shadow-md md:col-span-4 lg:col-span-3">
             <div className="grid w-full grid-cols-2 text-sm">
-              <p>Sub Total</p>
+              {/* <p>Sub Total</p>
               <p className="text-right">
-                {currencyFormatter.format(checkoutInfo?.total_price ?? 0)}
+                {currencyFormatter.format(checkoutData?.subTotal ?? 0)}
               </p>
 
               {checkoutInfo?.fee_detail.map((fee: any) => (
@@ -200,6 +237,10 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
               <p>Diskon:</p>
               <p className="text-right">
                 {currencyFormatter.format(checkoutInfo?.discount ?? 0)}
+              </p> */}
+              <p>Total Harga:</p>
+              <p className="text-right">
+                {currencyFormatter.format(checkoutData.total ?? 0)}
               </p>
               <p>Biaya Transaksi:</p>
               <p className="text-right">
@@ -207,10 +248,10 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
               </p>
             </div>
 
-            <p className="mt-4 text-pv-grey-medium2">Total</p>
+            <p className="mt-4 text-pv-grey-medium2">Total Tagihan :</p>
             <p className="mt-2 text-gray-600 text-[25px]">
               {currencyFormatter.format(
-                checkoutInfo?.total_amount + bank?.fee ?? 0
+                checkoutData.total + (bank?.fee ?? 0)
               )}
             </p>
 

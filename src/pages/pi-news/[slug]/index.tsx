@@ -59,7 +59,6 @@ const NewsDetail: NextPage<Props> = ({ params, adsParam }) => {
       });
     }
   };
-  console.log(news?.data?.category_name);
   
   const { author, publish_at, subcategory_name } = news.data ?? {};
 

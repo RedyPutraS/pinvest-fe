@@ -57,7 +57,7 @@ const ShareDialog = () => {
             onClick={async () => {
               navigator.clipboard && (await navigator.clipboard.writeText(url));
               toast({
-                title: "Copied to clipboard!",
+                title: "Disalin ke papan klip!",
               });
             }}
           >

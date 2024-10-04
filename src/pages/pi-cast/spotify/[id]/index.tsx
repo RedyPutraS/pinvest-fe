@@ -4,7 +4,7 @@ import PageBody from "components/page/page-body";
 import PageHeader from "components/page/page-header";
 import InquiryDialog from "modules/pi-capital/components/inquiry-dialog";
 import type { InferGetServerSidePropsType } from "next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PageContext } from "components/page/page-context";
 import RenderHtml from "components/render-html";
 import { useSpotifyDetail } from "modules/pi-cast/api/spotify-detail";
@@ -26,17 +26,21 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const PiCastSpotifyDetail = ({ id, adsParam }: Props) => {
   const { data } = useSpotifyDetail(id as string);
+  // console.log(id);
+  
   const [inquiryDialogOpen, setInquiryDialogOpen] = useState(false);
   const { data: ads } = useAds(adsParam);
-
+  
+  
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const [active, setActive] = React.useState("1");
-
+  
   const { data: datas } = usePiCastSpotifyPaginate({
     page: active,
     limit: 5,
   });
+  
   const getItemProps = (index: string) =>
     ({
       variant: active === index ? "filled" : "text",
@@ -61,6 +65,10 @@ const PiCastSpotifyDetail = ({ id, adsParam }: Props) => {
 
     setActive((activeNumber - 1).toString());
   };
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data])
+  console.log(data);
   return (
     <>
       <CustomHead title={data?.name} image={data?.images[0]?.url} />
@@ -115,7 +123,7 @@ const PiCastSpotifyDetail = ({ id, adsParam }: Props) => {
               </div>
               <FeedbackRating
                 type={TYPE}
-                slug={data?.id.toString() ?? "-"}
+                slug={id.toString() ?? "-"}
                 app={APP}
               />
               <FeedbackComment
@@ -150,91 +158,7 @@ const PiCastSpotifyDetail = ({ id, adsParam }: Props) => {
                       </>
                     )
                   )}
-                  <div className="mt-5 hidden justify-center xl:flex">
-                    <Button
-                      variant="text"
-                      color="blue-gray"
-                      className="flex items-center gap-2 rounded-full"
-                      onClick={prev}
-                      disabled={active === "1"}
-                    >
-                      <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-                      Sebelumnya
-                    </Button>
-
-                    <div className="mx-4 flex items-center gap-2">
-                      {datas?.page?.links[0]?.label == null ? (
-                        <Button {...getItemProps("1")}>
-                          {datas?.page?.current_page}
-                        </Button>
-                      ) : (
-                        datas?.page?.links?.map(
-                          (
-                            items: {
-                              label: string;
-                            },
-                            i: React.Key | null | undefined
-                          ) => (
-                            <Button key={i} {...getItemProps(items?.label)}>
-                              {items?.label}
-                            </Button>
-                          )
-                        )
-                      )}
-                    </div>
-                    <Button
-                      variant="text"
-                      color="blue-gray"
-                      className="flex items-center gap-2 rounded-full"
-                      onClick={next}
-                      disabled={active == datas?.page?.total_page.toString()}
-                    >
-                      <div className="flex">
-                        <span className="mr-2">Selanjutnya</span>
-                        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-                      </div>
-                    </Button>
-                  </div>
-                  <div className="mx-auto mt-5 flex justify-center xl:hidden">
-                    <Button
-                      variant="text"
-                      color="blue-gray"
-                      className="flex items-center gap-2 rounded-full px-3 text-xs"
-                      onClick={prev}
-                      disabled={active === "1"}
-                    >
-                      <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-                      Sebelumnya
-                    </Button>
-
-                    <div className="mx-4 flex items-center gap-2">
-                      {datas?.page?.links[0]?.label == null ? (
-                        <Button {...getItemProps("1")}>
-                          {datas?.page?.current_page}
-                        </Button>
-                      ) : (
-                        <Button
-                          {...getItemProps(
-                            datas?.page?.current_page.toString()
-                          )}
-                        >
-                          {datas?.page?.current_page}
-                        </Button>
-                      )}
-                    </div>
-                    <Button
-                      variant="text"
-                      color="blue-gray"
-                      className="flex items-center gap-2 rounded-full px-3 text-xs"
-                      onClick={next}
-                      disabled={active == datas?.page?.total_page.toString()}
-                    >
-                      <div className="flex">
-                        <span className="mr-2">Selanjutnya</span>
-                        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-                      </div>
-                    </Button>
-                  </div>
+                  
                 </div>
               </div>
             </div>

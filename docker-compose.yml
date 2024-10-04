@@ -2,30 +2,12 @@ version: '3'
 
 services:
   pinvest:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: pinvest
+    build: .  # Build image dari Dockerfile yang ada di direktori lokal
     ports:
-      - 3001:3001
+      - "3000:3000"  # Map port 3000 di container ke port 3000 di host
     networks:
-      - app-network
-
-  nginx:
-    build:
-      context: .
-      dockerfile: Dockerfile.nginx
-    ports:
-      - 81:81
-      - 443:443
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./certs:/etc/letsencrypt/live/fine-streets-cut-quietly.a276.dcdg.xyz
-    depends_on:
-      - pinvest
-    networks:
-      - app-network
-
+      - app-network  # Menghubungkan ke jaringan 'app-network'
+      
 networks:
   app-network:
     driver: bridge

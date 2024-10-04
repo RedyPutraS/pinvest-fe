@@ -46,7 +46,6 @@ const SectionPiCastLimitYoutube = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [newPiNewsParams] = useState(piNewsParams);
   const piNews = usePiNews(newPiNewsParams);
-  console.log(piNews.data);
   
   return (
     <Section title="PiCast" href="/pi-cast?category=youtube" icon={<PiCast />}>

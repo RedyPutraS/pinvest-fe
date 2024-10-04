@@ -11,7 +11,7 @@ import { useUpdateCart } from "modules/cart/api/update-cart";
 import EventCartItem from "modules/cart/components/event-cart-item.ts";
 import { useCreateTrx } from "modules/checkout/api/create-trx";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { currencyFormatter } from "utils/helpers/formatter";
 
 const Cart = () => {
@@ -19,11 +19,11 @@ const Cart = () => {
   const [voucher, setVoucher] = useState("");
   const [discount, setDiscount] = useState<null | number>();
   const [voucherApplied, setVoucherApplied] = useState("");
-  const [priceAfterDiscount, setPriceAfterDiscount] = useState<null | number>(
-    null
-  );
+  const [priceAfterDiscount, setPriceAfterDiscount] = useState<null | number>();
+  
   const { toast } = useToast();
   const cartList = useCartList();
+  
 
   const removeFromCart = useRemoveFromCart();
   const moveToWishlist = useMoveToWishlist();
@@ -33,6 +33,45 @@ const Cart = () => {
 
   //*New
   const createTrx = useCreateTrx();
+
+  const [diskon, setDiskon] = useState<null | number>(0);
+  // const [priceAfterDiscount, setPriceAfterDiscount] = useState<null | number>(0);
+
+  useEffect(() => {
+    sessionStorage.removeItem('checkoutData');
+    if (voucherApplied === "" && voucher === "") {
+      calculateCartSummary();
+      console.log('heelo kids');
+    }
+  }, [cartList]);
+
+  const calculateCartSummary = () => {
+    
+    if (cartList?.data?.items) {
+      // Hitung total diskon
+      const totalDiskon = cartList.data.items.reduce((total: any, item: any) => {
+        return total + (item.data?.promo_price || 0);
+      }, 0);
+      
+      // Hitung total harga
+      const totalPrice = cartList.data.items.reduce(
+        (total: any, item: any) => total + (item.data?.price ?? 0),
+        0
+      );
+      
+      // Hitung harga setelah diskon
+      setDiskon(totalDiskon);
+      const priceAfterDiscount = (totalPrice + cartList.data?.admin_fee) - totalDiskon;
+      console.log(priceAfterDiscount, 'calculateCartSummary');
+      
+      
+      setPriceAfterDiscount(priceAfterDiscount);
+    }
+  };
+
+  // useEffect(() => {
+  //   console.log(diskon);
+  // }, [diskon]);
 
   const handleCreateTransaction = () => {
     toast({
@@ -46,7 +85,7 @@ const Cart = () => {
       })
       .then((res) => {
         toast({
-          title: "Please Wait!",
+          title: "Harap tunggu!",
         });
         {
           {
@@ -71,19 +110,32 @@ const Cart = () => {
   };
 
   const handleCheckVoucher = () => {
-    checkVoucher
-      .mutateAsync({ voucher_number: voucher })
-      .then((res) => {
-        setVoucherApplied(voucher);
-        setVoucher("");
-        setDiscount(res.discount);
-        setPriceAfterDiscount(res.total_amount);
-      })
-      .catch(() => {
-        toast({
-          title: "Voucher tidak valid.",
+    const inputElement = document.getElementById("voucherInput") as HTMLInputElement | null;
+  
+    if (inputElement) { // Pastikan inputElement tidak null
+      const inputVoucher = inputElement.value; // Ambil nilai dari input
+      setVoucher(inputVoucher); // Tetap perbarui state jika dibutuhkan
+  
+      // Gunakan inputVoucher langsung
+      checkVoucher
+        .mutateAsync({ voucher_number: inputVoucher })
+        .then((res) => {
+          console.log('Total amount from API:', res.total_amount);
+          setVoucherApplied(inputVoucher);
+          setVoucher(""); // Kosongkan input setelah digunakan
+          setDiscount(res.discount); 
+          setPriceAfterDiscount(res.total_amount); 
+          console.log('Updated priceAfterDiscount:', res.total_amount);
+        })
+        .catch((res) => {
+          console.log(res);
+          toast({
+            title: "Voucher tidak valid.",
+          });
         });
-      });
+    } else {
+      console.error("Input element not found");
+    }
   };
 
   const handleRemoveFromCart = (id: number) => {
@@ -91,6 +143,7 @@ const Cart = () => {
       .mutateAsync({ id })
       .then(() => {
         cartList.refetch();
+        calculateCartSummary();
       })
       .catch(() => {
         toast({
@@ -127,6 +180,31 @@ const Cart = () => {
         });
       });
   };
+  
+  const handleCheckout = () => {
+    const dataToSend = {
+      voucher: voucherApplied,
+      subTotal: cartList.data?.items.reduce(
+        (total, item) => total + (item.data?.price ?? 0),
+        0
+      ) ?? 0,
+      biayaAdmin: cartList.data?.admin_fee ?? 0,
+      hargaPromo: diskon ?? 0,
+      diskon: discount ?? 0,
+      total: priceAfterDiscount ?? 0, // Contoh data lain
+    };
+
+    // Simpan data ke sessionStorage
+    sessionStorage.setItem('checkoutData', JSON.stringify(dataToSend));
+    
+    router.push({
+      pathname: `/checkout`,
+      query: { ...(voucherApplied ? { v: voucherApplied } : {}) },
+    })
+    // console.log(dataToSend);
+    // Redirect ke halaman checkout
+    // router.push('/checkout');
+  };
 
   const newLocal = (items: any[]) => (
     <div>
@@ -153,27 +231,28 @@ const Cart = () => {
               onChangeQty={handleQtyChange}
             />
           );
+        } else {
+          return (
+            <EventCartItem
+              className=" pt-4"
+              key={item.id}
+              cartId={item.id}
+              idEvent={0}
+              description={item.data?.description ?? ""}
+              image={item.data?.image ?? ""}
+              event_title={item.data?.title ?? ""}
+              title={item.data?.title ?? ""}
+              price={item.data?.price ?? 0}
+              author={item.data?.author ?? ""}
+              rate={item.data?.rate ?? 0}
+              removeFromCart={handleRemoveFromCart}
+              moveToWishlist={handleMoveToWishlist}
+              qty={item.qty}
+              type={item.type}
+              onChangeQty={handleQtyChange}
+            />
+          );
         }
-        return (
-          <EventCartItem
-            className=" pt-4"
-            key={item.id}
-            cartId={item.id}
-            idEvent={0}
-            description={item.data?.description ?? ""}
-            image={item.data?.image ?? ""}
-            event_title={item.data?.title ?? ""}
-            title={item.data?.title ?? ""}
-            price={item.data?.price ?? 0}
-            author={item.data?.author ?? ""}
-            rate={item.data?.rate ?? 0}
-            removeFromCart={handleRemoveFromCart}
-            moveToWishlist={handleMoveToWishlist}
-            qty={item.qty}
-            type={item.type}
-            onChangeQty={handleQtyChange}
-          />
-        );
       })}
     </div>
   );
@@ -192,7 +271,7 @@ const Cart = () => {
       <div className="grid grid-cols-1 items-start xl:grid-cols-12 xl:flex-row xl:flex-wrap xl:gap-8">
         <div className="xl:col-span-9">
           {!cartList.isFetching && newLocal(cartList?.data?.items ?? [])}
-          {!cartList.isFetching && newLocal(cartList?.data?.items ?? [])}
+          {/* {!cartList.isFetching && newLocal(cartList?.data?.items ?? [])} */}
         </div>
 
         {cartList.data && cartList.data?.items.length > 0 && (
@@ -210,19 +289,23 @@ const Cart = () => {
             <p className="mt-1 text-lg text-gray-600">
               {currencyFormatter.format(cartList.data?.admin_fee ?? 0)}
             </p>
+            <p className="mt-4 text-pv-grey-medium2">Harga Promo</p>
+            <p className="mt-1 text-lg text-gray-600">
+              {currencyFormatter.format(
+                diskon ?? 0
+              )}
+            </p>
             <p className="mt-4 text-pv-grey-medium2">Diskon</p>
             <p className="mt-1 text-lg text-gray-600">
               {currencyFormatter.format(
-                discount ?? cartList.data?.items[0]?.data?.promo_price ?? 0
+                discount ?? 0
               )}
             </p>
             <p className="mt-4 text-pv-grey-medium2">Total</p>
             <p className="text-4xl text-gray-600">
-              {(priceAfterDiscount &&
-                currencyFormatter.format(
-                  priceAfterDiscount + (cartList.data?.admin_fee ?? 0)
-                )) ??
-                currencyFormatter.format(cartList.data?.total_price ?? 0)}
+              {currencyFormatter.format(
+                priceAfterDiscount ?? 0
+              )}
             </p>
 
             <p className="mt-4">Promosi</p>
@@ -232,7 +315,8 @@ const Cart = () => {
                   onClick={() => {
                     setVoucherApplied("");
                     setVoucher("");
-                    setPriceAfterDiscount(null);
+                    setDiscount(0);
+                    calculateCartSummary();
                   }}
                 >
                   X
@@ -242,8 +326,7 @@ const Cart = () => {
             )}
             <div className="flex gap-4">
               <Input
-                onChange={(e) => setVoucher(e.target.value)}
-                value={voucher}
+                id="voucherInput"
               />
               <Button color="red" onClick={handleCheckVoucher}>
                 Terapkan
@@ -257,12 +340,7 @@ const Cart = () => {
               <Button
                 className="mt-6 w-full"
                 disabled={updateCart.isLoading}
-                onClick={() =>
-                  router.push({
-                    pathname: `/checkout`,
-                    query: { ...(voucherApplied ? { v: voucherApplied } : {}) },
-                  })
-                }
+                onClick={handleCheckout}
               >
                 Beli
               </Button>

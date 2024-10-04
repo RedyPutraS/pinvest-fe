@@ -8,16 +8,14 @@ const ArticlePaginateTabPanel = () => {
   const [active, setActive] = React.useState("1");
   const topRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    console.log(active);
-  }, [active])
-
   const { data, isInitialLoading } = usePiCastPaginateArticle({
     page: active,
     category: "pinspire",
     limit: 12,
   });
-
+  const total_page = data?.page.total_page ?? 0;
+  console.log("Data Article pinspire",data);
+  
   const getItemProps = (index: string) =>
     ({
       variant: active === index ? "filled" : "text",
@@ -60,56 +58,71 @@ const ArticlePaginateTabPanel = () => {
               />
             ))}
           </div>
-          <div className="mt-5 flex justify-center">
-            <Button
-              variant="text"
-              color="blue-gray"
-              className="flex items-center gap-2 rounded-full"
-              onClick={prev}
-              disabled={active === "1"}
-            >
-              <div className="hidden md:block">
-                <div className="flex">
-                  <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-                  <span className="ml-2">Sebelumnya</span>
-                </div>
-              </div>
-              <div className="md:hidden">
-                <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />
-              </div>
-            </Button>
+          {
+            total_page > 1 && (
+              <>
+                <div className="mt-5 flex justify-center">
+                  {
+                    Number(active) !== 1 && (
+                      <Button
+                        variant="text"
+                        color="blue-gray"
+                        className="flex items-center gap-2 rounded-full"
+                        onClick={prev}
+                        disabled={active === "1"}
+                      >
+                        <div className="hidden md:block">
+                          <div className="flex">
+                            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
+                            {/* <span className="ml-2">Sebelumnya</span> */}
+                          </div>
+                        </div>
+                        <div className="md:hidden">
+                          <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />
+                        </div>
+                      </Button>
+                    )
+                  }
 
-            <div className="mx-4 flex items-center gap-2">
-              {data?.page?.links[0]?.label == null ? (
-                <Button {...getItemProps("1")}>
-                  {data?.page?.current_page}
-                </Button>
-              ) : (
-                data?.page?.links?.map((items, i) => (
-                  <Button key={i} {...getItemProps(items?.label)}>
-                    {items?.label}
-                  </Button>
-                ))
-              )}
-            </div>
-            <Button
-              variant="text"
-              color="blue-gray"
-              className="flex items-center gap-2 rounded-full"
-              onClick={next}
-              disabled={active == data?.page?.total_page.toString()}
-            >
-              <div className="hidden md:block">
-                <div className="flex">
-                  <span className="mr-2">Selanjutnya</span>
-                  <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                  <div className="mx-4 flex items-center gap-2">
+                    {data?.page?.links[0]?.label == null ? (
+                      <Button {...getItemProps("1")}>
+                        {data?.page?.current_page}
+                      </Button>
+                    ) : (
+                      data?.page?.links?.map((items, i) => (
+                        <Button key={i} {...getItemProps(items?.label)}>
+                          {items?.label}
+                        </Button>
+                      ))
+                    )}
+                  </div>
+
+                  {
+                    Number(active) !== total_page && (
+                      <Button
+                        variant="text"
+                        color="blue-gray"
+                        className="flex items-center gap-2 rounded-full"
+                        onClick={next}
+                        disabled={active == data?.page?.total_page.toString()}
+                      >
+                        <div className="hidden md:block">
+                          <div className="flex">
+                            {/* <span className="mr-2">Selanjutnya</span> */}
+                            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                          </div>
+                        </div>
+                        <div className="md:hidden">
+                          <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                        </div>
+                      </Button>
+                    )
+                  }
                 </div>
-              </div>
-              <div className="md:hidden">
-                <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-              </div>
-            </Button>
-          </div>
+              </>
+            )
+          }
         </div>
       )}
     </div>

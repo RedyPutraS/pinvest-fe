@@ -15,6 +15,7 @@ import StarEmpty from "components/icon/star-empty";
 import StarFilled from "components/icon/star-filled";
 import useStore from "app/store";
 import { useAuthStore } from "hooks/use-auth-store";
+import { useEffect } from "react";
 type Props = {
   event: Event;
 };
@@ -24,6 +25,9 @@ export function PiEventCard({ event }: Props) {
   const wishlist = useAddToWishlist();
   const toggle = useDisclosure({ isOpen: !event.added_to_wishlist });
   const { incrementW } = useStore();
+  const earliestDate = event.ticket.date[0]; // Mengambil tanggal paling awal
+  const latestDate = event.ticket.date[event.ticket.date.length - 1]; // Mengambil tanggal paling akhir
+
   return (
     <Card className="mx-2 mb-1 mt-4  shadow-md ring-gray-200 hover:ring-2">
       <CardImage className="relative">
@@ -62,9 +66,22 @@ export function PiEventCard({ event }: Props) {
         </div>
         <div className="mt-1 text-[10px] font-normal text-pv-blue-light xl:mb-1 xl:text-[14px]">
           {format(
-            parse(event.ticket.date[0] || "0", "yyyy-MM-dd", new Date()),
-            "iiii, dd MMMM yyyy",
+            parse(earliestDate || "0", "yyyy-MM-dd", new Date()),
+            "dd MMMM yyyy",
             { locale: id }
+          )}
+
+          {/* Kondisi jika ada lebih dari 1 tanggal, tampilkan latestDate */}
+          {event.ticket.date.length > 1 && (
+            <>
+              {" "}
+              <sup>s</sup>/<sub>d</sub>{" "}
+              {format(
+                parse(latestDate || "0", "yyyy-MM-dd", new Date()),
+                "dd MMMM yyyy",
+                { locale: id }
+              )}
+            </>
           )}
         </div>
         <Link href={`/pi-event/${event.id.toString()}`}>
@@ -141,7 +158,7 @@ export function PiEventCard({ event }: Props) {
         try {
           if (
             e.response?.data.message ===
-            "The item has been added to the wishlist."
+            "Barang sudah ditambahkan ke daftar keinginan."
           ) {
             message = "Item sudah ada di wishlist";
           }

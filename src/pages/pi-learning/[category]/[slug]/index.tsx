@@ -181,7 +181,7 @@ const Detail: NextPage<Props> = ({ params }) => {
 
                       <Link
                         target="_blank"
-                        className=" ml-2 whitespace-nowrap text-sm text-gray-600"
+                        className=" ml-2 whitespace-nowrap text-sm text-blue-700"
                         href={
                           data?.type == "offline"
                             ? `http://maps.google.com/?q=${data?.google_location}`

@@ -57,7 +57,7 @@ const TransactionItem = ({ order, onClick }: Props) => {
       </div>
       <div className="text-end">
         <Button onClick={() => onClick(order.order_id)} className="font-normal">
-          Lihat Detail Transaksi
+          Proses Transaksi
         </Button>
       </div>
     </div>
