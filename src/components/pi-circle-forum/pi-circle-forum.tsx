@@ -104,8 +104,8 @@ export const PiCircleForum = () => {
               ))}
             </SelectContent>
           </Select>
-          <button onClick={reset} className="mb-3">
-            <span className="text-xs font-medium text-pv-blue-dark xl:text-base">
+          <button onClick={reset} className="md:mb-1 xl:mb-3">
+            <span className="font-medium text-pv-blue-dark text-base">
               Reset
             </span>
           </button>

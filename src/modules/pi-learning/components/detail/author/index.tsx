@@ -23,13 +23,14 @@ const Author = ({ author, publishedAt, subcategory }: Props) => {
         <p className="text-sm text-gray-600 md:text-lg">Penulis : {author}</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:flex xl:flex xl:h-10">
+      <div className="grid grid-cols-1 xl:flex xl:h-10 md:h-[100px]">
         {subcategory && (
-          <span className="mb-2 rounded-lg bg-blue-200 px-3 py-1 text-center text-sm font-semibold text-sky-800 xl:mr-4 md:px-6 md:py-2 md:text-base lg:my-0 xl:my-0 2xl:my-0">
+          <span className="rounded-lg bg-blue-200 px-3 py-1 text-center text-sm font-semibold text-sky-800 xl:mr-4 md:px-6 md:py-2 md:text-base lg:my-0 xl:my-0 2xl:my-0 md:h-10">
             {subcategory}
           </span>
         )}
-        <ShareArticle />
+        <div className="my-1"/>
+        <ShareArticle className="md:h-5" />
       </div>
     </div>
   );

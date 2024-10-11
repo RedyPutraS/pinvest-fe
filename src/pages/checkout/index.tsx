@@ -30,6 +30,7 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const Checkout: React.FC<Props> = ({ voucher }) => {
   const storedData = sessionStorage.getItem('checkoutData');
+  
   const [checkoutData, setCheckoutData] = useState({
     subTotal: 0,
     biayaAdmin: 0,
@@ -38,6 +39,7 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
     total: 0,
     voucher: 0,
   });
+
   const { incrementN, decrementC } = useStore();
   const { toast } = useToast();
   const router = useRouter();
@@ -63,7 +65,7 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
   
   useEffect(() => {
     // Ambil data dari sessionStorage    
-    console.log(checkoutData);
+    console.log(checkoutData.diskon);
     
   }, [checkoutData]);
 
@@ -86,10 +88,12 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
   const createTrx = useCreateTrxXendit();
 
   const handleCreateTransaction = () => {
+    
     createTrx
       .mutateAsync({
         // total: checkoutInfo?.total_price ?? 0,
         subTotal: checkoutData.subTotal,
+        diskon: checkoutData.diskon,
         totalInCart: checkoutData.total,
         hargaPromo: checkoutData.hargaPromo,
         total: checkoutData.total + (bank?.fee ?? 0),
@@ -183,7 +187,15 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
                       cartId={item.id}
                       idEvent={item.data?.event_id ?? 0}
                       description={item.data.description ?? ""}
-                      event_title={item.data?.duration_type ?? ""}
+                      event_title={
+                        item.data?.duration_name === "Monthly"
+                          ? "Bulanan"
+                          : item.data?.duration_name === "Yearly"
+                          ? "Tahunan"
+                          : item.data?.duration_name === "Third Monthly"
+                          ? "3 Bulan"
+                          : item.data?.duration_name
+                      }
                       image={item.data.thumbnail_image ?? ""}
                       title={item.data.plan_name ?? ""}
                       price={item.data.price ?? 0}

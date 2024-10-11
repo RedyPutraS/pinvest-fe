@@ -141,7 +141,7 @@ const SectionPiNews = ({ data }: Props) => {
                 <Button
                   variant="text"
                   color="blue-gray"
-                  className="flex items-end gap-2 rounded-md mt-10"
+                  className="flex items-end gap-2 rounded-md mt-6"
                 >
                   Lihat semua
                   <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
@@ -157,7 +157,7 @@ const SectionPiNews = ({ data }: Props) => {
               <Button
                 variant="text"
                 color="blue-gray"
-                className="flex items-center gap-2 mt-10"
+                className="flex items-center gap-2 mt-7"
               >
                 Lihat semua
                 <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />

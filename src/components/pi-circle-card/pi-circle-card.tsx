@@ -29,7 +29,7 @@ export function PiCircleCard({ article, className, overrideLink }: Props) {
             }
             src={article.thumbnail_image}
             alt={article.title}
-            className="h-[105px] md:h-[230px] w-full cursor-pointer rounded-t-lg object-cover xl:h-[235px]"
+            className="h-full w-full cursor-pointer rounded-t-lg object-cover"
           />
         </CardImage>
         <CardBody className="p-2 xl:p-4">
@@ -41,7 +41,7 @@ export function PiCircleCard({ article, className, overrideLink }: Props) {
             </Link>
             <ShareButton
               path={overrideLink ?? `/pi-circle/${article.id}`}
-              className="md:w-7 xl:w-10"
+              className="w-7 md:w-10 md:h-9 xl:w-10"
             />
           </div>
           <div

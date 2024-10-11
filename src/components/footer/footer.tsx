@@ -121,7 +121,7 @@ export default function Footer() {
       </div>
       <div className="flex w-full flex-col items-center gap-4 xl:mt-10 xl:max-w-[1300px]">
         <div className="my-3 block h-[3px] w-full rounded-full bg-pv-grey-medium1 font-light" />
-        <Typo.B1>Hak Cipta@2022 Pinvest. Seluruh Hak Dilindungi</Typo.B1>
+        <Typo.B1>Hak Cipta @ 2022 Pinvest. Seluruh Hak Dilindungi</Typo.B1>
       </div>
     </div>
   );

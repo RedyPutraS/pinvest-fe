@@ -26,7 +26,7 @@ export default function PiCastSpotifyItem({ item }: Props) {
             onClick={() => router.push(`/pi-cast/spotify/${item.track.id}`)}
           />
           <ShareButton
-            className="absolute right-4 top-4 xl:right-2 xl:top-2 xl:h-9 xl:w-9"
+            className="absolute right-4 top-4 xl:right-2 xl:top-2 w-7 xl:w-10 md:w-10 md:h-9"
             path={`/pi-cast/spotify/${item.track.id}`}
           />
         </div>

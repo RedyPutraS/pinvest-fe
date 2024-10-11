@@ -76,7 +76,7 @@ const AboutUs = ({ params }: Props) => {
                   alt=""
                 />
               </div>
-              <div className="ml-2 flex-1">
+              <div className="ml-2 flex-1 mt-10 md:mt-12">
                 <p className="font-semibold text-pv-grey-medium3">WhatsApp</p>
                 <p className="text-2xl text-gray-600">
                   <Link

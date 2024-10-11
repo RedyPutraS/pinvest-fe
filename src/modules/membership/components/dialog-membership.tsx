@@ -21,6 +21,24 @@ type Props = {
 
 const DialogMembership = ({ isOpen, setIsOpen, durations }: Props) => {
   const router = useRouter();
+  
+  const handleCheckout = (price: number, id: number) => {
+    const dataToSend = {
+      total: price ?? 0, // Menyimpan total harga yang akan dibayar
+    };
+  
+    // Simpan data ke sessionStorage
+    sessionStorage.setItem('checkoutData', JSON.stringify(dataToSend));
+  
+    // Redirect ke halaman checkout dengan ID dan type yang sesuai
+    router.push({
+      pathname: `/checkout`,
+      query: {
+        type: 'membership',
+        id: id,
+      },
+    });
+  };
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
@@ -32,9 +50,7 @@ const DialogMembership = ({ isOpen, setIsOpen, durations }: Props) => {
               <div
                 className="cursor-pointer p-6 shadow-md"
                 key={item.duration}
-                onClick={() => {
-                  router.push(`/checkout?type=membership&id=${item.id}`);
-                }}
+                onClick={() => handleCheckout(item.price, item.id)}
               >
                 <p>
                   {item.name} ({item.duration} Bulan)

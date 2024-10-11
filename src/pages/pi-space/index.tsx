@@ -81,7 +81,7 @@ const PiSpace = () => {
                 i % 2 === 0 ? "xl:flex-row" : "xl:flex-row-reverse"
               )}
             >
-              <div onClick={() => router.push(`/pi-space/${article.id}`)}>
+              <div onClick={() => router.push(`/pi-space/${article.id}`)} className="my-2">
                 <div className="flex-1">
                   <img
                     src={article.thumbnail_image}
@@ -103,7 +103,7 @@ const PiSpace = () => {
                 </div>
               </div>
               <div>
-                <button
+                {/* <button
                   className="mb-6 rounded-lg bg-pv-blue-dark px-4 py-2 text-xs font-light text-pv-white-pure hover:bg-pv-blue-light xl:h-11 xl:px-8 xl:text-sm"
                   onClick={() => {
                     auth.user
@@ -112,7 +112,7 @@ const PiSpace = () => {
                   }}
                 >
                   Inquiry
-                </button>
+                </button> */}
               </div>
             </div>
           </>

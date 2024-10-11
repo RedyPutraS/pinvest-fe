@@ -16,6 +16,7 @@ export const newsSchema = z.object({
     description: z.string(),
     content: z.string(),
     author: z.string().nullable(),
+    alias: z.string().nullable(),
     publish_at: z.string().nullish(),
     province: z.string().nullish(),
     city: z.string().nullish(),

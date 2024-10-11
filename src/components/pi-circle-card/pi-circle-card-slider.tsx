@@ -8,7 +8,7 @@ export function PiCircleCardSlider(props: Props) {
   return (
     <>
       {/* mobile */}
-      <div className="flex xl:hidden">
+      <div className="flex md:hidden">
         <div className="mb-8 w-full bg-pv-white-pure md:px-0">
           <CardSlider slidesToScroll={2} slidesToShow={2}>
             {props.children}

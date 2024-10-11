@@ -41,7 +41,7 @@ const YoutubeSlider = ({ title, type }: Props) => {
                       </p>
                       <ShareButton
                         path={`/pi-cast/youtube/${video.id.videoId}`}
-                        className="lg:h-[28px]"
+                        className="w-7 md:w-10 md:h-9 xl:w-10"
                       />
                     </div>
                     <div className="mt-4 flex">
@@ -87,7 +87,7 @@ const YoutubeSlider = ({ title, type }: Props) => {
                       </Link>
                     </p>
                     <ShareButton
-                      className="mt-2 h-5 lg:h-[28px]"
+                      className="mt-2 w-7 md:w-10 md:h-9 xl:w-10"
                       path={`/pi-cast/youtube/${video.id.videoId}`}
                     />
                   </div>

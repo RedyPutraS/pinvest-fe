@@ -87,7 +87,7 @@ const PiSpaceDetail = ({ id, adsParam }: Props) => {
                   <ShareButton
                     path={`/pi-space/${id}`}
                     type="outlined"
-                    className="h-8 xl:h-auto"
+                    className="w-8 md:w-10 md:h-9 xl:h-auto"
                   />
                 </div>
               </div>

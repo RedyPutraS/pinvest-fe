@@ -14,7 +14,7 @@ export const newsSchema = z.object({
       author: z.string(),
       publish_at: z.string().optional().nullable(),
       category_name: z.string(),
-      subcategory_name: z.string(),
+      subcategory_name: z.string().nullable(),
     })
   ),
 });
@@ -29,6 +29,8 @@ export const getNews = async ({ start, limit, subCat }: Params) => {
   const { data } = await axios.get("/pinews/article", {
     params: { start, limit, subcategory: subCat },
   });
+  console.log("Testing",newsSchema.parse(data).data);
+  
 
   return newsSchema.parse(data).data;
 };

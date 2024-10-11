@@ -56,8 +56,8 @@ const PiNewsCategory = () => {
         </Tabs>
       </div>
       <PageBody>
-        <div className="mb-8 hidden grid-cols-7 gap-6 pt-3 lg:grid lg:w-2/3 xl:w-full">
-          <div className="mx-auto w-full md:col-span-5">
+        <div className="mb-8 grid-cols-7 gap-6 pt-3 lg:grid lg:w-3/3 xl:w-full">
+          <div className="mx-auto w-full md:col-span-12 xl:col-span-5">
             <div className="flex-1">
               {piNews.data
                 ?.filter((v) => v.id)
@@ -96,7 +96,6 @@ const PiNewsCategory = () => {
                         </Link>
                       </div>
                     );
-                  } else {
                   }
                 })}
               <div className="flex">
@@ -141,7 +140,7 @@ const PiNewsCategory = () => {
               </div>
             </div>
 
-            <div className="sm:flex md:hidden">
+            <div className="sm:flex md:hidden xl:hidden">
               <div className="mx-auto w-full rounded ">
                 <div className="items-center">
                   {ads
@@ -159,7 +158,7 @@ const PiNewsCategory = () => {
                     ))}
                 </div>
 
-                <div className="items-center">
+                <div className="items-center hidden xl:flex">
                   <div className="relative my-4 flex justify-center whitespace-nowrap py-2 text-start text-2xl text-sky-800 transition-all before:absolute before:bottom-0 before:z-0 before:h-2 before:w-full before:rounded before:bg-sky-800">
                     Latest News
                   </div>
@@ -208,7 +207,7 @@ const PiNewsCategory = () => {
               </div>
             </div>
           </div>
-          <div className="hidden md:flex">
+          <div className="hidden xl:flex">
             <div className="">
               <div className="items-center">
                 {ads
@@ -271,12 +270,12 @@ const PiNewsCategory = () => {
             </div>
           </div>
         </div>
-        <div className="mx-3 lg:hidden">
+        <div className="mx-3 xl:hidden">
           <div>
             {piNews.data
               ?.filter((v) => v.id)
               .map((g, i) => (
-                <div key={i} className="text-md xl:text-xl xl:font-medium">
+                <div key={i} className="text-md xl:text-xl xl:font-medium mt-3 hidden xl:flex">
                   <Link
                     href={`/pi-news/${g.id}`}
                     key={g.id}
@@ -306,8 +305,8 @@ const PiNewsCategory = () => {
                 </div>
               ))}
           </div>
-          <div>
-            <div className="items-center">
+          <div className="items-center hidden md:flex xl:hidden md:flex-col">
+            <div>
               {ads
                 ?.filter((v) => v.type === "vertical")
                 .map((ad, i) => (

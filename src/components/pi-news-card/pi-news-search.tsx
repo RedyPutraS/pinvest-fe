@@ -42,7 +42,7 @@ export function PiNewsSearchCard({
             >
               {title}
             </p>
-            <ShareButton path={`/pi-news/${id}`} className="w-6 xl:w-10" />
+            <ShareButton path={`/pi-news/${id}`} className="w-6 md:w-10 md:h-9 xl:w-10" />
           </div>
           <p
             onClick={() => router.push(`/pi-news/${id}`)}

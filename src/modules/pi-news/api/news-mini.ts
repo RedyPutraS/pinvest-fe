@@ -14,7 +14,7 @@ export const newsSchema = z.object({
       author: z.string(),
       publish_at: z.string().optional().nullable(),
       category_name: z.string(),
-      subcategory_name: z.string(),
+      subcategory_name: z.string().nullable(),
     })
   ),
 });

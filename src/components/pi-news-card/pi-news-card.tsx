@@ -29,8 +29,8 @@ export default function PiNewsCard({
               className={cn("w-full object-cover", imgClassName)}
             />
           </Link>
-          <div className="absolute top-0 right-0 m-2 xl:m-2 lg:w-8 lg:h-8">
-            <ShareButton path={`/pi-news/${article.id}`} className="max-w-[30px] lg:w-[50px]"/>
+          <div className="absolute top-0 right-0 m-2 xl:m-2 lg:w-10 lg:h-8">
+            <ShareButton path={`/pi-news/${article.id}`} className="w-7 md:w-10 md:h-9 xl:w-10 lg:w-full"/>
           </div>
         </CardImage>
         <CardBody className="py-2 md:h-[79px] xl:h-[92px]">

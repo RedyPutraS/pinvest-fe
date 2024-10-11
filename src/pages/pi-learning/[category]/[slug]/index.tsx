@@ -93,7 +93,7 @@ const Detail: NextPage<Props> = ({ params }) => {
                 <h2 className="mt-8 text-xl font-semibold text-gray-600 lg:text-2xl">
                   Jadwal
                 </h2>
-                <div className="md:hidden">
+                <div className="xl:hidden">
                   <div className="mb-4 flex gap-2">
                     <img
                       src="/assets/icon/calendar.svg"
@@ -126,9 +126,20 @@ const Detail: NextPage<Props> = ({ params }) => {
                     />
                     <div>
                       Alamat
-                      <div>
+                      <div className="text-gray-600">
                         {data?.type == "offline" ? data?.address : data?.type}
                       </div>
+                      <Link
+                        target="_blank"
+                        className="whitespace-nowrap text-sm text-blue-700"
+                        href={
+                          data?.type == "offline"
+                            ? `http://maps.google.com/?q=${data?.google_location}`
+                            : ""
+                        }
+                      >
+                        {data?.type == "offline" ? "Lihat Maps" : ""}
+                      </Link>
                     </div>
                   </div>
                 </div>

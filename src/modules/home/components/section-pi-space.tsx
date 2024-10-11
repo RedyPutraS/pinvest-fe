@@ -30,7 +30,7 @@ const SectionPiSpace = () => {
       icon={<PiSpace />}
     >
       <SectionBanner tab="pispace" rounded />
-      <div className="h-4" />
+      <div className="h-8 md:h-9" />
     </Section>
   );
 };

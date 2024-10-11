@@ -35,7 +35,7 @@ export function PiLearningCard({
           <img
             src={thumbnail}
             alt={title}
-            className="h-[100px] w-full cursor-pointer rounded-t-lg object-cover xl:h-[235px]"
+            className="h-full w-full cursor-pointer rounded-t-lg object-cover xl:h-[235px]"
             onClick={() => router.push(`/pi-learning/article/${id}`)}
           />
         </CardImage>
@@ -49,7 +49,7 @@ export function PiLearningCard({
             </p>
             <ShareButton
               path={`/pi-learning/article/${id}`}
-              className="w-6 xl:w-10"
+              className="w-7 md:w-10 md:h-9 xl:w-10"
             />
           </div>
           <p

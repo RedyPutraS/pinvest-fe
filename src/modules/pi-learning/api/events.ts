@@ -141,6 +141,8 @@ const eventDetailSchema = z.object({
             end_time: z.string().nullish(),
             price: z.number(),
             quota: z.number().nullish(),
+            limit: z.number().nullish(),
+            qty_include: z.number().nullish(),
             quota_used: z.number().nullish(),
             quota_available: z.number().nullish(),
             duration: z.string().nullish(),

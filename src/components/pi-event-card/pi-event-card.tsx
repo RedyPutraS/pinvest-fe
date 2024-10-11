@@ -35,7 +35,7 @@ export function PiEventCard({ event }: Props) {
           <img
             src={event.thumbnail_image}
             alt={event.title}
-            className="w-full object-cover xl:h-[232px]"
+            className="w-full object-cover h-full"
           />
         </Link>
         <img
@@ -62,7 +62,7 @@ export function PiEventCard({ event }: Props) {
               {event.title}
             </div>
           </Link>
-          <ShareButton path={`/pi-event/${event.id}`} className="w-6 xl:w-10" />
+          <ShareButton path={`/pi-event/${event.id}`} className="w-7 md:w-10 md:h-9 xl:w-10" />
         </div>
         <div className="mt-1 text-[10px] font-normal text-pv-blue-light xl:mb-1 xl:text-[14px]">
           {format(

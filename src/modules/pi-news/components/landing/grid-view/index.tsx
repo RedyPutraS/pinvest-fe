@@ -34,6 +34,7 @@ const NewsGridView = ({ sortBy }: Props) => {
                   src={item.thumbnail_image ?? ""}
                   alt={`Thumbnail ${item.title}`}
                   style={{ objectFit: "cover" }}
+                  className="h-full w-full"
                 />
               </CardImage>
               <CardBody>

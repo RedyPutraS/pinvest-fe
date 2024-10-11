@@ -136,7 +136,7 @@ export function WebinarCard({
             </Link>
             <ShareButton
               path={overrideLink || `/pi-learning/${category}/${event.id}`}
-              className="w-6 xl:w-10"
+              className="w-7 md:w-10 md:h-9 xl:w-10"
             />
           </div>
           <p className="mt-1 h-20 text-[10px] text-pv-grey-medium2 line-clamp-3 xl:h-[90px] xl:text-sm">

@@ -22,8 +22,8 @@ export default function PinspireHeadlineCard({
           <Link href={`/pinspire/${article.id}`}>
             <Image src={article.thumbnail_image} alt={article.title} fill />
           </Link>
-          <div className="absolute top-0 right-0 m-2 lg:m-4 lg:w-8">
-            <ShareButton path={`/pinspire/${article.id}`} className="max-w-[30px] lg:w-[50px]"/>
+          <div className="absolute top-0 right-0 m-2 lg:m-4 lg:w-10">
+            <ShareButton path={`/pinspire/${article.id}`} className="w-7 md:w-10 md:h-9 xl:w-10"/>
           </div>
         </CardImage>
         <CardBody className="md:h-full relative">

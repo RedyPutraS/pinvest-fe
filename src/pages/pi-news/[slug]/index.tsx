@@ -26,19 +26,23 @@ import { useApps } from "utils/api/get-apps";
 import { APP_NAME } from "utils/constants";
 import PopupBanner from "components/popup-banner";
 import Cover from "modules/pi-learning/components/detail/cover";
+import { useEffect } from "react";
 const APP = "pinews";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const NewsDetail: NextPage<Props> = ({ params, adsParam }) => {
   const news = useNewsDetail(params);
   const { data: ads } = useAds(adsParam);
   const newsArticle = useNews({ start: 0, limit: 3, sortBy: "asc" });
-  const subCategorys = news.data?.subcategory_name;
+  const subCategorys = news.data?.alias;
   const subString = subCategorys?.toLowerCase();
   const newsRelated = useNewsRelated({
     start: 0,
     limit: 3,
     subCat: subString,
   });
+  // useEffect(() => {
+  //   console.log(newsRelated, news);
+  // }, [newsRelated])
 
   const appList = useApps();
   const appData = appList.data;
@@ -136,7 +140,7 @@ const NewsDetail: NextPage<Props> = ({ params, adsParam }) => {
             <RenderHtml className="mt-6" html={news?.data?.description ?? ""} />
 
             <div className="sm:flex md:hidden">
-              <div className="mx-auto h-full rounded">
+              <div className="mx-auto h-full rounded mt-3 md:mt-0">
                 <div className="items-center">
                   {ads
                     ?.filter((v) => v.type === "vertical")

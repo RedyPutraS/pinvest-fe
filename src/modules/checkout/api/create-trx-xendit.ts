@@ -48,6 +48,7 @@ export const creatTransactionBodySchema = z.object({
   qty: z.number(),
   voucher: z.string().nullish(),
   total: z.number().nullish(),
+  diskon: z.number().nullish(),
   subTotal: z.number().nullish(),      // Menambahkan subTotal
   totalInCart: z.number().nullish(),   // Menambahkan totalInCart
   hargaPromo: z.number().nullish(), 
@@ -59,6 +60,7 @@ export type CreateTransactionBodyType = z.infer<
 
 export const createTrxXendit = async (body: CreateTransactionBodyType) => {
   const { data } = await axios.post(`/transaction/createV3`, {
+    diskon: body.diskon,
     bank_code: body.bank_code,
     type: body.type,
     app: body.app,

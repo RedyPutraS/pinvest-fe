@@ -48,7 +48,7 @@ const ArticleItem = ({
             </Link>
             <ShareButton
               path={`/pi-learning/article/${articleId}`}
-              className="w-6 xl:w-10"
+              className="w-7 md:w-10 md:h-9 xl:w-10"
             />
           </div>
           <p className="mt-4 text-neutral-400 line-clamp-3">{description}</p>

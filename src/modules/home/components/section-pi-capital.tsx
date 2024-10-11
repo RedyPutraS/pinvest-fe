@@ -89,6 +89,7 @@ const SectionPiCapital = ({ data }: Props) => {
           })}
         </TabPanels>
       </Tabs>
+      <div className="h-8"/>
     </Section>
   );
 };

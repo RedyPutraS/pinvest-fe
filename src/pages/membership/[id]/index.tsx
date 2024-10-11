@@ -24,9 +24,19 @@ const MembershipDetail = ({ id }: Props) => {
       )}
       <PageHeader className="bg-pv-white-pure pb-10 xl:min-h-fit xl:max-w-[1300px] xl:pb-20">
         <div className="grid w-full px-4 lg:grid-cols-2 xl:flex xl:justify-between xl:pl-16">
+          <div className="mt-10 xl:hidden md:w-full">
+            <span className="flex justify-center">
+              <img
+                key={data?.id}
+                src={data?.thumbnail_image}
+                alt=""
+                className="rounded-xl bg-pv-white-pure p-2 shadow-md shadow-slate-400 md:w-80"
+              />
+            </span>
+          </div>
           <div className="xl:py-16 xl:pr-16">
-            <p className="py-8 text-xl font-medium">Keanggotaan</p>
-            <h1 className="mb-2 text-4xl font-medium">{data?.plan_name}</h1>
+            <p className="pt-2 text-3xl font-medium">Keanggotaan</p>
+            <h1 className="mb-2 text-2xl font-medium">{data?.plan_name}</h1>
 
             <RenderHtml
               className="mb-4 text-pv-grey-medium3"
@@ -45,7 +55,7 @@ const MembershipDetail = ({ id }: Props) => {
             )}
           </div>
           <div className="mt-10">
-            <span className="flex justify-center">
+            <span className="hidden justify-center xl:flex">
               <img
                 key={data?.id}
                 src={data?.thumbnail_image}

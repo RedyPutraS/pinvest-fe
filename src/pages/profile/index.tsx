@@ -224,15 +224,15 @@ const ProfilePage = ({}: Props) => {
 
           <TabPanels>
             <TabPanel>
-              <div className="relative mx-auto items-center bg-white p-4">
-                <div className="absolute right-0 text-center">
+              <div className="relative mx-auto items-center bg-white md:p-2">
+                <div className="absolute right-0 text-center mt-16">
                   <img
                     src={data?.img_status ?? ""}
                     className="mb-1 w-20 rounded-xl "
                     alt=""
                   />
                   <div className="tracking-widest text-pv-blue-light">
-                    {data?.status?.toUpperCase()}
+                    {data?.status?.toUpperCase() === "FREE" ? "Gratis" : data?.status?.toUpperCase()}
                   </div>
                 </div>
                 <div className="flex grid-flow-row auto-rows-max">
@@ -261,6 +261,7 @@ const ProfilePage = ({}: Props) => {
                           onChange={submitChange}
                         />
                       </label>
+                      <span className="text-sm"><span className="text-red-600">*</span>Click untuk ubah gambar</span>
                       <Button
                         id="submitImage"
                         className="mx-auto mt-4  hidden"
@@ -313,12 +314,12 @@ const ProfilePage = ({}: Props) => {
                     <div>{translateGender(data?.gender)}</div>
                   </div>
                 </div>
-                <div className="order-last mx-1 mb-2 flex items-center">
+                {/* <div className="order-last mx-1 mb-2 flex items-center">
                   <div className="font-semiBold relative flex justify-center whitespace-nowrap py-2 text-center uppercase text-cyan-600 transition-all before:absolute before:bottom-0 before:z-0 before:h-2 before:w-full before:rounded before:bg-sky-800 xl:hidden xl:p-2">
                     {data?.status} member
                   </div>
-                </div>
-                <div className="flex xl:hidden">
+                </div> */}
+                <div className="flex xl:hidden mt-3">
                   <div className="mx-1">
                     <div className="mb-2 flex">
                       <img

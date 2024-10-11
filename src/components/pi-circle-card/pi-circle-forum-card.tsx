@@ -11,7 +11,7 @@ export const PiCircleForumCard = ({ article }: Props) => {
   const router = useRouter();
   return (
     <div
-      className=" mb-4 cursor-pointer border-2 border-pv-white-light bg-pv-white-light hover:border-pv-grey-medium2 xl:rounded-lg xl:p-6"
+      className=" mb-4 cursor-pointer border-2 border-pv-white-light bg-pv-white-light hover:border-pv-grey-medium2 xl:rounded-lg p-1 md:p-2 xl:p-6"
       onClick={() => router.push(`/pi-circle/forum/${article.id}`)}
     >
       <div className="flex">

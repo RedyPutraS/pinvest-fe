@@ -207,9 +207,9 @@ const OnlineCoursePage = ({ params }: Props) => {
           />
         </section>
 
-        <PageBody className="relative z-10">
-          <div className="grid items-center lg:items-start gap-4 md:grid-cols-12">
-            <div className="rounded p-2 shadow md:col-span-4 xl:hidden md:-mt-[224%]">
+        <PageBody className="relative z-10 ">
+          <div className=" grid items-center md:items-start xl:items-start gap-4 md:grid-cols-12 mt-0">
+            <div className="rounded p-2 shadow md:col-span-4 xl:hidden ">
               <img
                 className="rounded"
                 src={data?.thumbnail_image ?? data?.thumbnail_video ?? ""}
@@ -258,14 +258,15 @@ const OnlineCoursePage = ({ params }: Props) => {
                           alt="File Download Icon"
                         />
                         <p className="ml-2">
-                          {data?.file_count} Dapat Diunduh
+                          {data?.file_count} Dapat Diunduhh
                         </p>
                       </span>
                     </div>
                     <div>
                       <span className="inline-flex">
                         <img
-                          src="/assets/icon/CloudCheck.png"                          width={25}
+                          src="/assets/icon/CloudCheck.png"                          
+                          width={25}
                           alt="File Cloud Icon"
                         />
                         <p className="ml-2">Akses Selamanya</p>
@@ -370,6 +371,7 @@ const OnlineCoursePage = ({ params }: Props) => {
                       Beli Sekarang
                     </Button>
                   )}
+                  {/* Bagian Dari mobile sampai tablet */}
 
                   <div className="mt-5 p-1">
                     <p className="mb-2 font-bold">Kursus Ini Termasuk :</p>

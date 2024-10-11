@@ -13,10 +13,15 @@ import { downloadTicket } from "modules/transaction/download-ticket";
 import { useRouter } from "next/router";
 import AccordionTransaksi from "components/accordion-list/accordion-transaksi";
 import RenderHtml from "components/render-html";
+import { useEffect } from "react";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const Index = ({ params }: Props) => {
   const router = useRouter();
   const { data } = useTransactionDetail(params);
+  useEffect(() => {
+    console.log(data);
+    
+  }, [data]);
   
   if (!data) {
     return <div>Loading...</div>;
@@ -166,7 +171,7 @@ const Index = ({ params }: Props) => {
                   {(detail?.price ?? "0.00") == "0.00" ? (
                     <div className="text-pv-blue-lighter">Gratis</div>
                   ) : (
-                    currencyFormatter.format(parseInt(detail?.price ?? "0"))
+                    currencyFormatter.format(Number(detail?.price ?? "0"))
                   )}
                 </p>
               </div>
@@ -363,26 +368,30 @@ const Index = ({ params }: Props) => {
         </div>
         <div className="flex flex-col justify-between border-b-2 pb-3 pt-6 font-medium text-pv-grey-medium3 xl:flex-row">
           <div>Total Harga</div>
-          <div>{currencyFormatter.format(parseInt(data?.price ?? "0"))}</div>
+          <div>{currencyFormatter.format(Number(data?.price ?? "0"))}</div>
+        </div>
+        <div className="flex flex-col justify-between border-b-2 pb-3 pt-6 font-medium text-pv-grey-medium3 xl:flex-row">
+          <div>Total Diskon</div>
+          <div>{currencyFormatter.format(Number(data?.discount ?? "0"))}</div>
         </div>
         <div className="flex flex-col justify-between border-b-2 pb-3 pt-6 font-medium text-pv-grey-medium3 xl:flex-row">
           <div>Biaya Transaksi</div>
           <div>
             {currencyFormatter.format(
-              parseInt(data?.total_fee.toString() ?? "0")
+              Number(data?.total_fee.toString() ?? "0")
             )}
           </div>
         </div>
         <div className="flex flex-col justify-between border-b-2 pb-3 pt-6 font-medium text-pv-grey-medium3 xl:flex-row">
           <div>Biaya Admin</div>
           <div>
-            {currencyFormatter.format(parseInt(data?.fee_pg.toString() ?? "0"))}
+            {currencyFormatter.format(Number(data?.fee_pg.toString() ?? "0"))}
           </div>
         </div>
         <div className="flex flex-col justify-between py-6 text-xl font-medium xl:flex-row">
           <div>Total Belanja</div>
           <div>
-            {currencyFormatter.format(parseInt(data?.total_amount ?? "0"))}
+            {currencyFormatter.format(Number(data?.total_amount ?? "0"))}
           </div>
         </div>
       </div>

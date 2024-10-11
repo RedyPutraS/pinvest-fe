@@ -84,6 +84,7 @@ const YoutubePaginateGrid = ({ title, category, type, search }: Props) => {
                     </p>
                     <ShareButton
                       path={`/pi-cast/youtube/${video.id.videoId}`}
+                      className="w-7 md:w-10 md:h-9 xl:w-10"
                     />
                   </div>
                   <div className="mt-4 flex">

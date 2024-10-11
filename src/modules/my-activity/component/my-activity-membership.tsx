@@ -5,6 +5,7 @@ type Props = {
 };
 
 const MyActivityCardMembership = ({ items }: Props) => {
+  
   return (
     <div className="bg-pv-white-light p-6 xl:mb-8" style={{ marginBottom: '15px' }}>
       <div>

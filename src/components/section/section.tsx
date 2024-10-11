@@ -39,7 +39,7 @@ export default function Section(props: SectionProps) {
                 <Button
                   variant="text"
                   color="blue-gray"
-                  className="flex items-center gap-2 rounded-md text-gray-600 mt-10"
+                  className="flex items-center gap-2 rounded-md text-gray-600"
                 >
                   Lihat semua
                   <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
@@ -55,7 +55,7 @@ export default function Section(props: SectionProps) {
                 <Button
                   variant="text"
                   color="blue-gray"
-                  className="mt-10 flex items-center gap-2 rounded-md text-gray-600"
+                  className="flex items-center gap-2 rounded-md text-gray-600"
                 >
                   Lihat semua
                   <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
