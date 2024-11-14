@@ -33,7 +33,6 @@ export const PiCircleDirectory = () => {
   const { data: categories } = usePiCircleSubCategory({
     categoryId: "17",
   });
-  console.log("Picirle categories Direktory",categories);
 
   const handleSortChange = (sort: string) => {
     setFilter(sort);
@@ -191,22 +190,22 @@ export const PiCircleDirectory = () => {
               }
             </div>
             <div className="mx-auto mt-5 flex justify-center xl:hidden">
-            {
-              Number(active) !== 1 && (
-                <Button
-                  variant="text"
-                  color="blue-gray"
-                  className="flex items-center gap-2 rounded-full px-3 text-xs"
-                  onClick={prev}
-                  disabled={active === "1"}
-                >
-                  <div className="flex">
-                    <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-                    {/* <span className="ml-2">Sebelumnya</span> */}
-                  </div>
-                </Button>
-              )
-            }
+              {
+                Number(active) !== 1 && (
+                  <Button
+                    variant="text"
+                    color="blue-gray"
+                    className="flex items-center gap-2 rounded-full px-3 text-xs"
+                    onClick={prev}
+                    disabled={active === "1"}
+                  >
+                    <div className="flex">
+                      <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
+                      {/* <span className="ml-2">Sebelumnya</span> */}
+                    </div>
+                  </Button>
+                )
+              }
 
               <div className="mx-4 flex items-center gap-2">
                 {data?.page?.links[0]?.label == null ? (

@@ -11,6 +11,7 @@ const appsSchema = z.object({
       id: z.number(),
       app_name: z.string(),
       alias: z.string(),
+      vector_image: z.string().optional(), // Tambahkan vector_image
       category: z.array(
         z.object({
           id: z.number(),
@@ -22,7 +23,7 @@ const appsSchema = z.object({
               subcategory_name: z.string(),
               alias: z.string(),
             })
-          ),
+          ).nullish(),
         })
       ),
     })
@@ -37,6 +38,7 @@ export const getApps = async () => {
       with: "subcategory",
     },
   });
+  
   return appsSchema.parse(data).data;
 };
 

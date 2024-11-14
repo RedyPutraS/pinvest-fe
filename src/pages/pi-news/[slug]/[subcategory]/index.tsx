@@ -169,7 +169,7 @@ const NewsDetail: NextPage<Props> = ({ adsParam }) => {
 
                 <div className="items-center">
                   <div className="relative my-4 flex justify-center whitespace-nowrap py-2 text-start text-2xl text-sky-800 transition-all before:absolute before:bottom-0 before:z-0 before:h-2 before:w-full before:rounded before:bg-sky-800">
-                    Latest News
+                    Berita Terbaru
                   </div>
                   <div>
                     {newsArticle.data
@@ -232,7 +232,7 @@ const NewsDetail: NextPage<Props> = ({ adsParam }) => {
 
               <div className="items-center">
                 <div className="relative my-4 flex justify-center whitespace-nowrap py-2 text-start text-2xl text-sky-800 transition-all before:absolute before:bottom-0 before:z-0 before:h-2 before:w-full before:rounded before:bg-sky-800">
-                  Latest News
+                  Berita Terbaru
                 </div>
                 <div>
                   {newsArticle.data

@@ -12,11 +12,11 @@ export function PiCapitalCardSlider({
   return (
     <>
       {/* mobile */}
-      <div className={cn("mt-4 grid grid-cols-2 gap-4 md:hidden", className)}>
+      <div className={cn("grid grid-cols-2 gap-4 md:hidden", className)}>
         {children}
       </div>
       {/* desktop */}
-      <div className={cn("mt-8 hidden grid-cols-4 gap-6 pb-4 md:grid")}>
+      <div className={cn("hidden grid-cols-4 gap-6 pb-4 md:grid")}>
         {children}
       </div>
 

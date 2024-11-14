@@ -10,7 +10,7 @@ import PopupLogin from "components/popup-login/popup-login";
 type Props = {
   title: string;
   price: number;
-  onSubmit: (body: { qty: number }) => void;
+  onSubmit: (body: { qty: number, typeB: string }) => void;
   dataItem: any;
   eventData: any;
 };
@@ -26,6 +26,7 @@ const Tiket: React.FC<Props> = ({
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const qtyModal = useDisclosure();
   const modalOn = useDisclosure();
+  const [titipe, setTititpe] = useState("redirect");
 
   return (
     <>
@@ -57,13 +58,34 @@ const Tiket: React.FC<Props> = ({
             </p>
           </div>
 
-          <Button
-            onClick={() =>
-              auth.user ? qtyModal.onOpen() : setIsLoginPopupOpen(true)
-            }
-          >
-            Pilih
-          </Button>
+          <div className="flex flex-wrap">
+            <img
+                className="right-10 top-0 m-2 w-6 cursor-pointer opacity-60 hover:opacity-100 xl:m-4 xl:w-10 filter grayscale"
+                src={`/assets/icon/cart.svg`}
+                onClick={() => {
+                  if (auth.user) {
+                    qtyModal.onOpen();
+                    setTititpe("add");
+                  } else {
+                    setIsLoginPopupOpen(true);
+                  }
+                }}
+                alt="cart"
+              />
+
+            <Button
+              onClick={() => {
+                if (auth.user) {
+                  qtyModal.onOpen();
+                  setTititpe("redirect");
+                } else {
+                  setIsLoginPopupOpen(true);
+                }
+              }}
+            >
+              Pilih
+            </Button>
+          </div>
         </div>
 
         <QtyModal
@@ -71,6 +93,7 @@ const Tiket: React.FC<Props> = ({
           setIsOpen={qtyModal.setIsOpen}
           price={price}
           onSubmit={onSubmit}
+          titipe={titipe}
         />
 
         <ModalDetail

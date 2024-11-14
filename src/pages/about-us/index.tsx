@@ -68,7 +68,7 @@ const AboutUs = ({ params }: Props) => {
                 </p>
               </div>
             </div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center mt-5 xl:mt-0">
               <div className="flex h-20 w-20 items-center justify-center rounded-xl bg-pv-grey-light1">
                 <img
                   src="/assets/icon/wa-dark-blue.svg"
@@ -76,7 +76,7 @@ const AboutUs = ({ params }: Props) => {
                   alt=""
                 />
               </div>
-              <div className="ml-2 flex-1 mt-10 md:mt-12">
+              <div className="ml-2 flex-1">
                 <p className="font-semibold text-pv-grey-medium3">WhatsApp</p>
                 <p className="text-2xl text-gray-600">
                   <Link
@@ -90,6 +90,28 @@ const AboutUs = ({ params }: Props) => {
                 </p>
               </div>
             </div>
+            {/* <div className="flex items-center justify-center">
+              <div className="flex h-20 w-20 items-center justify-center rounded-xl bg-pv-grey-light1">
+                <img
+                  src="/assets/icon/wa-dark-blue.svg"
+                  className="w-10 fill-pv-blue-dark"
+                  alt=""
+                />
+              </div>
+              <div className="ml-2 flex-1 mt-10">
+                <p className="font-semibold text-pv-grey-medium3">WhatsApp</p>
+                <p className="text-2xl text-gray-600">
+                  <Link
+                    href={
+                      "https://wa.me/628111177374?text=Hi%20Minvest%2C%20tolong%20info%20lengkapnya%20ya"
+                    }
+                    target="_blank"
+                  >
+                    +62 811-1177-374
+                  </Link>
+                </p>
+              </div>
+            </div> */}
           </div>
         </div>
         {/* <div className="mt-20">

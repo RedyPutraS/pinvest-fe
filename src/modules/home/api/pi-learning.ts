@@ -8,6 +8,7 @@ export const ticketSchema = z
     title: z.string().nullish(),
     description: z.string().nullish(),
     date: z.any().nullish(),
+    price: z.any().nullish(),
     duration: z.string().nullish(),
   })
   .nullish();

@@ -36,12 +36,12 @@ const YouTubeTabPanel = () => {
   const [sort, setSort] = useState<string>();
   const [search, setSearch] = useState<string>();
   useEffect(() => {
-    if (piCastYoutubeByPlaylistId.data && piCastYoutubeByPlaylistId.data[0]) {
+    if (piCastYoutubeByPlaylistId.data?.data.items && piCastYoutubeByPlaylistId.data?.data.items[0]) {
       setVideoId(
-        piCastYoutubeByPlaylistId.data[0].snippet?.resourceId?.videoId ?? ""
+        piCastYoutubeByPlaylistId.data?.data.items[0].snippet?.resourceId?.videoId ?? ""
       );
     }
-  }, [piCastYoutubeByPlaylistId.data]);
+  }, [piCastYoutubeByPlaylistId.data?.data.items]);
 
   const handleSortChange = (sort: string) => {
     setSort(sort);
@@ -119,10 +119,10 @@ const YouTubeTabPanel = () => {
         />
       ) : (
         <>
-          {piCastYoutubeByPlaylistId.data &&
-            piCastYoutubeByPlaylistId.data[0] && (
-              <div className="mt-8 w-full md:mb-4 md:grid md:h-[400px] md:grid-cols-3 md:gap-4">
-                <div className="relative mb-4 aspect-video rounded-md bg-pv-grey-dark2 md:col-span-2 md:mb-0">
+          {piCastYoutubeByPlaylistId.data?.data.items &&
+            piCastYoutubeByPlaylistId.data?.data.items[0] && (
+              <div className="mt-8 w-full md:mb-4 md:grid md:h-full md:grid-cols-1 xl:grid-cols-3 md:gap-4 bg-slate-800">
+                <div className="relative mb-4 aspect-video rounded-md bg-pv-grey-dark2 md:col-span-2 md:mb-0 w-full md:ml-2">
                   <iframe
                     width="100%"
                     height="100%"
@@ -131,7 +131,7 @@ const YouTubeTabPanel = () => {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   ></iframe>
                 </div>
-                <div className="col-span-3 h-[300px] overflow-y-auto rounded-md bg-pv-grey-dark2 md:col-span-1 xl:h-[480px]">
+                <div className="col-span-3 h-[300px] overflow-y-auto rounded-md bg-pv-grey-dark2 xl:col-span-1 xl:h-[480px]">
                   <div className="px-6 py-3 pt-6">
                     <div className="text-lg font-normal text-white">
                       {piCastYoutubePlaylist.data &&
@@ -144,7 +144,7 @@ const YouTubeTabPanel = () => {
                         piCastYoutubePlaylist.data[0].snippet.channelTitle}
                     </div>
                   </div>
-                  {piCastYoutubeByPlaylistId.data.map(
+                  {piCastYoutubeByPlaylistId.data?.data.items.map(
                     (video, idx) =>
                       idx !== 0 && (
                         <YoutubePlaylistSlider
@@ -155,7 +155,7 @@ const YouTubeTabPanel = () => {
                           }}
                         />
                       )
-                  )}
+                  )} 
                 </div>
               </div>
             )}

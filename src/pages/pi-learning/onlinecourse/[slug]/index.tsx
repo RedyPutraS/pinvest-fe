@@ -60,7 +60,7 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ item }) => {
 
   return (
     <div
-      className="popup"
+      className="popup flex flex-col md:flex-row"
       style={{
         marginTop: "40px",
         position: "fixed",
@@ -71,27 +71,22 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ item }) => {
         padding: "20px",
         borderRadius: "8px",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        zIndex: 999, // Adjust z-index as needed
-        display: "flex",
+        zIndex: 999,
       }}
     >
       <img
-        className="h-40 w-40 rounded" // Adding fixed width and height
+        className="h-40 w-40 rounded mb-4 md:mb-0 md:mr-4" // mb-4 untuk spasi di bawah gambar pada mobile
         src={item.image ?? ""}
         alt="thumbnail"
-        style={{ marginRight: "10px" }} // Added margin-right for spacing
       />
       <div>
-        <p className="text-lg font-bold" style={{ textAlign: "left" }}>
-          {item.name}
-        </p>
-        <p style={{ textAlign: "left" }}>{item.title}</p>
+        <p className="text-lg font-bold text-left">{item.name}</p>
+        <p className="text-left">{item.title}</p>
         <RenderHtml
           html={truncatedDescription ?? ""}
           key={truncatedDescription}
           className="mt-4"
-        />{" "}
-        {/* Display truncated description */}
+        />
       </div>
     </div>
   );

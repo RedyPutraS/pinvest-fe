@@ -17,6 +17,7 @@ import Layout from "components/layout/layout";
 import { Toaster } from "components/toast";
 import ShareDialog from "components/icon/share-dialog";
 import { useRouter } from "next/router";
+import ActivityTrackerWithPopup from "components/ActivityTrackerWithPopup/ActivityTrackerWithPopup";
 export const ShareContext = createContext<{
   showDialog: boolean;
   openShareDialog?: (url: string) => void;
@@ -72,6 +73,7 @@ const MyApp: AppType<{ dehydratedState: DehydratedState }> = ({
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ActivityTrackerWithPopup />
       <Hydrate state={pageProps.dehydratedState}>
         {loading ? (
           <div className="flex justify-center items-center min-h-screen">

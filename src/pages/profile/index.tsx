@@ -261,7 +261,7 @@ const ProfilePage = ({}: Props) => {
                           onChange={submitChange}
                         />
                       </label>
-                      <span className="text-sm"><span className="text-red-600">*</span>Click untuk ubah gambar</span>
+                      <span className="text-sm"><span className="text-red-600">*</span>Klik untuk ubah gambar</span>
                       <Button
                         id="submitImage"
                         className="mx-auto mt-4  hidden"

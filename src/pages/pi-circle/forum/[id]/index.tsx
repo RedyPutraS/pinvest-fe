@@ -62,7 +62,6 @@ function PiCircleDetail({ id, adsParam }: Props) {
         }
       })
       .catch((response) => {
-        console.log(response);
         toast({
           title: "Forum like gagal!",
         });

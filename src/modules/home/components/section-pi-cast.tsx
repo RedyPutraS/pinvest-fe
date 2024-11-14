@@ -31,12 +31,12 @@ const SectionPiCast = () => {
   });
   const [videoId, setVideoId] = useState<string>();
   useEffect(() => {
-    if (piCastYoutubeByPlaylistId.data && piCastYoutubeByPlaylistId.data[0]) {
+    if (piCastYoutubeByPlaylistId.data?.data && piCastYoutubeByPlaylistId.data?.data.items[0]) {
       setVideoId(
-        piCastYoutubeByPlaylistId.data[0].snippet?.resourceId?.videoId ?? ""
+        piCastYoutubeByPlaylistId.data?.data.items[0].snippet?.resourceId?.videoId ?? ""
       );
     }
-  }, [piCastYoutubeByPlaylistId.data]);
+  }, [piCastYoutubeByPlaylistId.data?.data]);
 
   const piNewsParams: PiNewsParams = {
     page: 1,
@@ -48,7 +48,7 @@ const SectionPiCast = () => {
   const piNews = usePiNews(newPiNewsParams);
   return (
     <Section title="PiCast" href="/pi-cast?category=youtube" icon={<PiCast />}>
-      {piCastYoutubeByPlaylistId.data && piCastYoutubeByPlaylistId.data[0] && (
+      {piCastYoutubeByPlaylistId.data?.data && piCastYoutubeByPlaylistId.data?.data.items[0] && (
         <div className="mt-8 w-full md:mb-4 md:grid md:h-[620px] md:grid-cols-3 md:gap-4">
           <div className="mb-4 rounded-md md:col-span-2 md:mb-0">
             <div className="grid gap-4 xl:grid-cols-4">
@@ -106,7 +106,7 @@ const SectionPiCast = () => {
                     piCastYoutubePlaylist.data[0].snippet.channelTitle}
                 </div>
               </div>
-              {piCastYoutubeByPlaylistId.data.map(
+              {piCastYoutubeByPlaylistId.data?.data.items.map(
                 (video, idx) =>
                   idx !== 0 && (
                     <div

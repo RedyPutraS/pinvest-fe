@@ -42,7 +42,6 @@ const Learning = ({ params, appParams }: Props) => {
     category: router.query.category?.toString() ?? params.category,
   });
   const total_page = events.data?.page.total_page ?? 0;
-  // console.log("events di pilearning kayak kategori lainnya",events);
   
   const handleSortChange = (sort: string) => {
     setSort(sort);
@@ -85,7 +84,6 @@ const Learning = ({ params, appParams }: Props) => {
   const subCategory = app.data?.category.find(
     (category) => category.alias === router.query.category
   );
-  console.log(app.data?.category, router.query.category);
   
 
   const APP = "pilearning";
@@ -165,13 +163,21 @@ const Learning = ({ params, appParams }: Props) => {
           </div>
           {events.isLoading && <Spinner center />}
           <div className="mt-5 grid gap-5 md:grid-cols-3">
-            {events.data?.data?.map((event, index) => (
+            {/* {events.data?.data?.map((event, index) => (
               <WebinarCard
                 className="w-full"
                 key={index}
                 event={event as never}
                 category={`${router.query.category}` || "webinar"}
               />
+            ))} */}
+            {events.data?.data?.map((event, index) => (
+              <WebinarCard
+              className="w-full"
+              key={index}
+              event={event as never}
+              category={`${router.query.category}` || "webinar"}
+            />
             ))}
           </div>
         </Tabs>

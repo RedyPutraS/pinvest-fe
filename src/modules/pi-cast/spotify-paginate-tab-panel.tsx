@@ -14,7 +14,6 @@ const SpotifyPaginateTabPanel = () => {
   });
 
   const total_page = data?.page.total_page ?? 0;
-  // console.log("picast spotify", data);
   const { data: detail } = usePiCastSpotifyDetailPlaylist();
   
   const getItemProps = (index: string) =>
@@ -42,8 +41,6 @@ const SpotifyPaginateTabPanel = () => {
 
     setActive((activeNumber - 1).toString());
   };
-
-  console.log(data?.data);
   
   return (
     <div>

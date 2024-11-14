@@ -2,7 +2,7 @@ export function PiLearning() {
   return (
     <img
       src="/assets/img/pilearning.png"
-      className="mt-4 mb-2 h-6 object-cover xl:h-12"
+      className="mt-4 mb-2 h-6 md:h-9 object-cover xl:h-12"
       alt=""
     />
   );
@@ -12,7 +12,7 @@ export function PiCircle() {
   return (
     <img
       src="/assets/img/picircle.png"
-      className="mt-4 mb-2 h-6 object-cover xl:h-12"
+      className="mt-4 mb-2 h-6 md:h-9 object-cover xl:h-12"
       alt=""
     />
   );
@@ -22,7 +22,7 @@ export function PiSpace() {
   return (
     <img
       src="/assets/img/pispace.png"
-      className="mt-4 mb-2 h-6 object-cover xl:h-14"
+      className="mt-4 mb-2 h-6 md:h-9 object-cover xl:h-12"
       alt=""
     />
   );
@@ -32,7 +32,7 @@ export function PiCapital() {
   return (
     <img
       src="/assets/img/_picapital_crop.png"
-      className="mt-4 mb-2 h-6 object-cover xl:h-14"
+      className="mt-4 mb-2 h-6 md:h-9 object-cover xl:h-12"
       alt=""
     />
   );
@@ -41,7 +41,7 @@ export function PiEvent() {
   return (
     <img
       src="/assets/img/pievent.png"
-      className="mt-4 mb-2 h-6 object-cover xl:h-12"
+      className="mt-4 mb-2 h-6 md:h-9 object-cover xl:h-12"
       alt=""
     />
   );
@@ -50,7 +50,7 @@ export function PiNews() {
   return (
     <img
       src="/assets/img/pinews.png"
-      className="mt-4 mb-2 h-6 object-cover xl:h-12"
+      className="mt-4 mb-2 h-6 md:h-9 object-cover xl:h-12"
       alt=""
     />
   );
@@ -59,7 +59,7 @@ export function PiCast() {
   return (
     <img
       src="/assets/img/pinspire.png"
-      className="mt-4 mb-2 h-6 object-cover xl:h-12"
+      className="mt-4 mb-2 h-6 md:h-9 object-cover xl:h-12"
       alt=""
     />
   );

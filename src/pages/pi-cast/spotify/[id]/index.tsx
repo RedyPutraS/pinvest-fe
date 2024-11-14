@@ -26,7 +26,6 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const PiCastSpotifyDetail = ({ id, adsParam }: Props) => {
   const { data } = useSpotifyDetail(id as string);
-  // console.log(id);
   
   const [inquiryDialogOpen, setInquiryDialogOpen] = useState(false);
   const { data: ads } = useAds(adsParam);
@@ -65,10 +64,6 @@ const PiCastSpotifyDetail = ({ id, adsParam }: Props) => {
 
     setActive((activeNumber - 1).toString());
   };
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data])
-  console.log(data);
   return (
     <>
       <CustomHead title={data?.name} image={data?.images[0]?.url} />

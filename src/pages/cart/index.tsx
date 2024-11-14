@@ -41,7 +41,6 @@ const Cart = () => {
     sessionStorage.removeItem('checkoutData');
     if (voucherApplied === "" && voucher === "") {
       calculateCartSummary();
-      console.log('heelo kids');
     }
   }, [cartList]);
 
@@ -62,16 +61,10 @@ const Cart = () => {
       // Hitung harga setelah diskon
       setDiskon(totalDiskon);
       const priceAfterDiscount = (totalPrice + cartList.data?.admin_fee) - totalDiskon;
-      console.log(priceAfterDiscount, 'calculateCartSummary');
-      
       
       setPriceAfterDiscount(priceAfterDiscount);
     }
   };
-
-  // useEffect(() => {
-  //   console.log(diskon);
-  // }, [diskon]);
 
   const handleCreateTransaction = () => {
     toast({
@@ -102,7 +95,6 @@ const Cart = () => {
         }
       })
       .catch((e) => {
-        console.log(e);
         toast({
           title: "Gagal checkout.",
         });
@@ -120,15 +112,12 @@ const Cart = () => {
       checkVoucher
         .mutateAsync({ voucher_number: inputVoucher })
         .then((res) => {
-          console.log('Total amount from API:', res.total_amount);
           setVoucherApplied(inputVoucher);
           setVoucher(""); // Kosongkan input setelah digunakan
           setDiscount(res.discount); 
           setPriceAfterDiscount(res.total_amount); 
-          console.log('Updated priceAfterDiscount:', res.total_amount);
         })
         .catch((res) => {
-          console.log(res);
           toast({
             title: "Voucher tidak valid.",
           });
@@ -201,7 +190,6 @@ const Cart = () => {
       pathname: `/checkout`,
       query: { ...(voucherApplied ? { v: voucherApplied } : {}) },
     })
-    // console.log(dataToSend);
     // Redirect ke halaman checkout
     // router.push('/checkout');
   };

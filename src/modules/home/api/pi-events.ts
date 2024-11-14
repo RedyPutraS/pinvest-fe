@@ -32,11 +32,13 @@ export interface Event {
 
 export interface Ticket {
   date: string[];
+  price: number[];
   duration: string;
 }
 
 export const ticketSchema = z.object({
   date: z.array(z.string()),
+  price: z.array(z.number()),
   duration: z.string(),
 });
 
@@ -98,6 +100,7 @@ export const getPiEvents = async ({
   const { data } = await axios.get("/pievent/event", {
     params: { limit, start, filter, search, category, time, type, price },
   });
+  
   return rootSchema.parse(data).data;
 };
 

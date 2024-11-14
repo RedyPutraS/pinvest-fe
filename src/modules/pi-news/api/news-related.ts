@@ -29,8 +29,6 @@ export const getNews = async ({ start, limit, subCat }: Params) => {
   const { data } = await axios.get("/pinews/article", {
     params: { start, limit, subcategory: subCat },
   });
-  console.log("Testing",newsSchema.parse(data).data);
-  
 
   return newsSchema.parse(data).data;
 };

@@ -20,7 +20,7 @@ const VerifyToken = ({ t }: Props) => {
       mutateAsync({ otp: `${t}` })
         .then((res) => {
           setToken(res.token);
-          router.replace("/");
+          router.push("/");
         })
         .catch(() => {
           router.push("/auth/login");

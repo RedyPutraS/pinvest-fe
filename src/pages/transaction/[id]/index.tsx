@@ -18,10 +18,6 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const Index = ({ params }: Props) => {
   const router = useRouter();
   const { data } = useTransactionDetail(params);
-  useEffect(() => {
-    console.log(data);
-    
-  }, [data]);
   
   if (!data) {
     return <div>Loading...</div>;

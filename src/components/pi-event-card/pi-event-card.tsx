@@ -27,6 +27,9 @@ export function PiEventCard({ event }: Props) {
   const { incrementW } = useStore();
   const earliestDate = event.ticket.date[0]; // Mengambil tanggal paling awal
   const latestDate = event.ticket.date[event.ticket.date.length - 1]; // Mengambil tanggal paling akhir
+  
+  const earliestPrice = event.ticket.price[0]; // Mengambil price paling awal
+  const latestPrice = event.ticket.price[event.ticket.price.length - 1]; // Mengambil price paling akhir
 
   return (
     <Card className="mx-2 mb-1 mt-4  shadow-md ring-gray-200 hover:ring-2">
@@ -113,20 +116,51 @@ export function PiEventCard({ event }: Props) {
             {event.type === "online-zoom" ? "online" : event.type}
           </div>
           <div className="hidden text-lg font-normal xl:block xl:text-[20px]">
-            {event.price == 0 ? (
+            {
+              earliestPrice === 0 && latestPrice === 0 ? (
+                "Gratis"
+              ) : (
+                <>
+                  {earliestPrice === 0 ? "Gratis" : currencyFormatter.format(earliestPrice ?? 0)}
+
+                  {event.ticket.price.length > 1 && (
+                    <>
+                      {" "}
+                      <sup>s</sup>/<sub>d</sub>{" "}
+                      {latestPrice === 0 ? "Gratis" : currencyFormatter.format(latestPrice ?? 0)}
+                    </>
+                  )}
+                </>
+              )
+            }
+            {/* {event.price == 0 ? (
               <div className="text-pv-blue-lighter">Gratis</div>
-            ) : (
+            ) : ( */}
+            {/* {
               currencyFormatter.format(event.price)
-            )}
+            } */}
+            {/* )} */}
           </div>
         </Link>
         <div className="flex items-center justify-between py-2 pr-2 xl:justify-end">
           <div className="text-xs font-bold xl:hidden">
-            {event.price == 0 ? (
-              <div className="text-pv-blue-lighter">Gratis</div>
-            ) : (
-              currencyFormatter.format(event.price)
-            )}
+            {
+              earliestPrice === 0 && latestPrice === 0 ? (
+                "Gratis"
+              ) : (
+                <>
+                  {earliestPrice === 0 ? "Gratis" : currencyFormatter.format(earliestPrice ?? 0)}
+
+                  {event.ticket.price.length > 1 && (
+                    <>
+                      {" "}
+                      <sup>s</sup>/<sub>d</sub>{" "}
+                      {latestPrice === 0 ? "Gratis" : currencyFormatter.format(latestPrice ?? 0)}
+                    </>
+                  )}
+                </>
+              )
+            }
           </div>
           <button
             onClick={() => router.push(`/pi-event/${event.id.toString()}`)}

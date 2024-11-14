@@ -34,7 +34,7 @@ const eventsSchema = z.object({
       rate: z.number(),
       promo_price: z.number(),
       app_name: z.string(),
-      ticket: z.object({ date: z.array(z.string()), duration: z.string() }),
+      ticket: z.object({ date: z.array(z.string()), price: z.array(z.number()), duration: z.string() }),
     })
   ),
   page: z.object({
@@ -117,6 +117,14 @@ const eventDetailSchema = z.object({
         description: z.string(),
       })
     ),
+    instructor:z
+      .object({
+        name: z.string(),
+        title: z.string(),
+        description: z.string(),
+        image: z.any(),
+      })
+      .nullish(),
     title: z.string(),
     duration: z.string().nullish(),
     province: z.string().nullish(),

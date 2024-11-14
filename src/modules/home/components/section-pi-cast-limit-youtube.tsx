@@ -29,18 +29,20 @@ const SectionPiCastLimitYoutube = () => {
   const piCastYoutubeByPlaylistId = usePiCastYoutubeByPlaylistId({
     playlistId: "UULFx2roASBNqBRKieH9kRm0IA",
   });
+  
+
   const [videoId, setVideoId] = useState<string>();
   useEffect(() => {
-    if (piCastYoutubeByPlaylistId.data && piCastYoutubeByPlaylistId.data[0]) {
+    if (piCastYoutubeByPlaylistId.data?.data.items && piCastYoutubeByPlaylistId.data?.data.items[0]) {
       setVideoId(
-        piCastYoutubeByPlaylistId.data[0].snippet?.resourceId?.videoId ?? ""
+        piCastYoutubeByPlaylistId.data?.data.items[0].snippet?.resourceId?.videoId ?? ""
       );
     }
-  }, [piCastYoutubeByPlaylistId.data]);
+  }, [piCastYoutubeByPlaylistId.data?.data.items]);
 
   const piNewsParams: PiNewsParams = {
     page: 1,
-    limit: 4,
+    limit: 5,
     category: "pinspire",
   };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -49,10 +51,10 @@ const SectionPiCastLimitYoutube = () => {
   
   return (
     <Section title="PiCast" href="/pi-cast?category=youtube" icon={<PiCast />}>
-      <div className="mt-8 w-full md:mb-4 md:grid md:grid-cols-3 md:gap-4 ">
-        <div className="mb-4 rounded-md md:col-span-12 lg:md:col-span-2 md:mb-0">
+      <div className="mt-4 w-full md:mb-4 md:grid md:grid-cols-3 md:gap-4 ">
+        <div className="mb-4 rounded-md md:col-span-12 xl:col-span-2 md:mb-0">
           <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-4">
-            <div className="col-span-3 lg:col-span-3 md:h-[750px] lg:h-auto">
+            <div className="col-span-3 md:col-span-12 xl:col-span-3 md:h-[750px] lg:h-auto">
               {piNews.data && piNews.data[0] && (
                 <PinspireHeadlineCard
                   article={piNews.data[0] as never}
@@ -61,6 +63,26 @@ const SectionPiCastLimitYoutube = () => {
               )}
             </div>
             <div className="hidden overflow-y-auto no-scrollbar xl:block">
+              {piNews.data?.map(
+                (article, index) =>
+                  index !== 0 && index !== 4 && (
+                    <PiNspireCard
+                      key={article.id}
+                      article={article as never}
+                      withDescription={false}
+                      isHomePage
+                    />
+                  )
+              )}
+            </div>
+            {/* <div className="hidden overflow-y-auto no-scrollbar md:block xl:hidden md:h-[800px]">
+              {piNews.data?.slice(1, 4).map((article) => (
+                <PiNspireCard
+                  key={article.id}
+                  article={article as never}
+                  imgClassName="h-[50px] md:h-auto"
+                />
+              ))}
               {piNews.data?.map(
                 (article, index) =>
                   index !== 0 && (
@@ -72,42 +94,25 @@ const SectionPiCastLimitYoutube = () => {
                     />
                   )
               )}
-            </div>
-            <div className="hidden overflow-y-auto no-scrollbar md:block xl:hidden md:h-[800px]">
-              {piNews.data?.slice(1, 4).map((article) => (
+            </div> */}
+          </div>
+          <div className="grid grid-cols-2 gap-4 xl:hidden mt-3">
+            {piNews.data?.map((article, index) => (
+              index === 0 ? null : (
                 <PiNspireCard
                   key={article.id}
                   article={article as never}
-                  imgClassName="h-[50px] md:h-auto"
+                  imgClassName="h-[100px] md:h-[200px] xl:h-auto"
                 />
-              ))}
-              {/* {piNews.data?.map(
-                (article, index) =>
-                  index !== 0 && (
-                    <PiNspireCard
-                      key={article.id}
-                      article={article as never}
-                      withDescription={false}
-                      isHomePage
-                    />
-                  )
-              )} */}
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4 md:hidden xl:hidden mt-3">
-            {piNews.data?.map((article) => (
-              <PiNspireCard
-                key={article.id}
-                article={article as never}
-                imgClassName="h-[100px] md:h-[200px] xl:h-auto"
-              />
+              )
             ))}
           </div>
         </div>
+        {/* {`https://www.youtube.com/embed/${videoId}`} */}
 
-        {piCastYoutubeByPlaylistId.data &&
-          piCastYoutubeByPlaylistId.data[0] && (
-            <div className="col-span-3 md:col-span-12 lg:col-span-1">
+        {piCastYoutubeByPlaylistId.data?.data.items &&
+          piCastYoutubeByPlaylistId.data?.data.items[0] && (
+            <div className="col-span-3 md:col-span-12 xl:col-span-1">
               <div className="aspect-video">
                 <iframe
                   width="100%"
@@ -130,7 +135,7 @@ const SectionPiCastLimitYoutube = () => {
                       piCastYoutubePlaylist.data[0].snippet.channelTitle}
                   </div>
                 </div>
-                {piCastYoutubeByPlaylistId.data.map(
+                {piCastYoutubeByPlaylistId.data?.data.items.map(
                   (video, idx) =>
                     idx !== 0 && (
                       <div
@@ -162,7 +167,7 @@ const SectionPiCastLimitYoutube = () => {
             </div>
           )}
       </div>
-      <div className="flex w-full gap-4 overflow-x-auto py-4 no-scrollbar xl:hidden">
+      <div className="flex w-full gap-4 overflow-x-auto pb-1 no-scrollbar xl:hidden mt-2">
         {piCastSpotify.data &&
           piCastSpotify.data.map(
             (item: { track: { id: Key | null | undefined } }) => (
@@ -170,14 +175,13 @@ const SectionPiCastLimitYoutube = () => {
             )
           )}
       </div>
-      <div className="hidden w-full pb-4 xl:grid xl:grid-cols-4 xl:gap-4 ">
+      <div className="hidden w-full xl:grid xl:grid-cols-4 pb-1 xl:gap-4 ">
         {piCastSpotify.data?.map(
           (item: { track: { id: Key | null | undefined } }) => (
             <PiCastSpotifyItem key={item.track.id} item={item as never} />
           )
         )}
       </div>
-      <div className="h-8" />
     </Section>
   );
 };

@@ -29,8 +29,8 @@ const SectionPiSpace = () => {
       href="/pi-space"
       icon={<PiSpace />}
     >
+      <div className="mt-3 md:mt-4" />
       <SectionBanner tab="pispace" rounded />
-      <div className="h-8 md:h-9" />
     </Section>
   );
 };

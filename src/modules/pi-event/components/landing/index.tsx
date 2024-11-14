@@ -16,7 +16,6 @@ const LandingPiEvent = ({ time = null, type = null }: Props) => {
 
   const events = useEvents({ time, type, page: "1" });
   const total_page = events.data?.page.total_page ?? 0;
-  console.log("Pievent", events);
   
   const getItemProps = (index: string) =>
     ({

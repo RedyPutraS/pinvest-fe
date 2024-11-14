@@ -31,7 +31,6 @@ const PiNewsCategory = () => {
     limit: 100,
     category: category as any,
   });
-  // console.log("Pinews",piNews);
   
   return (
     <>
@@ -160,7 +159,7 @@ const PiNewsCategory = () => {
 
                 <div className="items-center hidden xl:flex">
                   <div className="relative my-4 flex justify-center whitespace-nowrap py-2 text-start text-2xl text-sky-800 transition-all before:absolute before:bottom-0 before:z-0 before:h-2 before:w-full before:rounded before:bg-sky-800">
-                    Latest News
+                    Berita Terbaru
                   </div>
                   <div>
                     {piNews.data
@@ -223,11 +222,12 @@ const PiNewsCategory = () => {
 
               <div className="items-center">
                 <div className="relative my-4 flex justify-center whitespace-nowrap py-2 text-start text-2xl text-sky-800 transition-all before:absolute before:bottom-0 before:z-0 before:h-2 before:w-full before:rounded before:bg-sky-800">
-                  Latest News
+                  Berita Terbaru
                 </div>
                 <div>
                   {piNews.data
                     ?.filter((v) => v.publish_at)
+                    .slice(0,3)
                     .map((item, index) => {
                       const isLarge = index === 1;
                       return (

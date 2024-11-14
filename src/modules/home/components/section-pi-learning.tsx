@@ -16,6 +16,7 @@ import { PiLearning } from "./program-menu-icon";
 import { fillSpace } from "utils/helpers/fillspace";
 import PiLearningSlider from "components/image-slider/pi-learning-slider";
 import { ActiveTabContext } from "../context/active-tab-context";
+
 type Props = {
   data: {
     app_name: string;
@@ -26,12 +27,24 @@ type Props = {
     }[];
   }[];
 };
+
 const SectionPiLearning = ({ data }: Props) => {
   const { setActiveTab } = useContext(ActiveTabContext);
+  const [activeTab, setActiveTabState] = useState<string | undefined>("article");
+  const [loading, setLoading] = useState(true); // Menyimpan status loading
+
   useEffect(() => {
     setActiveTab("article");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // Set activeTab awal
+    setActiveTabState("article");
+    
+    // Simulasi pengambilan data
+    const fetchData = async () => {
+      // Logika pengambilan data (misalnya API)
+      setLoading(false);
+    };
+    fetchData();
+  }, [setActiveTab]);
 
   const appName = data?.find(
     (app) => app.app_name.trim() === APP_NAME.learning.trim()
@@ -40,6 +53,7 @@ const SectionPiLearning = ({ data }: Props) => {
   const bannerPiLearningParams: BannerParams = {
     tab: "pilearning",
   };
+
   const piArticleParams = {
     page: 1,
     filter: null,
@@ -47,24 +61,28 @@ const SectionPiLearning = ({ data }: Props) => {
     category: "article",
     limit: 6,
   };
+
   const piLearningParams: PiLearningParams = {
     page: 1,
     limit: 6,
     category: "webinar",
   };
+
   const onlineCourseParams: OnlineCourseParams = {
     page: 1,
     limit: 6,
   };
+
   const [newPiArticleParams, setNewPiArticleParams] = useState(piArticleParams);
-  const [newPiLearningParams, setNewPiLearningParams] =
-    useState(piLearningParams);
+  const [newPiLearningParams, setNewPiLearningParams] = useState(piLearningParams);
   const bannerPiLearning = useBanner(bannerPiLearningParams);
   const piArticles = useArticles(newPiArticleParams);
   const piLearning = usePiLearning(newPiLearningParams);
   const onlineCourse = useOnlineCourse(onlineCourseParams);
+
   const onChangeTab = (tab: number, category: string): void => {
     setActiveTab(category);
+    setActiveTabState(category); // Set activeTab ketika tab berubah
     if (tab === 0) {
       setNewPiArticleParams({
         ...piArticleParams,
@@ -79,6 +97,15 @@ const SectionPiLearning = ({ data }: Props) => {
       });
     }
   };
+
+  if (loading) {
+    return <p>Loading...</p>; // Tampilkan loading saat data sedang diambil
+  }
+
+  const piarticleData = piArticles.data ?? [];
+  const onlineData = onlineCourse.data ?? [];
+  const pilearningData = piLearning.data ?? [];
+  
 
   return (
     <Section
@@ -104,63 +131,66 @@ const SectionPiLearning = ({ data }: Props) => {
         </TabList>
         <div className="h-4" />
         <TabPanels>
-          {appName?.category.map((category, i) => {
-            return (
-              <TabPanel key={category.id}>
-                {i === 0 &&
-                  bannerPiLearning.data &&
-                  bannerPiLearning.data.length > 0 && (
-                    <div className="h-full w-full object-contain md:object-cover">
-                      <PiLearningSlider items={bannerPiLearning.data} rounded />
-                    </div>
-                  )}
-                {category.alias === "article" ? (
-                  <PiLearningCardSlider>
-                    {piArticles.data?.map((article) => (
-                      <PiLearningCard
-                        key={article.id}
-                        id={article.id.toString()}
-                        title={article.title}
-                        description={article.description}
-                        thumbnail={article.thumbnail_image}
-                        subcategory={article.subcategory_name ?? ""}
-                        publishedAt={article.publish_at}
-                        rate={article as never}
-                      />
-                    ))}
-                    {fillSpace(piArticles.data?.length)}
-                  </PiLearningCardSlider>
-                ) : category.alias === "onlinecourse" ? (
-                  <PiLearningCardSlider>
-                    {onlineCourse.data?.map((event, i) => (
-                      <WebinarCard
-                        key={i}
-                        event={event as never}
-                        category={category.alias}
-                        className="mx-2"
-                      />
-                    ))}
-                    {fillSpace(onlineCourse.data?.length)}
-                  </PiLearningCardSlider>
-                ) : (
-                  <PiLearningCardSlider>
-                    {piLearning.data?.map((event, i) => (
-                      <WebinarCard
-                        key={i}
-                        event={event as never}
-                        category={category.alias}
-                        className="mx-2"
-                      />
-                    ))}
-                    {fillSpace(piLearning.data?.length)}
-                  </PiLearningCardSlider>
-                )}
-              </TabPanel>
-            );
-          })}
+          {appName?.category.map((category, i) => (
+            <TabPanel key={category.id}>
+              {i === 0 && bannerPiLearning.data && bannerPiLearning.data.length > 0 && (
+                <div className="h-full w-full object-contain md:object-cover">
+                  <PiLearningSlider items={bannerPiLearning.data} rounded />
+                </div>
+              )}
+              {category.alias === "article" ? (
+                <PiLearningCardSlider data={piarticleData} href={`/pi-learning/`} activeTab={activeTab}>
+                  {piArticles.data?.map((article) => (
+                    <PiLearningCard
+                      key={article.id}
+                      id={article.id.toString()}
+                      title={article.title}
+                      description={article.description}
+                      thumbnail={article.thumbnail_image}
+                      subcategory={article.subcategory_name ?? ""}
+                      publishedAt={article.publish_at}
+                      rate={article as never}
+                      href={`/pi-learning/article/${article.id}`} // Kirim href
+                      activeTab={activeTab} // Kirim activeTab
+                    />
+                  ))}
+                  {fillSpace(piArticles.data?.length)}
+                </PiLearningCardSlider>
+              ) : category.alias === "onlinecourse" ? (
+                <PiLearningCardSlider data={onlineData} href="/pi-learning/" activeTab={activeTab}>
+                  {onlineCourse.data?.map((event, i) => (
+                    <WebinarCard
+                      key={i}
+                      event={event as never}
+                      category={category.alias}
+                      className="mx-2"
+                      href={`/pi-learning/onlinecourse/${event.id}`} // Kirim href
+                      activeTab={activeTab} // Kirim activeTab
+                    />
+                  ))}
+                  {fillSpace(onlineCourse.data?.length)}
+                </PiLearningCardSlider>
+              ) : (
+                <PiLearningCardSlider data={pilearningData} href="/pi-learning/" activeTab={activeTab}>
+                  {piLearning.data?.map((event, i) => (
+                    <WebinarCard
+                      key={i}
+                      event={event as never}
+                      category={category.alias}
+                      className="mx-2"
+                      href={`/pi-learning/webinar/${event.id}`} // Kirim href
+                      activeTab={activeTab} // Kirim activeTab
+                    />
+                  ))}
+                  {fillSpace(piLearning.data?.length)}
+                </PiLearningCardSlider>
+              )}
+            </TabPanel>
+          ))}
         </TabPanels>
       </Tabs>
     </Section>
   );
 };
+
 export default memo(SectionPiLearning);

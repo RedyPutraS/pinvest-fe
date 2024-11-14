@@ -71,7 +71,7 @@ const SubCommentDialog = ({ showDialog = false, onClose, id, app }: Props) => {
               name="notes"
               value={comment}
               onChange={handleChange}
-              className="h-[120px] w-full rounded-md border border-pv-grey-medium1 px-4 py-2 hover:border-pv-grey-medium2 focus:outline-none focus:ring-1"
+              className="h-28 w-full rounded-md border border-pv-grey-medium1 px-4 py-2 hover:border-pv-grey-medium2 focus:outline-none focus:ring-1"
               placeholder="Masukkan Komentar Disini"
             />
           </div>

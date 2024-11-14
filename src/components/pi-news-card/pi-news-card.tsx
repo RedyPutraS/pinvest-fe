@@ -20,7 +20,7 @@ export default function PiNewsCard({
 }: Props) {
   return (
     <div>
-      <Card className="cursor-pointer rounded-md opacity-90 ring-gray-200 hover:opacity-100 hover:ring-2 xl:mb-4 xl:h-[190px] shadow-md md:h-[220px]">
+      <Card className="cursor-pointer rounded-md opacity-90 ring-gray-200 hover:opacity-100 hover:ring-2 xl:mb-4 xl:h-[190px] shadow-md md:h-auto">
         <CardImage className="relative">
           <Link href={`/pi-news/${article.id}`}>
             <img
@@ -33,7 +33,7 @@ export default function PiNewsCard({
             <ShareButton path={`/pi-news/${article.id}`} className="w-7 md:w-10 md:h-9 xl:w-10 lg:w-full"/>
           </div>
         </CardImage>
-        <CardBody className="py-2 md:h-[79px] xl:h-[92px]">
+        <CardBody className="py-2 md:h-auto xl:h-[92px]">
           <Link href={`/pi-news/${article.id}`}>
             {variant === "large" ? (
               <Typo.H5 className="hidden truncate text-gray-600 md:block">
@@ -44,11 +44,11 @@ export default function PiNewsCard({
                 {article.title}
               </Typo.B1>
             )}
-            <Typo.Caption className="font-extrabold h-8 truncate text-gray-600 md:hidden">
+            <Typo.Caption className="font-bold truncate text-gray-600 md:hidden">
               {article.title}
             </Typo.Caption>
             {withDescription && (
-              <Typo.B2 className="hidden truncate text-pv-grey-medium2 md:mb-4 md:block">
+              <Typo.B2 className="truncate text-pv-grey-medium2 text-[10px] md:text-sm md:mb-4 md:block xl:hidden">
                 {article.description}
               </Typo.B2>
             )}

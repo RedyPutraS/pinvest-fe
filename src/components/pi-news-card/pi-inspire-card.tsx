@@ -28,7 +28,7 @@ export default function PiNspireCard({
       <Card className={cn("cursor-pointer rounded-md opacity-90 ring-gray-200 hover:opacity-100 hover:ring-2  mb-4 shadow-md",isHomePage&&"h-[189.5px]")}>
         
         <CardImage className="relative">
-          <Link href={`/pi-news/${article.id}`}>
+          <Link href={`/pinspire/${article.id}`}>
             <img
               src={article.thumbnail_image}
               alt={article.title}

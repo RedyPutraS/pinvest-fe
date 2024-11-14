@@ -29,7 +29,7 @@ const SectionPiNews = ({ data }: Props) => {
 
   const piNewsParams: PiNewsParams = {
     page: 1,
-    limit: 4,
+    limit: 5,
     category: "financialeconomic",
   };
   const [newPiNewsParams, setNewPiNewsParams] = useState(piNewsParams);
@@ -37,7 +37,6 @@ const SectionPiNews = ({ data }: Props) => {
   const appName = data?.find(
     (app) => app.app_name.trim() === APP_NAME.news.trim()
   );
-  console.log(appName);
   
   
 
@@ -48,7 +47,7 @@ const SectionPiNews = ({ data }: Props) => {
       >
         <div className="block md:grid md:grid-cols-2 md:gap-5">
           <div className="md:col-span-2">
-            <div className="mb-4 hidden items-center justify-between xl:flex">
+            <div className="hidden items-center justify-between xl:flex">
               <PiNews />
             </div>
             <div className="flex items-center justify-between xl:hidden">
@@ -61,7 +60,6 @@ const SectionPiNews = ({ data }: Props) => {
                 //   (appName as any)?.category[tab]?.subcategory[0]?.alias ?? "";
                 setActiveTab(alias || "");
                 const param = { category: alias };
-                // console.log(param);
                 
                 setNewPiNewsParams({ ...piNewsParams, ...param });
               }}
@@ -78,15 +76,15 @@ const SectionPiNews = ({ data }: Props) => {
                 )}
               </TabList>
               <div className="h-3" />
-              <div className="block gap-4 lg:grid lg:grid-cols-7">
-                <div className="lg:col-span-5">
+              <div className="block gap-4 xl:grid xl:grid-cols-7 ">
+                <div className="xl:col-span-5">
                   <TabPanels>
                     {appName?.category
                       .filter((cat) => cat.category_name !== piNewsParams.category)
                       .map((category) => {
                         return (
                           <TabPanel key={category.id}>
-                            <div className="grid grid-cols-3 gap-4 md:grid-cols-4">
+                            <div className="grid grid-cols-3 gap-4 xl:grid-cols-4">
                               <div className="col-span-3">
                               {piNews.data && piNews.data[0] && (
                                 <>
@@ -96,29 +94,27 @@ const SectionPiNews = ({ data }: Props) => {
                                 </>
                               )}
                               </div>
-                              <div className="hidden no-scrollbar md:flex md:flex-col justify-between">
-                                {piNews.data?.map(
-                                  (
-                                    article: { id: Key | null | undefined },
-                                    index: number
-                                  ) =>
-                                    index !== 0 && (
-                                      <PiNewsCard
-                                        key={article.id}
-                                        article={article as never}
-                                        withDescription={false}
-                                      />
-                                    )
+                              <div className="hidden no-scrollbar xl:flex xl:flex-col justify-between">
+                                {piNews.data?.map((article, index) =>
+                                  index !== 0 && index !== 4 && (
+                                    <PiNewsCard
+                                      key={article.id}
+                                      article={article as never}
+                                      withDescription={false}
+                                    />
+                                  )
                                 )}
                               </div>
                             </div>
-                            <div className="grid grid-cols-2 gap-4 md:hidden mt-3">
-                              {piNews.data?.map((article) => (
-                                <PiNewsCard
-                                  key={article.id}
-                                  article={article as never}
-                                  imgClassName="h-[100px] xl:h-auto"
-                                />
+                            <div className="grid grid-cols-2 gap-4 xl:hidden mt-3">
+                              {piNews.data?.map((article, index) => (
+                                index === 0 ? null : (
+                                  <PiNewsCard
+                                    key={article.id}
+                                    article={article as never}
+                                    imgClassName="h-auto"
+                                  />
+                                )
                               ))}
                             </div>
                           </TabPanel>
@@ -126,45 +122,49 @@ const SectionPiNews = ({ data }: Props) => {
                       })}
                   </TabPanels>
                 </div>
-                <div className="lg:col-span-2 mt-5 lg:mt-0">
+                <div className="col-span-12 xl:col-span-2 mt-5 xl:mt-0">
                   <Stock />
                 </div>
               </div>
             </Tabs>
           </div>
         </div>
-        <div className="mt-2 flex items-end justify-end text-gray-600 hover:text-pv-grey-dark3 xl:hidden ">
-            <Link
-              href={activeTab ? `/pi-news-category/${activeTab}` : `/pi-news`}
-            >
-              <Typo.S2 className="font-semibold">
-                <Button
-                  variant="text"
-                  color="blue-gray"
-                  className="flex items-end gap-2 rounded-md mt-6"
-                >
-                  Lihat semua
-                  <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-                </Button>
-              </Typo.S2>
-            </Link>
-          </div>
-        <div className="mt-2 hidden items-center justify-end text-gray-600 hover:text-pv-grey-dark3 xl:flex">
-          <Link
-            href={activeTab ? `/pi-news-category/${activeTab}` : `/pi-news`}
-          >
-            <Typo.H6 className="m-0 font-semibold">
-              <Button
-                variant="text"
-                color="blue-gray"
-                className="flex items-center gap-2 mt-7"
+        {piNews.data && piNews.data[0] && (
+          <>
+            <div className="mt-2 flex items-end justify-end text-gray-600 hover:text-pv-grey-dark3 xl:hidden ">
+              <Link
+                href={activeTab ? `/pi-news-category/${activeTab}` : `/pi-news`}
               >
-                Lihat semua
-                <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-              </Button>
-            </Typo.H6>
-          </Link>
-        </div>
+                <Typo.S2 className="font-semibold">
+                  <Button
+                    variant="text"
+                    color="blue-gray"
+                    className="text-[10px] md:text-base flex items-center gap-1 md:gap-2 rounded-md text-gray-600 px-3"
+                  >
+                    Lihat semua
+                    <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                  </Button>
+                </Typo.S2>
+              </Link>
+            </div>
+            <div className="mt-2 hidden items-center justify-end text-gray-600 hover:text-pv-grey-dark3 xl:flex">
+              <Link
+                href={activeTab ? `/pi-news-category/${activeTab}` : `/pi-news`}
+              >
+                <Typo.H6 className="m-0 font-semibold">
+                  <Button
+                    variant="text"
+                    color="blue-gray"
+                    className="flex items-center gap-2"
+                  >
+                    Lihat semua
+                    <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                  </Button>
+                </Typo.H6>
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

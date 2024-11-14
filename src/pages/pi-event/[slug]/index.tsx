@@ -11,6 +11,7 @@ import { format, parse } from "date-fns";
 import { id } from "date-fns/locale";
 import { toast } from "hooks/use-toast";
 import { useAddToCart } from "modules/cart/api/add-to-cart";
+import { useCartList } from "modules/cart/api/list-cart";
 import { FeedbackComment } from "modules/feedback/component/comment";
 import { FeedbackRating } from "modules/feedback/component/rating";
 import { useEvent } from "modules/pi-event/api/event";
@@ -22,24 +23,37 @@ import type {
 } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import useStore from '../../../../src/app/store';
 
 const APP = "picircle";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const EventDetail: NextPage<Props> = ({ params }) => {
+  const [showMap, setShowMap] = useState(false);
   const event = useEvent(params);
 
   const router = useRouter();
   const addToCart = useAddToCart();
+  const { refetch: reCart } = useCartList();
+  const { incrementC } = useStore();
   const type = "event";
-  const handleAddToCart = (qty: number, event: string, id: number) => {
+  const handleAddToCart = (qty: number, event: string, id: number, typeB: string) => {
     addToCart
       .mutateAsync({
         type: event,
         content_id: id,
         qty,
       })
-      .then(() => router.push("/cart"))
+      .then(() => {
+        if (typeB === "redirect") {
+          router.push("/cart");
+        } else {
+          incrementC();
+          reCart();
+          toast({ title: "Berhasil menambahkan ke keranjang" });
+        }
+      })
       .catch((err: AxiosError) => {
         toast({
           title:
@@ -83,6 +97,36 @@ const EventDetail: NextPage<Props> = ({ params }) => {
                     <div className="flex">
                       <div className="rounded bg-gray-50 p-2">
                         <img
+                          src="/assets/icon/map-trifold.svg"
+                          className="h-10 w-10"
+                          alt="ticket icon"
+                        />
+                      </div>
+                      <div className="relative flex-row">
+                        <span className="col-span-2 ml-2 text-sm text-gray-600">
+                          Alamat
+                        </span>
+
+                        <p className="ml-2 text-sm  xl:w-96">
+                          {event?.data?.type == "offline" &&
+                            event?.data?.address}
+                          {(event?.data?.type == "online-zoom" ||
+                            event?.data?.type == "online-gmeet") &&
+                            "online"}
+                        </p>
+
+                        {/* <Link
+                          target="_blank"
+                          className="ml-2 whitespace-nowrap text-sm text-blue-700"
+                          href={url ?? "#"}  // Gunakan url jika ada, jika tidak, fallback ke "#" agar tidak kosong
+                        >
+                          {event?.data?.type === "offline" ? "Lihat Maps" : ""}
+                        </Link> */}
+                      </div>
+                    </div>
+                    <div className="flex mt-1 xl:mt-0 xl:ml-2">
+                      <div className="rounded bg-gray-50 p-2">
+                        <img
                           src="/assets/icon/calendar.svg"
                           className="h-10 w-10 "
                           alt="time icon"
@@ -108,11 +152,12 @@ const EventDetail: NextPage<Props> = ({ params }) => {
                         </p>
                       </div>
                     </div>
-                    <div className="flex">
+                    
+                    {/* <div className="flex">
                       <div className="rounded bg-gray-50 p-2 xl:ml-10">
                         <img
                           src="/assets/icon/map-trifold.svg"
-                          className="h-10 w-20"
+                          className="h-auto w-10"
                           alt="ticket icon"
                         />
                       </div>
@@ -134,8 +179,35 @@ const EventDetail: NextPage<Props> = ({ params }) => {
                           {event?.data?.type == "offline" ? "Lihat Maps" : ""}
                         </Link>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
+                  {
+                      url && (
+                        <div>
+                          {/* Tombol untuk Hide/Show Maps */}
+                          <button 
+                            onClick={() => setShowMap(!showMap)}  // Toggle state showMap
+                            className="px-4 py-2 bg-blue-500 text-white rounded-md mb-2 text-[12px] md:text-[15px]"
+                          >
+                            {showMap ? "Tutup Map" : "Tampilkan Maps"}  {/* Teks bergantung pada state */}
+                          </button>
+
+                          {/* Hanya render iframe jika showMap true */}
+                          {showMap && (
+                            <div className="flex mt-1 xl:mt-0 bg-black h-[350px] md:h-[400px] md:w-full xl:w-[400px] xl:h-[300px]">
+                              <iframe 
+                                src={url} 
+                                width="100%" 
+                                height="100%" 
+                                style={{ border: 0 }} 
+                                loading="lazy" 
+                                referrerPolicy="no-referrer-when-downgrade"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      )
+                    }
 
                   <h2 className="mt-8 border-t text-xl font-bold text-gray-600 lg:text-2xl">
                     Deskripsi Umum
@@ -190,7 +262,7 @@ const EventDetail: NextPage<Props> = ({ params }) => {
                       <Tiket
                         key={item.id}
                         onSubmit={(body) =>
-                          handleAddToCart(body.qty, "event", item.id)
+                          handleAddToCart(body.qty, "event", item.id, body.typeB ?? "redirect")
                         }
                         title={item.title + dateString}
                         price={item.price}

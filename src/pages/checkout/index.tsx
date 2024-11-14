@@ -62,12 +62,6 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
     voucher,
     membership_duration_id: router.query.id as string,
   });
-  
-  useEffect(() => {
-    // Ambil data dari sessionStorage    
-    console.log(checkoutData.diskon);
-    
-  }, [checkoutData]);
 
   useEffect(() => {
     // Ambil data dari sessionStorage    
@@ -79,7 +73,6 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
         console.error('Error parsing JSON:', error);
       }
     } else {
-      console.log('No checkout data found in sessionStorage');
     }
   }, [storedData]);
   
@@ -158,7 +151,6 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
           <div className="col-span-12 md:col-span-8 lg:col-span-9">
             {checkoutInfo &&
               checkoutInfo.items.map((item: any, index: any) => {
-                // console.log(checkoutInfo);
                 
                 if (item.type === "event") {
                   return (

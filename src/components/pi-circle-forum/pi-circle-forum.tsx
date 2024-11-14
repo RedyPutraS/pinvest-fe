@@ -33,7 +33,6 @@ export const PiCircleForum = () => {
   const { data: categories, refetch } = usePiCircleSubCategory({
     categoryId: "18",
   });
-  console.log(categories);
   
 
   const handleSortChange = (sort: string) => {

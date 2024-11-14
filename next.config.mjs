@@ -26,7 +26,8 @@ const config = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://3.106.99.236/api/:path*",
+        // destination: "http://3.106.99.236/api/:path*",
+        destination: "https://api.pinvest.co.id/api/:path*",
         // destination: "http://127.0.0.1:8000/api/:path*",
       },
     ];

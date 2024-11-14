@@ -26,23 +26,27 @@ import { useApps } from "utils/api/get-apps";
 import { APP_NAME } from "utils/constants";
 import PopupBanner from "components/popup-banner";
 import Cover from "modules/pi-learning/components/detail/cover";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 const APP = "pinews";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const NewsDetail: NextPage<Props> = ({ params, adsParam }) => {
   const news = useNewsDetail(params);
   const { data: ads } = useAds(adsParam);
+  const [arrID, setArrID] = useState<number[]>([]);
   const newsArticle = useNews({ start: 0, limit: 3, sortBy: "asc" });
   const subCategorys = news.data?.alias;
   const subString = subCategorys?.toLowerCase();
   const newsRelated = useNewsRelated({
     start: 0,
-    limit: 3,
+    limit: 4,
     subCat: subString,
   });
-  // useEffect(() => {
-  //   console.log(newsRelated, news);
-  // }, [newsRelated])
+  useEffect(() => {
+    if (newsRelated.data){
+      const ids = newsRelated.data?.map((item) => item.id);
+      setArrID(ids);
+    }
+  }, [newsRelated.data])
 
   const appList = useApps();
   const appData = appList.data;
@@ -159,7 +163,7 @@ const NewsDetail: NextPage<Props> = ({ params, adsParam }) => {
 
                 <div className="items-center">
                   <div className="relative my-4 flex justify-center whitespace-nowrap py-2 text-start text-2xl text-sky-800 transition-all before:absolute before:bottom-0 before:z-0 before:h-2 before:w-full before:rounded before:bg-sky-800">
-                    Latest News
+                    Berita Terbaru
                   </div>
                   <div>
                     <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-6">
@@ -212,35 +216,68 @@ const NewsDetail: NextPage<Props> = ({ params, adsParam }) => {
             <div className="flex">
               <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-6">
                 {newsRelated.data?.map((item, index) => {
-                  const isLarge = index === 1;
-                  return (
-                    <Link
-                      href={`/pi-news/${item.id}`}
-                      key={item.id}
-                      className={cn("md:col-span-2", "md:row-span-2")}
-                    >
-                      <Card className="min-h-full max-w-2xl">
-                        <CardImage>
-                          <Image
-                            fill
-                            src={item.thumbnail_image}
-                            alt={`Thumbnail ${item.title}`}
-                            style={{ objectFit: "cover" }}
-                          />
-                        </CardImage>
-                        <CardBody>
-                          <p className="text-xl text-sky-800">{item.title}</p>
-                          {isLarge && (
-                            <p className="mb-4 truncate">{item.description}</p>
-                          )}
-                          <p className="text-sm text-green-500">
-                            {item.subcategory_name}
-                          </p>
-                        </CardBody>
-                      </Card>
-                    </Link>
-                  );
-                })}
+                    if (news.data?.id !== undefined && arrID.includes(news.data.id)) {
+                      if (news.data?.id !== item.id) {
+                        return (
+                          <Link
+                            href={`/pi-news/${item.id}`}
+                            key={item.id}
+                            className={cn("md:col-span-2", "md:row-span-2")}
+                          >
+                            <Card className="min-h-full max-w-2xl">
+                              <CardImage>
+                                <Image
+                                  fill
+                                  src={item.thumbnail_image}
+                                  alt={`Thumbnail ${item.title}`}
+                                  style={{ objectFit: "cover" }}
+                                />
+                              </CardImage>
+                              <CardBody>
+                                <p className="text-xl text-sky-800">{item.title}</p>
+                                {/* {isLarge && (
+                                  <p className="mb-4 truncate">{item.description}</p>
+                                )} */}
+                                <p className="text-sm text-green-500">
+                                  {item.subcategory_name}
+                                </p>
+                              </CardBody>
+                            </Card>
+                          </Link>
+                        );
+                      }
+                    } else {
+                      if (index !== 3) {
+                        return (
+                          <Link
+                            href={`/pi-news/${item.id}`}
+                            key={item.id}
+                            className={cn("md:col-span-2", "md:row-span-2")}
+                          >
+                            <Card className="min-h-full max-w-2xl">
+                              <CardImage>
+                                <Image
+                                  fill
+                                  src={item.thumbnail_image}
+                                  alt={`Thumbnail ${item.title}`}
+                                  style={{ objectFit: "cover" }}
+                                />
+                              </CardImage>
+                              <CardBody>
+                                <p className="text-xl text-sky-800">{item.title}</p>
+                                {/* {isLarge && (
+                                  <p className="mb-4 truncate">{item.description}</p>
+                                )} */}
+                                <p className="text-sm text-green-500">
+                                  {item.subcategory_name}
+                                </p>
+                              </CardBody>
+                            </Card>
+                          </Link>
+                        )
+                      }
+                    }
+                  })}
               </div>
             </div>
             <FeedbackRating
@@ -282,7 +319,7 @@ const NewsDetail: NextPage<Props> = ({ params, adsParam }) => {
 
               <div className="items-center">
                 <div className="relative my-4 flex justify-center whitespace-nowrap py-2 text-start text-2xl text-sky-800 transition-all before:absolute before:bottom-0 before:z-0 before:h-2 before:w-full before:rounded before:bg-sky-800">
-                  Latest News
+                  Berita Terbaru
                 </div>
                 <div>
                   {newsArticle.data?.map((item, index) => {

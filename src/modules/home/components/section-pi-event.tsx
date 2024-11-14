@@ -11,6 +11,7 @@ import { memo, useContext, useEffect, useState } from "react";
 import { PiEvent } from "./program-menu-icon";
 import { fillSpace } from "utils/helpers/fillspace";
 import { ActiveTabContext } from "../context/active-tab-context";
+
 type Props = {
   data: {
     app_name: string;
@@ -24,10 +25,13 @@ type Props = {
 
 const SectionPiEvent = ({ data }: Props) => {
   const { setActiveTab } = useContext(ActiveTabContext);
+  const [activeTab, setActiveTabState] = useState("all");
+
   useEffect(() => {
     setActiveTab("all");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setActiveTabState("all");
+  }, [setActiveTab]);
+
   const piEventParams: PiEventParams = {
     page: 1,
     limit: 6,
@@ -38,6 +42,45 @@ const SectionPiEvent = ({ data }: Props) => {
     (app) => app.app_name.trim() === APP_NAME.event.trim()
   );
 
+  const onChangeTab = (tab: number) => {
+    let param = {};
+    let category = "all";
+
+    switch (tab) {
+      case 1:
+        param = {
+          type: "online",
+          limit: 6,
+        };
+        category = "all";
+        break;
+      case 2:
+        param = {
+          time: "day",
+          limit: 6,
+        };
+        category = "today";
+        break;
+      case 3:
+        param = {
+          time: "week",
+          limit: 6,
+        };
+        category = "week";
+        break;
+      case 4:
+        param = {
+          price: "free",
+          limit: 6,
+        };
+        break;
+    }
+
+    setActiveTab(category);
+    setActiveTabState(category);
+    setNewPiEventParams({ ...piEventParams, ...param });
+  };
+
   return (
     <Section
       title="PiEvent"
@@ -45,43 +88,7 @@ const SectionPiEvent = ({ data }: Props) => {
       variant="white"
       icon={<PiEvent />}
     >
-      <Tabs
-        onChangeTab={(tab) => {
-          let param = {};
-          let category = "all";
-          switch (tab) {
-            case 1:
-              param = {
-                type: "online",
-                limit: 6,
-              };
-              category = "all";
-              break;
-            case 2:
-              param = {
-                time: "day",
-                limit: 6,
-              };
-              category = "today";
-              break;
-            case 3:
-              param = {
-                time: "week",
-                limit: 6,
-              };
-              category = "week";
-              break;
-            case 4:
-              param = {
-                price: "free",
-                limit: 6,
-              };
-              break;
-          }
-          setActiveTab(category);
-          setNewPiEventParams({ ...piEventParams, ...param });
-        }}
-      >
+      <Tabs onChangeTab={(tab) => onChangeTab(tab)}>
         <TabList>
           <Tab>
             <div className="text-[11px] md:text-xl md:font-medium mr-1">Semua</div>
@@ -97,34 +104,29 @@ const SectionPiEvent = ({ data }: Props) => {
           </Tab>
         </TabList>
         <TabPanels>
-          {appName?.category.map((category, i) => {
-            return (
-              <TabPanel key={category.id}>
-                {i === 0 && (
-                  <div>
-                    <Typo.S1 className="mb-2 mt-6 text-[24px] font-semibold text-gray-600">
-                      Lihat Kategori Trending
-                    </Typo.S1>
-                    <PiEventMenuSlider
-                      onClick={(category) => {
-                        setNewPiEventParams({
-                          ...piEventParams,
-                          category: category.alias,
-                        });
-                      }}
-                      categories={appName.category}
-                    />
-                  </div>
-                )}
-                <PiEventCardSlider>
-                  {piEvents.data?.map((event) => (
-                    <PiEventCard key={event.id} event={event as never} />
-                  ))}
-                  {fillSpace(piEvents.data?.length)}
-                </PiEventCardSlider>
-              </TabPanel>
-            );
-          })}
+          {appName?.category.map((category, i) => (
+            <TabPanel key={category.id}>
+              {i === 0 && (
+                <div>
+                  <PiEventMenuSlider
+                    onClick={(category) => {
+                      setNewPiEventParams({
+                        ...piEventParams,
+                        category: category.alias,
+                      });
+                    }}
+                    categories={appName.category}
+                  />
+                </div>
+              )}
+              <PiEventCardSlider data={piEvents.data} href="/pi-event?category=" activeTab={activeTab}>
+                {piEvents.data?.map((event) => (
+                  <PiEventCard key={event.id} event={event as never} />
+                ))}
+                {fillSpace(piEvents.data?.length)}
+              </PiEventCardSlider>
+            </TabPanel>
+          ))}
         </TabPanels>
       </Tabs>
     </Section>

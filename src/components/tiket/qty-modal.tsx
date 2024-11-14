@@ -6,16 +6,17 @@ import {
 } from "components/dialog";
 import Button from "components/button/button";
 import { currencyFormatter } from "utils/helpers/formatter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   isOpen: boolean;
   price: number;
   setIsOpen: (isOpen: boolean) => void;
-  onSubmit: (body: { qty: number }) => void;
+  onSubmit: (body: { qty: number, typeB: string }) => void;
+  titipe: string;
 };
 
-const QtyModal: React.FC<Props> = ({ isOpen, setIsOpen, onSubmit, price }) => {
+const QtyModal: React.FC<Props> = ({ isOpen, setIsOpen, onSubmit, price, titipe }) => {
   const [qty, setQty] = useState(1);
 
   return (
@@ -58,7 +59,7 @@ const QtyModal: React.FC<Props> = ({ isOpen, setIsOpen, onSubmit, price }) => {
               >
                 Kembali
               </Button>
-              <Button className="mt-4" onClick={() => onSubmit({ qty })}>
+              <Button className="mt-4" onClick={() => onSubmit({ qty, typeB: titipe })}>
                 Pesan Sekarang
               </Button>
             </div>

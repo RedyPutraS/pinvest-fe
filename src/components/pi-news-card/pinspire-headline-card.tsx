@@ -16,8 +16,8 @@ export default function PinspireHeadlineCard({
   descHeight = "",
 }: Props) {
   return (
-    <div className=" cursor-pointer opacity-90 ring-gray-200 hover:opacity-100 hover:ring-2 shadow-md md:h-[750px] xl:h-[600px]">
-      <Card className="xl:h-[600px] shadow-md md:h-[750px]">
+    <div className=" cursor-pointer opacity-90 ring-gray-200 hover:opacity-100 hover:ring-2 shadow-md md:h-[750px] xl:h-[600px] md:mb-3">
+      <Card className="xl:h-[600px] shadow-md md:h-auto">
         <CardImage className="relative">
           <Link href={`/pinspire/${article.id}`}>
             <Image src={article.thumbnail_image} alt={article.title} fill />
@@ -29,14 +29,14 @@ export default function PinspireHeadlineCard({
         <CardBody className="md:h-full relative">
           <Link href={`/pinspire/${article.id}`} className="">
             <Typo.H5 className="my-2 hidden font-bold text-gray-600 md:block">
-              {article.title}
+              {article.title.length > 90 ? `${article.title.substring(0, 90)}...` : article.title}
             </Typo.H5>
             <Typo.H6 className="text-center font-bold text-gray-600 md:hidden">
-              {article.title}
+              {article.title.length > 90 ? `${article.title.substring(0, 90)}...` : article.title}
             </Typo.H6>
             <Typo.B2
               className={cn(
-                "hidden text-clip text-pv-grey-medium2 line-clamp-2 md:mb-4 md:block lg:h-[60px] md:h-[220px]",
+                "hidden text-clip text-pv-grey-medium2 line-clamp-2 md:mb-4 md:block lg:h-[60px] md:h-auto",
               )}
             >
               {article.description}

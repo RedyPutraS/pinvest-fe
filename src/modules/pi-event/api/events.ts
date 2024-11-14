@@ -29,7 +29,7 @@ export const eventsSchema = z.object({
       promo_price: z.number(),
       app_name: z.string(),
       rate: z.number(),
-      ticket: z.object({ date: z.array(z.string()), duration: z.string() }),
+      ticket: z.object({ date: z.array(z.string()), price: z.array(z.number()), duration: z.string() }),
       instructor: z
         .array(
           z.object({

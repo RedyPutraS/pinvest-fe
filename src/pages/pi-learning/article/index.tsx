@@ -68,7 +68,6 @@ const Learning = ({ appParams }: Props) => {
     filter: null,
     sort: filter?.toString() ?? "",
   });
-  console.log("Article", articleRelated.data);
   const total_page = articleRelated.data?.page.total_page ?? 0;
   // const [page, setPage] = useState(1);
   const subCategory = app.data?.category.find(
@@ -98,7 +97,6 @@ const Learning = ({ appParams }: Props) => {
 
     setActive((activeNumber - 1).toString());
   };
-  console.log(total_page === Number(active));
   
 
   return (

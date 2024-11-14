@@ -10,6 +10,7 @@ import { PiCircle } from "./program-menu-icon";
 import { fillSpace } from "utils/helpers/fillspace";
 import { useRouter } from "next/navigation";
 import { ActiveTabContext } from "../context/active-tab-context";
+
 type Props = {
   data: {
     app_name: string;
@@ -20,12 +21,15 @@ type Props = {
     }[];
   }[];
 };
+
 const SectionPiCircle = ({ data }: Props) => {
   const { setActiveTab } = useContext(ActiveTabContext);
+  const [activeTab, setActiveTabState] = useState<string | undefined>("directory");
   useEffect(() => {
     setActiveTab("directory");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setActiveTabState("directory"); // Set activeTab awal
+  }, [setActiveTab]);
+
   const piCircleParams: PiCircleParams = {
     page: 1,
     limit: 6,
@@ -37,14 +41,20 @@ const SectionPiCircle = ({ data }: Props) => {
     (app) => app.app_name.trim() === APP_NAME.circle.trim()
   );
   const router = useRouter();
+
+  const onChangeTab = (tab: number, alias: string): void => {
+    setActiveTab(alias);
+    setActiveTabState(alias); // Set activeTab ketika tab berubah
+    const param = { category: alias };
+    setNewPiCircleParams({ ...piCircleParams, ...param });
+  };
+
   return (
     <Section title="PiCircle" href="/pi-circle?category=" icon={<PiCircle />}>
       <Tabs
         onChangeTab={(tab) => {
-          const alias = appName?.category[tab]?.alias;
-          setActiveTab(alias || "");
-          const param = { category: alias };
-          setNewPiCircleParams({ ...piCircleParams, ...param });
+          const alias = appName?.category[tab]?.alias || "";
+          onChangeTab(tab, alias);
         }}
       >
         <TabList>
@@ -60,7 +70,7 @@ const SectionPiCircle = ({ data }: Props) => {
           {appName?.category.map((category) => {
             return (
               <TabPanel key={category.id}>
-                <PiCircleCardSlider>
+                <PiCircleCardSlider data={piCircle.data} href="/pi-circle?category=" activeTab={activeTab}>
                   {piCircle.data?.map(function (article) {
                     const link =
                       category.alias.toLowerCase() === "forum"
@@ -88,4 +98,5 @@ const SectionPiCircle = ({ data }: Props) => {
     </Section>
   );
 };
+
 export default memo(SectionPiCircle);

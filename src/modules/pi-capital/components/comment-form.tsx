@@ -48,7 +48,7 @@ const CommentForm = ({ onSuccess }: Props) => {
             value={formData.comment}
             onChange={handleChange}
             rows={3}
-            className="w-full rounded-md border border-gray-300 px-4 py-2 text-xs focus:outline-none focus:ring-1 xl:text-base"
+            className="h-28 w-full rounded-md border border-gray-300 px-4 py-2 text-xs focus:outline-none focus:ring-1 xl:text-base"
             placeholder="Masukkan Komentar Disini"
           />
           <div>

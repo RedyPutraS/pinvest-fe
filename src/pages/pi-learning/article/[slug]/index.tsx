@@ -185,7 +185,7 @@ const Detail = ({ params, adsParam }: Props) => {
               Artikel Terkait
             </div>
             <div className="flex">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-6">
+              <div className="grid grid-cols-1 gap-4 xl:grid-cols-6">
                 {articleRelated.data?.data?.map((item) => {
                   return (
                     <Link

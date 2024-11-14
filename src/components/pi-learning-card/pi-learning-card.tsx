@@ -16,6 +16,8 @@ type Props = {
   subcategory: string;
   publishedAt?: string | null;
   rate?: any;
+  href?: string; // Menambahkan href
+  activeTab?: string; 
 };
 export function PiLearningCard({
   id,
@@ -25,6 +27,8 @@ export function PiLearningCard({
   publishedAt,
   subcategory,
   rate,
+  href,
+  activeTab
 }: Props) {
   const router = useRouter();
 

@@ -29,7 +29,6 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const Learning = ({ params, appParams }: Props) => {
   const router = useRouter();
   const app = useApp(appParams);
-  console.log(appParams);
   
   const APP = "pilearning";
   const [search1, setSearch] = useState<string>();
@@ -71,7 +70,6 @@ const Learning = ({ params, appParams }: Props) => {
     category: category?.toString() ?? "",
   });
   const total_page = onlinecourses.data?.page.total_page ?? 0;
-  // console.log('onlinecourses',onlinecourses);
   const initActiveTab = useMemo(
     () =>
       app.data?.category.findIndex(

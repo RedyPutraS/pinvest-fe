@@ -15,15 +15,10 @@ export default function PiNewsHeadlineCard({
   article,
   descHeight = "xl:h-[60px]",
 }: Props) {
-
-  useEffect(() => {
-    // console.log(article);
-    // console.log(test);
-  }, []);
   
   return (
     <div className=" cursor-pointer opacity-90 ring-gray-200 hover:opacity-100 hover:ring-2">
-      <Card className="shadow-md xl:h-[603px]">
+      <Card className="shadow-md h-full xl:h-[603px]">
         <CardImage className="relative">
           <Link href={`/pi-news/${article.id}`}>
             <Image src={article.thumbnail_image} alt={article.title} fill />
@@ -34,11 +29,12 @@ export default function PiNewsHeadlineCard({
         </CardImage>
         <CardBody>
           <Link href={`/pi-news/${article.id}`}>
-            <Typo.H5 className="my-2 hidden font-bold text-gray-600 md:block">
-              {article.title}
+            <Typo.H5 className="my-2 hidden font-bold text-gray-600 line-clamp-1 md:block">
+              {article.title.length > 90 ? `${article.title.substring(0, 90)}...` : article.title}
             </Typo.H5>
             <Typo.H6 className="text-center font-bold text-gray-600 md:hidden">
-              {article.title}
+              {/* {article.title} */}
+              {article.title.length > 90 ? `${article.title.substring(0, 90)}...` : article.title}
             </Typo.H6>
             <Typo.B2
               className={cn(

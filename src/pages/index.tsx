@@ -14,6 +14,7 @@ import PopupBanner from "components/popup-banner";
 import { appx } from "utils/get-apps";
 import SectionPiCastLimitYoutube from "modules/home/components/section-pi-cast-limit-youtube";
 import { ActiveTabProvider } from "modules/home/context/active-tab-provider";
+import { useEffect } from "react";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const Home = ({}: Props) => {

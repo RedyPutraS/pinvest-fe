@@ -133,7 +133,7 @@ export const thumbnailsSchema = z.object({
   medium: mediumSchema,
   high: highSchema,
   standard: standardSchema,
-  maxres: maxresSchema,
+  maxres: maxresSchema.optional(),
 });
 
 export const snippetSchema = z.object({
@@ -182,7 +182,8 @@ export const getPiCastYoutubeByPlaylistId = async ({
   const { data } = await axios.get(`/picast/youtube-playlist/${playlistId}`, {
     params: {},
   });
-  return rootSchema.parse(data).data.items;
+  
+  return rootSchema.parse(data);
 };
 
 export const usePiCastYoutubeByPlaylistId = (

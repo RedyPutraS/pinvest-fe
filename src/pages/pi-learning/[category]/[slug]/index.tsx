@@ -21,32 +21,119 @@ import { useRouter } from "next/router";
 import { id } from "date-fns/locale";
 import type { AxiosError } from "axios";
 import { toast } from "hooks/use-toast";
+import { useState } from "react";
+import { useCartList } from "modules/cart/api/list-cart";
+import useStore from '../../../../../src/app/store';
+import Collapse from "components/collapse";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
+interface Instructor {
+  image?: string | null | undefined;
+  name: string;
+  title: string;
+  description: string;
+}
+interface ProfilePopupProps {
+  item: Instructor;
+  onClose: () => void;
+}
+
+const ProfilePopup: React.FC<ProfilePopupProps> = ({ item }) => {
+  const maxSentences = 2; // Set the maximum number of sentences to display
+
+  // Function to truncate the description to a certain number of sentences
+  const truncateDescription = (description: string, maxSentences: number) => {
+    // Split the description into an array of sentences
+    const sentences = description.split(". ");
+
+    // Take only the first 'maxSentences' sentences and join them back together
+    const truncatedDescription = sentences.slice(0, maxSentences).join(". ");
+
+    return truncatedDescription;
+  };
+
+  // Truncate the description to a certain number of sentences
+  const truncatedDescription = truncateDescription(
+    item.description ?? "",
+    maxSentences
+  );
+
+  return (
+    <div
+      className="popup"
+      style={{
+        marginTop: "40px",
+        position: "fixed",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        backgroundColor: "white",
+        padding: "20px",
+        borderRadius: "8px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        zIndex: 999, // Adjust z-index as needed
+        display: "flex",
+      }}
+    >
+      <img
+        className="h-40 w-40 rounded" // Adding fixed width and height
+        src={item.image ?? ""}
+        alt="thumbnail"
+        style={{ marginRight: "10px" }} // Added margin-right for spacing
+      />
+      <div>
+        <p className="text-lg font-bold" style={{ textAlign: "left" }}>
+          {item.name}
+        </p>
+        <p style={{ textAlign: "left" }}>{item.title}</p>
+        <RenderHtml
+          html={truncatedDescription ?? ""}
+          key={truncatedDescription}
+          className="mt-4"
+        />{" "}
+        {/* Display truncated description */}
+      </div>
+    </div>
+  );
+};
+
 const Detail: NextPage<Props> = ({ params }) => {
+  const [showMap, setShowMap] = useState(false);
+  const [showProfile, setShowProfile] = useState<Instructor | null>(null);
   const router = useRouter();
   const { data } = useEventDetail({
     slug: params.slug ?? "",
   });
   const addToCart = useAddToCart();
   const APP = "pilearning";
-  const handleAddToCart = (qty: number, event: string, id: number) => {
+  const { refetch: reCart } = useCartList();
+  const { incrementC } = useStore();
+  const handleAddToCart = (qty: number, event: string, id: number, typeB: string) => {
+    
     addToCart
       .mutateAsync({
         type: event,
         content_id: id,
         qty,
       })
-      .then(() => router.push("/cart"))
+      .then(() => {
+        if (typeB === "redirect") {
+          router.push("/cart");
+        } else {
+          incrementC();
+          reCart();
+          toast({ title: "Berhasil menambahkan ke keranjang" });
+        }
+      })
       .catch((err: AxiosError) => {
         toast({
           title:
-            (err.response?.data as any)?.message ??
-            "Gagal menambahkan ke keranjang",
+            (err.response?.data as any)?.message ?? "Gagal menambahkan ke keranjang",
         });
       });
   };
+  
 
   return (
     <>
@@ -90,6 +177,33 @@ const Detail: NextPage<Props> = ({ params }) => {
 
             <TabPanels>
               <TabPanel>
+                {data?.instructor && (
+                  <>
+                    <h2 className="mb-1 text-2xl font-bold">Mentor</h2>
+                    <div key={data?.instructor?.title} className="border-b pb-4 mt-2">
+                      <img
+                        className="w-20 rounded hover:shadow-lg hover:shadow-black"
+                        src={data?.instructor?.image ?? ""}
+                        alt="thumbnail"
+                        onMouseEnter={() => setShowProfile(data?.instructor ?? null)}
+                        onMouseLeave={() => setShowProfile(null)}
+                      />
+                      <p className="text-lg font-bold hover:underline">
+                        {data?.instructor?.name}
+                      </p>
+                      <p className="mt-2">{data?.instructor?.title}</p>
+                      <Collapse>
+                        <RenderHtml html={data?.instructor?.description} />
+                      </Collapse>
+                    </div>
+                  </>
+                )}
+                {showProfile && (
+                    <ProfilePopup
+                      item={showProfile}
+                      onClose={() => setShowProfile(null)}
+                    />
+                  )}
                 <h2 className="mt-8 text-xl font-semibold text-gray-600 lg:text-2xl">
                   Jadwal
                 </h2>
@@ -129,7 +243,7 @@ const Detail: NextPage<Props> = ({ params }) => {
                       <div className="text-gray-600">
                         {data?.type == "offline" ? data?.address : data?.type}
                       </div>
-                      <Link
+                      {/* <Link
                         target="_blank"
                         className="whitespace-nowrap text-sm text-blue-700"
                         href={
@@ -139,7 +253,7 @@ const Detail: NextPage<Props> = ({ params }) => {
                         }
                       >
                         {data?.type == "offline" ? "Lihat Maps" : ""}
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
                 </div>
@@ -190,7 +304,7 @@ const Detail: NextPage<Props> = ({ params }) => {
                         {data?.type == "offline" ? data?.address : data?.type}
                       </p>
 
-                      <Link
+                      {/* <Link
                         target="_blank"
                         className=" ml-2 whitespace-nowrap text-sm text-blue-700"
                         href={
@@ -200,10 +314,37 @@ const Detail: NextPage<Props> = ({ params }) => {
                         }
                       >
                         {data?.type == "offline" ? "Lihat Maps" : ""}
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
                 </div>
+                {
+                  data?.google_location && (
+                    <div>
+                    {/* Tombol untuk Hide/Show Maps */}
+                      <button 
+                        onClick={() => setShowMap(!showMap)}  // Toggle state showMap
+                        className="mt-2 xl:mt-0 px-4 py-2 bg-blue-500 text-white rounded-md mb-2 text-[12px] md:text-[15px]"
+                      >
+                        {showMap ? "Tutup Map" : "Tampilkan Maps"}  {/* Teks bergantung pada state */}
+                      </button>
+
+                      {/* Hanya render iframe jika showMap true */}
+                      {showMap && (
+                        <div className="flex mt-1 xl:mt-0 bg-black h-[350px] md:h-[400px] md:w-full xl:w-[400px] xl:h-[300px]">
+                          <iframe 
+                            src={data?.google_location} 
+                            width="100%" 
+                            height="100%" 
+                            style={{ border: 0 }} 
+                            loading="lazy" 
+                            referrerPolicy="no-referrer-when-downgrade"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )
+                }
 
                 <h2 className="mt-8 border-t text-xl font-semibold text-gray-600 lg:text-2xl">
                   Deskripsi Umum
@@ -265,7 +406,7 @@ const Detail: NextPage<Props> = ({ params }) => {
                       <Tiket
                         key={item?.id}
                         onSubmit={(body) =>
-                          handleAddToCart(body.qty, event, item?.id ?? 0)
+                          handleAddToCart(body.qty, event, item?.id ?? 0 , body.typeB ?? "redirect")
                         }
                         title={
                           item?.title +

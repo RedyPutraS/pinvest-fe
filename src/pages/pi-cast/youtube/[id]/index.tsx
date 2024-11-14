@@ -2,7 +2,7 @@ import { QueryClient, dehydrate } from "@tanstack/react-query";
 import PageBody from "components/page/page-body";
 import InquiryDialog from "modules/pi-capital/components/inquiry-dialog";
 import type { InferGetServerSidePropsType } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PageContext } from "components/page/page-context";
 import { useSpotifyDetail } from "modules/pi-cast/api/spotify-detail";
 import { useYoutubeDetail } from "modules/pi-cast/api/youtube-detail";
@@ -36,8 +36,8 @@ const PiCastYoutubeDetail = ({ id, adsParam }: Props) => {
   return (
     <>
       <CustomHead
-        title={data?.data.items && data?.data.items[0]?.snippet.title}
-        image={data?.data.items[0]?.snippet.thumbnails.default.url}
+        title={data?.items && data?.items[0]?.snippet.title}
+        image={data?.items[0]?.snippet.thumbnails.default.url}
       />
       <PageContext.Provider value={{ id, type: TYPE, app: APP }}>
         <InquiryDialog
@@ -59,14 +59,14 @@ const PiCastYoutubeDetail = ({ id, adsParam }: Props) => {
                 />
               </div>
               <h1 className="mt-8 text-xl font-medium text-gray-600">
-                {data?.data.items && data?.data.items[0]?.snippet.title}
+                {data?.items && data?.items[0]?.snippet.title}
               </h1>
               <div className="mt-4 flex">
                 <img src="/assets/icon/channel_profile.png" alt="" />
                 <div className="ml-2 flex-grow">
                   <p className="font-medium text-gray-600">
-                    {data?.data.items &&
-                      data?.data.items[0]?.snippet.channelTitle}
+                    {data?.items &&
+                      data?.items[0]?.snippet.channelTitle}
                   </p>
                 </div>
                 <div className="flex rounded-lg border-[1px] border-pv-blue-light mr-3 pr-6">
@@ -76,8 +76,9 @@ const PiCastYoutubeDetail = ({ id, adsParam }: Props) => {
                     alt=""
                   />
                   <div className="p-3 text-pv-blue-light">
-                    {(data?.data.items &&
-                      data?.data.items[0]?.statistics.likeCount) ??
+                    
+                    {(data?.items &&
+                      data?.items[0]?.statistics.likeCount) ??
                       "0"}
                   </div>
                 </div>
@@ -91,14 +92,14 @@ const PiCastYoutubeDetail = ({ id, adsParam }: Props) => {
               </div>
               <div className="mt-4 rounded-lg bg-pv-white-light p-4 text-gray-600">
                 <p>
-                  {(data?.data.items &&
-                    data?.data.items[0]?.statistics.viewCount) ??
+                  {(data?.items &&
+                    data?.items[0]?.statistics.viewCount) ??
                     "0"}{" "}
                   views Premiered{" "}
-                  {data?.data.items &&
-                    data?.data.items[0]?.snippet.publishedAt &&
+                  {data?.items &&
+                    data?.items[0]?.snippet.publishedAt &&
                     formatRelative(
-                      parseISO(data?.data.items[0]?.snippet.publishedAt),
+                      parseISO(data?.items[0]?.snippet.publishedAt),
                       new Date(),
                       {
                         locale: localeId,
@@ -106,7 +107,7 @@ const PiCastYoutubeDetail = ({ id, adsParam }: Props) => {
                     )}
                 </p>
                 <p className="break-words text-gray-600">
-                  {data?.data.items && data?.data.items[0]?.snippet.description}
+                  {data?.items && data?.items[0]?.snippet.description}
                 </p>
               </div>
               <FeedbackRating

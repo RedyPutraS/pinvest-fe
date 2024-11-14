@@ -14,7 +14,6 @@ const ArticlePaginateTabPanel = () => {
     limit: 12,
   });
   const total_page = data?.page.total_page ?? 0;
-  console.log("Data Article pinspire",data);
   
   const getItemProps = (index: string) =>
     ({
