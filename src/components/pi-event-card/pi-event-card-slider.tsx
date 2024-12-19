@@ -18,15 +18,15 @@ export default function PiEventCardSlider({ children, data, href, activeTab }: P
       {/* mobile */}
       <div className="flex xl:hidden">
         <div className="w-full bg-pv-white-pure md:px-0">
-          <CardSlider slidesToScroll={2} slidesToShow={2}>
-            {children}
-          </CardSlider>
+        <CardSlider slidesToScroll={2} slidesToShow={2}>
+          {children}
+        </CardSlider>
         </div>
       </div>
       {/* desktop */}
       <div className="hidden xl:flex">
         <div className="w-full bg-pv-white-pure md:px-0">
-          <CardSlider>{children}</CardSlider>
+          <CardSlider slidesToScroll={3} slidesToShow={3}>{children}</CardSlider>
         </div>
       </div>
 

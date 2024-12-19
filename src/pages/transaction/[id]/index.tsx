@@ -60,14 +60,14 @@ const Index = ({ params }: Props) => {
         {data?.detail_transaction?.map((detail, di) => (
           <div key={di}>
             <div className="mb-2 mt-4 flex flex-col xl:flex-row">
-              <div className="grid grid-cols-3 gap-2 xl:flex xl:flex-grow">
-                <div className="xl:mr-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 xl:flex xl:flex-grow">
+                <div className="xl:mr-4 md:my-auto">
                   <img
                     src={
                       detail?.product.image ?? detail?.product?.thumbnail_image
                     }
                     alt=""
-                    className="rounded-lg object-fill xl:h-36"
+                    className="w-full rounded-lg object-fill xl:h-36"
                   />
                 </div>
                 <div className="col-span-2 flex flex-col xl:mr-4">

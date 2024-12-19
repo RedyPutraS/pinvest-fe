@@ -12,7 +12,7 @@ const Cyber = ({ params }: Props) => {
 
   return (
     <div>
-      <PageBody className="pt-10 pb-32 xl:mx-[25%]">
+      <PageBody className="pt-10  ">
         <div className="pb-2 text-2xl font-medium">{data?.title}</div>
         <RenderHtml html={tempResult} />
       </PageBody>

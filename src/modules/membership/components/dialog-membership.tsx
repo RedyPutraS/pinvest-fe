@@ -10,6 +10,7 @@ import { currencyFormatter } from "utils/helpers/formatter";
 type Props = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  admin_fee?:number;
   durations?: {
     id: number;
     type: string;
@@ -19,12 +20,13 @@ type Props = {
   }[];
 };
 
-const DialogMembership = ({ isOpen, setIsOpen, durations }: Props) => {
+const DialogMembership = ({ isOpen, setIsOpen, admin_fee, durations }: Props) => {
   const router = useRouter();
   
   const handleCheckout = (price: number, id: number) => {
     const dataToSend = {
-      total: price ?? 0, // Menyimpan total harga yang akan dibayar
+      total: price ?? 0,
+      biayaAdmin: admin_fee, // Menyimpan total harga yang akan dibayar
     };
   
     // Simpan data ke sessionStorage

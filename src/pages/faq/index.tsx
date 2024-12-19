@@ -16,7 +16,7 @@ const FAQ = ({ params }: Props) => {
         <h1 className="mb-6 text-center text-lg font-bold xl:text-5xl xl:font-medium">
           Frequently Asked Questions
         </h1>
-        <div className="mb-36">
+        <div className="">
           {data?.map((item, i) => (
             <Accordion
               title={item?.title}

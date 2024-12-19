@@ -13,8 +13,10 @@ import { useCreateTrx } from "modules/checkout/api/create-trx";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { currencyFormatter } from "utils/helpers/formatter";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Cart = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const [voucher, setVoucher] = useState("");
   const [discount, setDiscount] = useState<null | number>();
@@ -42,7 +44,16 @@ const Cart = () => {
     if (voucherApplied === "" && voucher === "") {
       calculateCartSummary();
     }
-  }, [cartList]);
+    console.log(cartList?.data?.items, "cartList?.data?.items");
+    
+  }, [cartList])
+  // useEffect(() => {
+  //   console.log(cartList?.data?.items,"cartList");
+  // }, [cartList?.data?.items])
+
+  useEffect(() => {
+    console.log(priceAfterDiscount, "priceAfterDiscount");
+  }, [priceAfterDiscount])
 
   const calculateCartSummary = () => {
     
@@ -60,7 +71,13 @@ const Cart = () => {
       
       // Hitung harga setelah diskon
       setDiskon(totalDiskon);
-      const priceAfterDiscount = (totalPrice + cartList.data?.admin_fee) - totalDiskon;
+      // const priceAfterDiscount = (totalPrice + cartList.data?.admin_fee) - totalDiskon;
+      const priceAfterDiscount = (
+        cartList.data?.items.reduce(
+          (total, item) => total + ((item.data?.price ?? 0) * (item.qty ?? 0)),
+          0
+        ) ?? 0
+      ) + (cartList.data?.admin_fee ?? 0) - totalDiskon;
       
       setPriceAfterDiscount(priceAfterDiscount);
     }
@@ -161,12 +178,19 @@ const Cart = () => {
     updateCart
       .mutateAsync({ type, content_id: id, qty })
       .then(() => {
-        cartList.refetch();
+        queryClient.setQueryData(["cart-list"], (oldData: any) => {
+          if (!oldData) return oldData;
+          return {
+            ...oldData,
+            items: oldData.items.map((item: any) =>
+              item.id === id ? { ...item, qty } : item
+            ),
+          };
+        });
       })
       .catch(() => {
-        toast({
-          title: "Gagal mengupdate quantity.",
-        });
+        cartList.refetch(); // Hanya refetch jika update gagal
+        toast({ title: "Gagal mengupdate quantity." });
       });
   };
   
@@ -174,7 +198,7 @@ const Cart = () => {
     const dataToSend = {
       voucher: voucherApplied,
       subTotal: cartList.data?.items.reduce(
-        (total, item) => total + (item.data?.price ?? 0),
+        (total, item) => (total + (item.data?.price ?? 0)) * (item.qty ?? 0),
         0
       ) ?? 0,
       biayaAdmin: cartList.data?.admin_fee ?? 0,
@@ -197,6 +221,8 @@ const Cart = () => {
   const newLocal = (items: any[]) => (
     <div>
       {items.map((item) => {
+        console.log(item.data.limit, "Di Component");
+        
         if (item.type === "event") {
           return (
             <EventCartItem
@@ -217,6 +243,7 @@ const Cart = () => {
               qty={item.qty}
               type={item.type}
               onChangeQty={handleQtyChange}
+              limit={item.data?.limit}
             />
           );
         } else {
@@ -238,12 +265,14 @@ const Cart = () => {
               qty={item.qty}
               type={item.type}
               onChangeQty={handleQtyChange}
+              limit={item.data?.limit}
             />
           );
         }
       })}
     </div>
   );
+  
   return (
     <PageBody className="min-h-[550px]">
       {cartList.isSuccess && !cartList.data.items.length && (
@@ -268,7 +297,7 @@ const Cart = () => {
             <p className="mt-1 text-lg text-gray-600">
               {currencyFormatter.format(
                 cartList.data?.items.reduce(
-                  (total, item) => total + (item.data?.price ?? 0),
+                  (total, item) => (total + (item.data?.price ?? 0)) * (item.qty ?? 0),
                   0
                 ) ?? 0
               )}
@@ -291,9 +320,7 @@ const Cart = () => {
             </p>
             <p className="mt-4 text-pv-grey-medium2">Total</p>
             <p className="text-4xl text-gray-600">
-              {currencyFormatter.format(
-                priceAfterDiscount ?? 0
-              )}
+              {currencyFormatter.format(priceAfterDiscount ?? 0)}
             </p>
 
             <p className="mt-4">Promosi</p>

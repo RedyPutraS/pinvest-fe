@@ -59,44 +59,46 @@ export default function Section(props: SectionProps) {
         </div>
         
         {
-  (lastSegment !== "pi-learning" && lastSegment !== "pi-circle" && lastSegment !== "pi-event") && (
-    <>
-      <div className="flex items-center justify-end xl:hidden">
-        {!shouldHideButtons && href && children && (
-          <Link href={`${href}${activeTab}`}>
-            <Typo.S2 className="mt-2 font-semibold text-gray-600">
-              <Button
-                variant="text"
-                color="blue-gray"
-                className="text-[10px] md:text-base flex items-center gap-1 md:gap-2 rounded-md text-gray-600 px-3"
-              >
-                Lihat semua
-                <ArrowRightIcon strokeWidth={2} className="h-3 w-3 md:h-4 md:w-4" />
-              </Button>
-            </Typo.S2>
-          </Link>
-        )}
-      </div>
+          (lastSegment !== "pi-learning" && lastSegment !== "pi-circle" && lastSegment !== "pi-event") && (
+            <>
+              <div className="flex items-center justify-end xl:hidden">
+                {!shouldHideButtons && href && children && (
+                  <Link href={`${href}${activeTab}`}>
+                    <Typo.S2 className="mt-2 font-semibold text-gray-600">
+                      <Button
+                        variant="text"
+                        color="blue-gray"
+                        className="text-[10px] md:text-base flex items-center gap-1 md:gap-2 rounded-md text-gray-600 px-3"
+                      >
+                        Lihat semua
+                        <ArrowRightIcon strokeWidth={2} className="h-3 w-3 md:h-4 md:w-4" />
+                      </Button>
+                    </Typo.S2>
+                  </Link>
+                )}
+              </div>
 
-      <div className="mr-2 hidden items-center justify-end xl:flex">
-        {!shouldHideButtons && href && children && (
-          <Link href={`${href}${activeTab}`}>
-            <Typo.H6 className="m-0 font-semibold text-gray-600 hover:opacity-60 xl:mt-3">
-              <Button
-                variant="text"
-                color="blue-gray"
-                className="flex items-center gap-2 rounded-md text-gray-600"
-              >
-                Lihat semua
-                <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-              </Button>
-            </Typo.H6>
-          </Link>
-        )}
-      </div>
-    </>
-  )
-}
+              <div className="mr-2 hidden items-center justify-end xl:flex">
+                {!shouldHideButtons && href && children && (
+                  <Link href={`${href}${activeTab}`}>
+                    <Typo.H6 className="m-0 font-semibold text-gray-600 hover:opacity-60 xl:mt-3">
+                      <Button
+                        variant="text"
+                        color="blue-gray"
+                        className="flex items-center gap-2 rounded-md text-gray-600"
+                      >
+                        Lihat semua
+                        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                      </Button>
+                    </Typo.H6>
+                  </Link>
+                )}
+              </div>
+            </>
+          )
+        }
+        <div className="w-full h-[4px] shadow-md mt-2 lg:mt-3"></div>
+        {/* <hr className="shadow-md mt-3 -mb-3 xl:mt-5 xl:-mb-5 absolute "/> */}
 
         {/* <div>{lastSegment}</div> */}
       </div>

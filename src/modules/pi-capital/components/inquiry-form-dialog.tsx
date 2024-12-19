@@ -201,7 +201,7 @@ const InquiryFormDialog = ({ app, showDialog, handleClose }: Props) => {
               >
                 Back
               </Button>
-              <Button type="submit" className="mt-2">Inquiry</Button>
+              <Button type="submit" className="mt-2">Kirim</Button>
             </div>
           </form>
         </div>

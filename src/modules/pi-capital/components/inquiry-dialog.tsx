@@ -107,7 +107,7 @@ const InquiryDialog = ({ showDialog = false, onClose, id, app }: Props) => {
               type="submit"
               className="h-11 rounded-lg bg-pv-blue-dark px-8 py-2 text-sm font-light text-pv-white-pure hover:bg-pv-blue-light mt-2"
             >
-              Inquiry
+              Kirim
             </button>
           </div>
         </form>

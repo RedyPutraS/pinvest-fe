@@ -30,6 +30,10 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const Checkout: React.FC<Props> = ({ voucher }) => {
   const storedData = sessionStorage.getItem('checkoutData');
+  const routerr = useRouter();
+  const { type } = routerr.query;
+  console.log(storedData, "storedData", "type", type);
+  
   
   const [checkoutData, setCheckoutData] = useState({
     subTotal: 0,
@@ -64,7 +68,8 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
   });
 
   useEffect(() => {
-    // Ambil data dari sessionStorage    
+    // Ambil data dari sessionStorage   
+    console.log(checkoutData); 
     if (storedData) {
       try {
         const checkoutData1 = JSON.parse(storedData);
@@ -246,6 +251,15 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
               <p className="text-right">
                 {currencyFormatter.format(checkoutData.total ?? 0)}
               </p>
+
+              {type === "membership" && (
+                <>
+                  <p>Biaya Administrasi:</p>
+                  <p className="text-right">
+                    {currencyFormatter.format(checkoutData.biayaAdmin)}
+                  </p>
+                </>
+              )}
               <p>Biaya Transaksi:</p>
               <p className="text-right">
                 {currencyFormatter.format(bank?.fee ?? 0)}
@@ -255,7 +269,7 @@ const Checkout: React.FC<Props> = ({ voucher }) => {
             <p className="mt-4 text-pv-grey-medium2">Total Tagihan :</p>
             <p className="mt-2 text-gray-600 text-[25px]">
               {currencyFormatter.format(
-                checkoutData.total + (bank?.fee ?? 0)
+                checkoutData.total + (bank?.fee ?? 0) + (type === "membership" ? checkoutData.biayaAdmin ?? 0 : 0)
               )}
             </p>
 

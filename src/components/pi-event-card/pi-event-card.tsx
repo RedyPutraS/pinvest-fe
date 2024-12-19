@@ -60,14 +60,18 @@ export function PiEventCard({ event }: Props) {
       </CardImage>
       <CardBody className="p-2 xl:p-4">
         <div className="flex items-start justify-between">
-          <Link href={`/pi-event/${event.id.toString()}`}>
-            <div className="text-md min-h-[50px] font-normal text-gray-600 line-clamp-2 xl:h-[80px] xl:text-[24px]">
-              {event.title}
-            </div>
-          </Link>
-          <ShareButton path={`/pi-event/${event.id}`} className="w-7 md:w-10 md:h-9 xl:w-10" />
+          <p
+            onClick={() => router.push(`/pi-event/${event.id.toString()}`)}
+            className="text-md h-5 font-semibold text-gray-600 line-clamp-1 xl:min-h-[55px] xl:text-[24px] xl:line-clamp-6"
+          >
+            {event.title}
+          </p>
+          <ShareButton
+            path={`/pi-event/${event.id.toString()}`}
+            className="w-7 md:w-10 md:h-9 xl:w-10"
+          />
         </div>
-        <div className="mt-1 text-[10px] font-normal text-pv-blue-light xl:mb-1 xl:text-[14px]">
+        <div className="mt-1 text-[10px] font-normal text-pv-blue-light xl:mb-1 xl:text-[14px] h-[20px] xl:h-[10px]">
           {format(
             parse(earliestDate || "0", "yyyy-MM-dd", new Date()),
             "dd MMMM yyyy",
@@ -88,12 +92,13 @@ export function PiEventCard({ event }: Props) {
           )}
         </div>
         <Link href={`/pi-event/${event.id.toString()}`}>
-          <div className="hidden xl:block xl:h-[100px]">
-            <div className="text-sm text-pv-grey-medium2 line-clamp-3">
-              <RenderHtml html={event.description ?? ""} />
-            </div>
-          </div>
-          <Link href={`/pi-event/${event.id.toString()}`}>
+          
+          <p
+            onClick={() => router.push(`/pi-event/${event.id.toString()}`)}
+            className="mt-1 h-[72px] text-pv-grey-medium2 line-clamp-3 md:line-clamp-2 md:h-[55px] xl:line-clamp-2 xl:h-[52px]"
+          >
+            <RenderHtml html={event.description ?? ""} />
+          </p>
             <div className="mb-2 flex items-center">
               <p className="mr-2 text-xs font-medium text-gray-600 xl:text-base">
                 Rating
@@ -110,7 +115,6 @@ export function PiEventCard({ event }: Props) {
                 ({event.rate})
               </p>
             </div>
-          </Link>
           {/* uppercase online-zoom*/}
           <div className="mt-1 text-[10px] font-semibold uppercase text-pv-blue-light xl:py-2 xl:text-[14px]">
             {event.type === "online-zoom" ? "online" : event.type}

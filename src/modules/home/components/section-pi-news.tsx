@@ -27,6 +27,8 @@ type Props = {
 const SectionPiNews = ({ data }: Props) => {
   const { activeTab, setActiveTab } = useContext(ActiveTabContext);
 
+
+
   const piNewsParams: PiNewsParams = {
     page: 1,
     limit: 5,
@@ -37,6 +39,10 @@ const SectionPiNews = ({ data }: Props) => {
   const appName = data?.find(
     (app) => app.app_name.trim() === APP_NAME.news.trim()
   );
+
+  useEffect(() => {
+    console.log(appName?.category);
+  }, [appName?.category])
   
   
 
@@ -165,6 +171,7 @@ const SectionPiNews = ({ data }: Props) => {
             </div>
           </>
         )}
+        <div className="w-full h-[4px] shadow-md mt-2 md:mt-3"></div>
       </div>
     </div>
   );

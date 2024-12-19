@@ -67,6 +67,7 @@ const MembershipDetail = ({ id }: Props) => {
         </div>
       </PageHeader>
       <DialogMembership
+        admin_fee={data?.admin_fee ?? 0}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         durations={data?.durations ?? []}

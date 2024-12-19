@@ -20,6 +20,7 @@ export const dataSchema = z.object({
   allow_all_apps: z.boolean(),
   thumbnail_image: z.string(),
   apps: z.array(z.any()).nullish(),
+  admin_fee: z.number().nullish(),
   durations: z.array(durationSchema),
 });
 

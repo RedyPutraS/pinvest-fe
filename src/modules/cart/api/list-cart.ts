@@ -43,13 +43,15 @@ export const data2Schema = z.object({
   address: z.string().nullish(),
   app_name: z.string().nullish(),
   fee: z.number().nullish(),
+  limit: z.number().nullish(),
+  qty_include: z.number().nullish(),
 });
 
 export const itemSchema = z.object({
-  id: z.number(),
-  qty: z.number(),
-  type: z.string(),
-  content_id: z.number(),
+  id: z.number().nullish(),
+  qty: z.number().nullish(),
+  type: z.string().nullish(),
+  content_id: z.number().nullish(),
   data: data2Schema.nullish(),
 });
 
@@ -68,6 +70,7 @@ export const rootSchema = z.object({
 
 export const getCartList = async () => {
   const { data } = await axios.get(`/cart-v2`, {});
+
   return rootSchema.parse(data).data;
 };
 

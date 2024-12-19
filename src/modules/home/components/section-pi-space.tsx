@@ -23,15 +23,17 @@ const SectionPiSpace = () => {
     imageSliderItems.push(item);
   });
   return (
-    <Section
-      title="PiSpace"
-      variant="white"
-      href="/pi-space"
-      icon={<PiSpace />}
-    >
-      <div className="mt-3 md:mt-4" />
-      <SectionBanner tab="pispace" rounded />
-    </Section>
+    <>
+      <Section
+        title="PiSpace"
+        variant="white"
+        href="/pi-space"
+        icon={<PiSpace />}
+      >
+        <div className="mt-3 md:mt-4" />
+        <SectionBanner tab="pispace" rounded />
+      </Section>
+    </>
   );
 };
 export default memo(SectionPiSpace);

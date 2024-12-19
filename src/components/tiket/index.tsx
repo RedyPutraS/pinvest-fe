@@ -49,7 +49,7 @@ const Tiket: React.FC<Props> = ({
         <div className="flex justify-between">
           <div>
             <p className="text-gray-600">Harga</p>
-            <p className="text-2xl text-gray-600">
+            <p className="text-lg md:text-2xl text-gray-600">
               {price == 0 ? (
                 <div className="text-pv-blue-lighter">Gratis</div>
               ) : (

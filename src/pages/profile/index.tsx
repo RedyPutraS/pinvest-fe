@@ -122,13 +122,18 @@ const ProfilePage = ({}: Props) => {
     postPassword
       .mutateAsync(form)
       .then((e) => {
+        auth.setToken("");
+        auth.logout();
+        
         const message = e.message;
         toast({
           title: message,
         });
-        router.push("/profile");
+        router.push("/auth/login");
       })
       .catch((err: AxiosError) => {
+        console.log(err);
+        
         const errorMessage =
           (err.response?.data as any)?.data.password ||
           "Update Kata Sandi Gagal";
@@ -361,60 +366,47 @@ const ProfilePage = ({}: Props) => {
                   </div>
                 </div>
                 <div>
-                  <form onSubmit={handleSubmit(onSubmit)} className="mt-8 ">
-                    <div className="grid grid-cols-2 ">
+                  <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
+                    <div className="grid grid-cols-2">
                       <div className="grid-cols-6">
-                        <label htmlFor="firstName" className="ml-2">
-                          Nama Depan
-                        </label>
+                        <label htmlFor="firstName" className="ml-2 mb-4">Nama Depan</label>
                         <input
-                          className="ms-2 relative flex w-11/12 overflow-hidden border-b border-slate-300 bg-transparent  p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900"
+                          className="ms-2 relative flex w-11/12 overflow-hidden border-b border-slate-300 bg-transparent p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900 mt-3"
                           {...register("firstName")}
                           placeholder="Nama Depan"
                           disabled={postProfile.isLoading}
                           value={firstName}
                           onChange={(e) => setFirstName(e.target.value)}
                         />
-                        <p className="text-md mb-4 text-red-400">
-                          {errors.firstName?.message}
-                        </p>
+                        <p className="text-md mb-4 text-red-400">{errors.firstName?.message}</p>
 
-                        <label htmlFor="lastName" className="ml-2">
-                          Nama Belakang
-                        </label>
-
+                        <label htmlFor="lastName" className="ml-2 mb-4">Nama Belakang</label>
                         <input
-                          className="ms-2 relative flex w-11/12 overflow-hidden border-b border-slate-300 bg-transparent bg-white p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900"
+                          className="ms-2 relative flex w-11/12 overflow-hidden border-b border-slate-300 bg-transparent bg-white p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900 mt-3"
                           {...register("lastName")}
                           placeholder="Nama Belakang"
                           disabled={postProfile.isLoading}
                           value={lastName}
                           onChange={(e) => setlastName(e.target.value)}
                         />
-                        <p className="text-md mb-4 text-red-400">
-                          {errors.lastName?.message}
-                        </p>
-                        <label htmlFor="email" className="ml-2">
-                          Email
-                        </label>
+                        <p className="text-md mb-4 text-red-400">{errors.lastName?.message}</p>
+
+                        <label htmlFor="email" className="ml-2 mb-4">Email</label>
                         <input
-                          className="ms-2 relative flex w-11/12 overflow-hidden border-b border-slate-300 bg-transparent bg-white p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900"
+                          className="ms-2 relative flex w-11/12 overflow-hidden border-b border-slate-300 bg-transparent bg-white p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900 mt-3"
                           {...register("email")}
                           placeholder="Email"
                           disabled={true}
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                         />
-                        <p className="text-md mb-4 text-red-400">
-                          {errors.email?.message}
-                        </p>
+                        <p className="text-md mb-4 text-red-400">{errors.email?.message}</p>
                       </div>
-                      <div className="grid-cols-6 ">
-                        <label htmlFor="phone" className="ml-2">
-                          Nomor Telepon
-                        </label>
+                      
+                      <div className="grid-cols-6">
+                        <label htmlFor="phone" className="ml-2 mb-4">Nomor Telepon</label>
                         <input
-                          className="relative flex w-full overflow-hidden  border-b border-slate-300 bg-transparent bg-white p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900"
+                          className="relative flex w-full overflow-hidden border-b border-slate-300 bg-transparent bg-white p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900 mt-3"
                           {...register("phone")}
                           placeholder="Nomor Telepon"
                           disabled={postProfile.isLoading}
@@ -422,12 +414,9 @@ const ProfilePage = ({}: Props) => {
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
                         />
-                        <p className="text-md mb-4 text-red-400">
-                          {errors.phone?.message}
-                        </p>
-                        <label htmlFor="birthdate" className="ml-2">
-                          Tanggal Lahir
-                        </label>
+                        <p className="text-md mb-4 text-red-400">{errors.phone?.message}</p>
+
+                        <label htmlFor="birthdate" className="ml-2 mb-4">Tanggal Lahir</label>
                         <Controller
                           control={control}
                           name="birthdate"
@@ -438,54 +427,41 @@ const ProfilePage = ({}: Props) => {
                               scrollableYearDropdown={true}
                               className={cn(
                                 "relative flex w-full overflow-hidden border-b border-pv-grey-medium1 bg-white p-2",
-                                "flex border-b border-slate-300 bg-transparent px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900"
+                                "flex border-b border-slate-300 bg-transparent px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900 mt-3"
                               )}
                               selected={
                                 field.value
                                   ? parse(field.value, "yyyy-MM-dd", new Date())
                                   : new Date()
                               }
-                              // eslint-disable-next-line @typescript-eslint/no-explicit-any
                               onChange={(date: any) =>
-                                field.onChange(
-                                  format(date ?? new Date(), "yyyy-MM-dd")
-                                )
+                                field.onChange(format(date ?? new Date(), "yyyy-MM-dd"))
                               }
                             />
                           )}
                         />
-                        <p className="mb-4 text-sm text-red-400">
-                          {errors.birthdate?.message}
-                        </p>
-                        <p id="date" className="mb-4 text-sm text-red-400">
-                          {birthdate17 !== "" ? birthdate17 : ""}
-                        </p>
-                        <label htmlFor="gender" className="ml-2">
-                          Jenis Kelamin
-                        </label>
+                        <p className="mb-4 text-sm text-red-400">{errors.birthdate?.message}</p>
+
+                        <label htmlFor="gender" className="ml-2 mb-4">Jenis Kelamin</label>
                         <Controller
                           control={control}
                           name="gender"
                           render={({ field }) => (
                             <Select {...field} onValueChange={field.onChange}>
-                              <SelectTrigger>
+                              <SelectTrigger className="mt-3">
                                 <SelectValue
                                   defaultValue={gender}
                                   placeholder={translateGender(data?.gender)}
                                 />
                               </SelectTrigger>
-                              <SelectContent>
+                              <SelectContent className="mt-3">
                                 <SelectItem value="male">Laki-laki</SelectItem>
-                                <SelectItem value="female">
-                                  Perempuan
-                                </SelectItem>
+                                <SelectItem value="female">Perempuan</SelectItem>
                               </SelectContent>
                             </Select>
                           )}
                         />
-                        <p className="text-md mb-4 text-red-400">
-                          {errors.gender?.message}
-                        </p>
+                        <p className="text-md mb-4 text-red-400">{errors.gender?.message}</p>
                       </div>
                     </div>
 
@@ -506,7 +482,7 @@ const ProfilePage = ({}: Props) => {
                   Kata Sandi Lama
                 </label>
                 <input
-                  className="ms-2 relative flex w-11/12 overflow-hidden border-b border-slate-300 bg-transparent bg-white p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900"
+                  className="ms-2 relative flex w-11/12 overflow-hidden border-b border-slate-300 bg-transparent bg-white p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900 mt-3"
                   {...register2("password")}
                   placeholder="Kata Sandi Lama"
                   disabled={postPassword.isLoading}
@@ -536,7 +512,7 @@ const ProfilePage = ({}: Props) => {
                   Kata Sandi Baru
                 </label>
                 <input
-                  className="ms-2 relative flex w-11/12 overflow-hidden border-b border-slate-300 bg-transparent bg-white p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900"
+                  className="ms-2 relative flex w-11/12 overflow-hidden border-b border-slate-300 bg-transparent bg-white p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900 mt-3"
                   {...register2("new_password")}
                   placeholder="Kata Sandi Baru"
                   id="new_password"
@@ -570,7 +546,7 @@ const ProfilePage = ({}: Props) => {
                   Konfirmasi Kata Sandi Baru
                 </label>
                 <input
-                  className="ms-2 relative flex w-11/12 overflow-hidden border-b border-slate-300 bg-transparent bg-white p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900"
+                  className="ms-2 relative flex w-11/12 overflow-hidden border-b border-slate-300 bg-transparent bg-white p-2 px-3 py-2 text-sm placeholder:text-slate-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus-within:ring-slate-400 dark:focus-within:ring-offset-slate-900 mt-3"
                   {...register2("confirm_new_password")}
                   placeholder="Konfirmasi Kata Sandi Baru"
                   id="confirm_new_password"

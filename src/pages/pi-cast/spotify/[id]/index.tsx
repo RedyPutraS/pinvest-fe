@@ -88,7 +88,7 @@ const PiCastSpotifyDetail = ({ id, adsParam }: Props) => {
         <PageBody>
           <div className="p-4 xl:grid xl:grid-cols-4 xl:gap-4 xl:p-0">
             <div className="text-gray-600 xl:col-span-3">
-              {data?.release_date &&
+              {/* {data?.release_date &&
                 format(
                   parse(data.release_date, "yyyy-MM-dd", new Date()),
                   "MMM dd"
@@ -103,57 +103,59 @@ const PiCastSpotifyDetail = ({ id, adsParam }: Props) => {
                   zero: true,
                   locale: localeId,
                 }
-              )}
-              <div className="flex items-center justify-end -mt-8 lg:-mt-6">
+              )} */}
+              <div className="flex items-center justify-end -mt-10 xl:mt-0">
                 <ShareButton
                   className="lg:w-[50px] lg:h-[40px]"
                   path={`/pi-cast/spotify/${id}`}
                 />
               </div>
-              <div className="w-full py-2">
+              {/* <div className="w-full py-2">
                 <RenderHtml
                   className="break-words"
                   html={data?.html_description || ""}
                 />
-              </div>
-              <FeedbackRating
-                type={TYPE}
-                slug={id.toString() ?? "-"}
-                app={APP}
-              />
-              <FeedbackComment
-                type={TYPE}
-                slug={data?.id.toString() ?? "-"}
-                app={APP}
-              />
-              <div className="my-4 mt-8 items-center">
-                {ads
-                  ?.filter((v) => v.type === "horizontal")
-                  .map((ad, i) => (
-                    <div key={i} className="mb-6">
-                      <a href={ad.url}>
-                        <img className="mx-auto w-full" src={ad.image} alt="" />
-                      </a>
-                    </div>
-                  ))}
-              </div>
-              <div className="mt-4 xl:grid-cols-4">
-                <div className="xl:col-span-3">
-                  <h1 className="text-xl font-medium text-gray-600 xl:hidden">
-                    Semua Episode
-                  </h1>
-                  {datas?.data?.tracks?.items.map(
-                    (item: { track: { id: React.Key | null | undefined } }) => (
-                      <>
-                        <div key={item.track.id} className="relative">
-                          <div className="relative inline-block w-full cursor-pointer border-pv-grey-medium2 py-4 xl:border-t-[1px]">
-                            <PiCastSpotifyItem item={item as never} />
+              </div> */}
+              <div className="-mt-8 xl:-mt-16">
+                <FeedbackRating
+                  type={TYPE}
+                  slug={id.toString() ?? "-"}
+                  app={APP}
+                />
+                <FeedbackComment
+                  type={TYPE}
+                  slug={data?.id.toString() ?? "-"}
+                  app={APP}
+                />
+                <div className="my-4 mt-8 items-center">
+                  {ads
+                    ?.filter((v) => v.type === "horizontal")
+                    .map((ad, i) => (
+                      <div key={i} className="mb-6">
+                        <a href={ad.url}>
+                          <img className="mx-auto w-full" src={ad.image} alt="" />
+                        </a>
+                      </div>
+                    ))}
+                </div>
+                <div className="mt-4 xl:grid-cols-4">
+                  <div className="xl:col-span-3">
+                    <h1 className="text-xl font-medium text-gray-600 ">
+                      Podcast Lainnya
+                    </h1>
+                    {datas?.data?.tracks?.items.map(
+                      (item: { track: { id: React.Key | null | undefined } }) => (
+                        <>
+                          <div key={item.track.id} className="relative">
+                            <div className="relative inline-block w-full cursor-pointer border-pv-grey-medium2 py-4 xl:border-t-[1px]">
+                              <PiCastSpotifyItem item={item as never} />
+                            </div>
                           </div>
-                        </div>
-                      </>
-                    )
-                  )}
-                  
+                        </>
+                      )
+                    )}
+                    
+                  </div>
                 </div>
               </div>
             </div>

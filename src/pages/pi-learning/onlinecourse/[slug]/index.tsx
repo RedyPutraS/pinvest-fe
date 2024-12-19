@@ -15,6 +15,7 @@ import { useAccount } from "modules/auth/api/account";
 import { useAddToCart } from "modules/cart/api/add-to-cart";
 import { useCartList } from "modules/cart/api/list-cart";
 import { useDetailOnlineCourse } from "modules/online-course/api/detail-online-course";
+import { usePlayOnlineCourse } from "modules/online-course/api/play-online-course";
 import { useAddToWishlist } from "modules/wishlist/api/add-to-wishlist";
 import { useRemoveFromWishlistItem } from "modules/wishlist/api/remove-wishlist-item";
 import { type InferGetServerSidePropsType, type NextPageContext } from "next";
@@ -39,54 +40,43 @@ interface ProfilePopupProps {
 }
 
 const ProfilePopup: React.FC<ProfilePopupProps> = ({ item }) => {
-  const maxSentences = 2; // Set the maximum number of sentences to display
+  const maxSentences = 1; // Set the maximum number of sentences to display
 
   // Function to truncate the description to a certain number of sentences
   const truncateDescription = (description: string, maxSentences: number) => {
-    // Split the description into an array of sentences
-    const sentences = description.split(". ");
+    // Split the description into an array of sentences using regex
+    const sentences = description.split(/(?<=[.!?])\s+/); // Memisahkan berdasarkan titik, tanda tanya, atau tanda seru diikuti spasi
 
     // Take only the first 'maxSentences' sentences and join them back together
-    const truncatedDescription = sentences.slice(0, maxSentences).join(". ");
+    const truncatedDescription = sentences.slice(0, maxSentences).join(" ");
 
     return truncatedDescription;
   };
 
   // Truncate the description to a certain number of sentences
-  const truncatedDescription = truncateDescription(
-    item.description ?? "",
-    maxSentences
-  );
+  const truncatedDescription = truncateDescription(item.description ?? "", maxSentences);
 
   return (
     <div
-      className="popup flex flex-col md:flex-row"
+      className="popup flex flex-col md:flex-row p-4 rounded-lg shadow-lg bg-white"
       style={{
         marginTop: "40px",
         position: "fixed",
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        backgroundColor: "white",
-        padding: "20px",
-        borderRadius: "8px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         zIndex: 999,
       }}
     >
       <img
-        className="h-40 w-40 rounded mb-4 md:mb-0 md:mr-4" // mb-4 untuk spasi di bawah gambar pada mobile
+        className="h-40 w-40 rounded mb-4 md:mb-0 md:mr-4"
         src={item.image ?? ""}
         alt="thumbnail"
       />
       <div>
         <p className="text-lg font-bold text-left">{item.name}</p>
-        <p className="text-left">{item.title}</p>
-        <RenderHtml
-          html={truncatedDescription ?? ""}
-          key={truncatedDescription}
-          className="mt-4"
-        />
+        <p className="text-left text-sm text-gray-600">{item.title}</p>
+        <RenderHtml html={truncatedDescription} key={truncatedDescription} className="mt-4 text-sm" />
       </div>
     </div>
   );
@@ -110,6 +100,7 @@ const OnlineCoursePage = ({ params }: Props) => {
   const { incrementW, decrementW } = useStore();
 
   useEffect(() => {
+    
     if (auth.user) {
       account.refetch();
       return setIsLoggedIn(true);
@@ -750,25 +741,44 @@ const OnlineCoursePage = ({ params }: Props) => {
 
   function tontonSekarang() {
     return (
-      <div className="flex flex-row">
-        <Button
-          className="mt-5 w-full p-4"
-          onClick={() => {
-            router.push(`/pi-learning/onlinecourse/watch/${data?.id}`);
-          }}
-        >
-          Tonton Sekarang
-        </Button>
-        <a href="#" className="mt-5 outline-1 border border-blue-800 rounded-lg w-[40px] flex items-center justify-center ml-2 md:w-[80px]"
-          style={{ color: 'blue' }}
-          onClick={auth.user ? wishlistAction : () => setIsOpen(true)}>
-          <img
-            src={data?.added_to_wishlist || !toggle.isOpen ? '/assets/icon/heart.png' : '/assets/icon/heart-red.svg'}
-            className="object-cover"
-            alt="wishlist icon"
-          />
-        </a>
-      </div>
+            <div className="flex flex-row">
+              {/* Button untuk Tonton Sekarang */}
+              <Button
+                className="mt-5 w-full p-4"
+                onClick={() => {
+                  if (auth.user) {
+                    router.push(`/pi-learning/onlinecourse/watch/${data?.id}`);
+                  } else {
+                    setIsOpen(true);
+                  }
+                }}
+              >
+                Tonton Sekarang
+              </Button>
+
+              {/* Wishlist Button */}
+              <button
+                className="mt-5 outline-1 border border-blue-800 rounded-lg w-[40px] flex items-center justify-center ml-2 md:w-[80px]"
+                style={{ color: 'blue' }}
+                onClick={() => {
+                  if (auth.user) {
+                    wishlistAction();
+                  } else {
+                    setIsOpen(true);
+                  }
+                }}
+              >
+                <img
+                  src={
+                    data?.added_to_wishlist || !toggle.isOpen
+                      ? '/assets/icon/heart.png'
+                      : '/assets/icon/heart-red.svg'
+                  }
+                  className="object-cover"
+                  alt="wishlist icon"
+                />
+              </button>
+            </div>
     );
   }
 };

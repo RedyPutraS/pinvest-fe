@@ -5,7 +5,8 @@ import ReactPlayer from "react-player";
 import Head from "next/head";
 import PageBody from "components/page/page-body";
 import { usePlayOnlineCourse } from "modules/online-course/api/play-online-course";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import Swal from "sweetalert2";
 import { FeedbackRating } from "modules/feedback/component/rating";
 import { FeedbackComment } from "modules/feedback/component/comment";
 import Collapse from "components/collapse";
@@ -16,6 +17,26 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const OnlineCoursePage = ({ params }: Props) => {
   const playerRef = useRef();
   const onlinecourse = usePlayOnlineCourse(params);
+
+  useEffect(() => {
+    if (onlinecourse.data === undefined && !onlinecourse.isLoading) {
+      Swal.fire({
+        title: "Tidak Mendapatkan Akses",
+        text: "Ini adalah content premium, silahkan naikan level Keanggotaan Anda.",
+        icon: "error",
+        confirmButtonText: "Ya",
+        showCancelButton: false,
+      }).then(() => {
+        window.history.back();
+      });
+    }
+  }, [onlinecourse]);
+
+  if (onlinecourse.isLoading || onlinecourse.data === undefined) {
+    return null; // Hindari render halaman saat data tidak tersedia
+  }
+
+  const videoUrl = onlinecourse.data?.video_url?.replace(/([^:]\/)\/+/g, "$1");
 
   return (
     <>
@@ -28,13 +49,13 @@ const OnlineCoursePage = ({ params }: Props) => {
           <div className="react-player-container col-span-12 lg:col-span-8 mx-6 bg-black">
             {onlinecourse.data?.video_url && (
               <ReactPlayer
-                  style={{ width: "100%" }}
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  ref={playerRef}
-                  controls
-                  url={onlinecourse.data.video_url}
-                />
+                style={{ width: "100%" }}
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                ref={playerRef}
+                controls
+                url={onlinecourse.data.video_url.replace(/([^:]\/)\/+/g, "$1")}
+              />
             )}
           </div>
           <div className="mx-6">
@@ -44,7 +65,7 @@ const OnlineCoursePage = ({ params }: Props) => {
                   <h2 className="mt-8 text-xl xl:text-2xl font-bold">{item.title}</h2>
                   <Collapse>
                     <RenderHtml
-                      html={item.description ?? ''}
+                      html={item.description ?? ""}
                       key={item.description}
                       className="mt-4"
                     />

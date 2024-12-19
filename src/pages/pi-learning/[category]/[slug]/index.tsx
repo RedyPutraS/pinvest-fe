@@ -40,59 +40,43 @@ interface ProfilePopupProps {
 }
 
 const ProfilePopup: React.FC<ProfilePopupProps> = ({ item }) => {
-  const maxSentences = 2; // Set the maximum number of sentences to display
+  const maxSentences = 1; // Set the maximum number of sentences to display
 
   // Function to truncate the description to a certain number of sentences
   const truncateDescription = (description: string, maxSentences: number) => {
-    // Split the description into an array of sentences
-    const sentences = description.split(". ");
+    // Split the description into an array of sentences using regex
+    const sentences = description.split(/(?<=[.!?])\s+/); // Memisahkan berdasarkan titik, tanda tanya, atau tanda seru diikuti spasi
 
     // Take only the first 'maxSentences' sentences and join them back together
-    const truncatedDescription = sentences.slice(0, maxSentences).join(". ");
+    const truncatedDescription = sentences.slice(0, maxSentences).join(" ");
 
     return truncatedDescription;
   };
 
   // Truncate the description to a certain number of sentences
-  const truncatedDescription = truncateDescription(
-    item.description ?? "",
-    maxSentences
-  );
+  const truncatedDescription = truncateDescription(item.description ?? "", maxSentences);
 
   return (
     <div
-      className="popup"
+      className="popup flex flex-col md:flex-row p-4 rounded-lg shadow-lg bg-white"
       style={{
         marginTop: "40px",
         position: "fixed",
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        backgroundColor: "white",
-        padding: "20px",
-        borderRadius: "8px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        zIndex: 999, // Adjust z-index as needed
-        display: "flex",
+        zIndex: 999,
       }}
     >
       <img
-        className="h-40 w-40 rounded" // Adding fixed width and height
+        className="h-40 w-40 rounded mb-4 md:mb-0 md:mr-4"
         src={item.image ?? ""}
         alt="thumbnail"
-        style={{ marginRight: "10px" }} // Added margin-right for spacing
       />
       <div>
-        <p className="text-lg font-bold" style={{ textAlign: "left" }}>
-          {item.name}
-        </p>
-        <p style={{ textAlign: "left" }}>{item.title}</p>
-        <RenderHtml
-          html={truncatedDescription ?? ""}
-          key={truncatedDescription}
-          className="mt-4"
-        />{" "}
-        {/* Display truncated description */}
+        <p className="text-lg font-bold text-left">{item.name}</p>
+        <p className="text-left text-sm text-gray-600">{item.title}</p>
+        <RenderHtml html={truncatedDescription} key={truncatedDescription} className="mt-4 text-sm" />
       </div>
     </div>
   );

@@ -21,6 +21,7 @@ import { TabListHeader } from "components/tabs/tab-list-header";
 import { TabCategory } from "components/tabs/tab-category";
 import PopupBanner from "components/popup-banner";
 import { CustomHead } from "components/custom-head/custom-head";
+import { useEffect } from "react";
 
 const APP = "pilearning";
 
@@ -51,6 +52,11 @@ const Detail = ({ params, adsParam }: Props) => {
   });
   const { author, publish_at, subcategory_name, meta_title, cover_image } =
     article.data ?? {};
+
+    useEffect(() => {
+      console.log(articleRelated);
+      
+    }, [articleRelated])
 
   const appList = useApps();
   const appData = appList.data;
@@ -135,22 +141,18 @@ const Detail = ({ params, adsParam }: Props) => {
                 </div>
                 <div className="items-center">
                   <div className="relative my-4 flex justify-center whitespace-nowrap py-2 text-start text-2xl text-sky-800 transition-all before:absolute before:bottom-0 before:z-0 before:h-2 before:w-full before:rounded before:bg-sky-800">
-                    Berita Terbaru
+                    Artikel Terkait
                   </div>
                   <div>
                     <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-6">
-                      {articleLatest.data?.data?.map((item, index) => {
-                        const isLarge = index === 1;
+                      {articleRelated.data?.data?.map((item) => {
                         return (
                           <Link
-                            href={`/pi-news/${item.id}`}
+                            href={`/pi-learning/article/${item.id}`}
                             key={item.id}
-                            className={cn(
-                              isLarge && "md:col-span-2",
-                              isLarge && "md:row-span-2"
-                            )}
+                            className={cn("md:col-span-2", "md:row-span-2")}
                           >
-                            <Card className="mx-auto my-4 xl:w-80">
+                            <Card className="min-h-full w-[900px] max-w-full">
                               <CardImage>
                                 <Image
                                   fill
@@ -160,14 +162,12 @@ const Detail = ({ params, adsParam }: Props) => {
                                 />
                               </CardImage>
                               <CardBody>
-                                <p className="text-xl text-sky-800">
+                                <p className="h-14 text-xl text-sky-800 line-clamp-2">
                                   {item.title}
                                 </p>
-                                {isLarge && (
-                                  <p className="mb-4 truncate">
-                                    {item.description}
-                                  </p>
-                                )}
+                                <p className="mb-4 text-gray-400 line-clamp-3">
+                                  {item.description}
+                                </p>
                                 <p className="text-sm text-green-500">
                                   {item.subcategory_name}
                                 </p>
@@ -181,55 +181,19 @@ const Detail = ({ params, adsParam }: Props) => {
                 </div>
               </div>
             </div>
-            <div className="relative my-4 flex whitespace-nowrap py-2 text-start text-2xl text-sky-800 transition-all before:absolute before:bottom-0 before:z-0 before:h-2 before:w-1/5 before:rounded before:bg-sky-800">
-              Artikel Terkait
-            </div>
-            <div className="flex">
-              <div className="grid grid-cols-1 gap-4 xl:grid-cols-6">
-                {articleRelated.data?.data?.map((item) => {
-                  return (
-                    <Link
-                      href={`/pi-learning/article/${item.id}`}
-                      key={item.id}
-                      className={cn("md:col-span-2", "md:row-span-2")}
-                    >
-                      <Card className="min-h-full w-[900px] max-w-full">
-                        <CardImage>
-                          <Image
-                            fill
-                            src={item.thumbnail_image}
-                            alt={`Thumbnail ${item.title}`}
-                            style={{ objectFit: "cover" }}
-                          />
-                        </CardImage>
-                        <CardBody>
-                          <p className="h-14 text-xl text-sky-800 line-clamp-2">
-                            {item.title}
-                          </p>
-                          <p className="mb-4 text-gray-400 line-clamp-3">
-                            {item.description}
-                          </p>
-                          <p className="text-sm text-green-500">
-                            {item.subcategory_name}
-                          </p>
-                        </CardBody>
-                      </Card>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-            <FeedbackRating
-              type={params.type}
-              slug={params.slug}
-              app={params.app}
-            />
+            <div className="w-full md:-mt-10">
+              <FeedbackRating
+                type={params.type}
+                slug={params.slug}
+                app={params.app}
+              />
 
-            <FeedbackComment
-              type={params.type}
-              slug={params.slug}
-              app={params.app}
-            />
+              <FeedbackComment
+                type={params.type}
+                slug={params.slug}
+                app={params.app}
+              />
+            </div>
             <div className="mt-8 items-center">
               {ads
                 ?.filter((v) => v.type === "horizontal")
@@ -262,21 +226,17 @@ const Detail = ({ params, adsParam }: Props) => {
               </div>
               <div className="items-center">
                 <div className="relative my-4 flex justify-center whitespace-nowrap py-2 text-start text-2xl text-sky-800 transition-all before:absolute before:bottom-0 before:z-0 before:h-2 before:w-full before:rounded before:bg-sky-800 ">
-                  Berita Terbaru
+                  Artikel Terkait
                 </div>
                 <div>
-                  {articleLatest.data?.data?.map((item, index) => {
-                    const isLarge = index === 1;
+                  {articleRelated.data?.data?.map((item) => {
                     return (
                       <Link
                         href={`/pi-learning/article/${item.id}`}
                         key={item.id}
-                        className={cn(
-                          isLarge && "md:col-span-2",
-                          isLarge && "md:row-span-2"
-                        )}
+                        className={cn("md:col-span-2", "md:row-span-2")}
                       >
-                        <Card className="my-4 w-80">
+                        <Card className="min-h-full w-[900px] max-w-full">
                           <CardImage>
                             <Image
                               fill
@@ -286,8 +246,10 @@ const Detail = ({ params, adsParam }: Props) => {
                             />
                           </CardImage>
                           <CardBody>
-                            <p className="text-xl text-sky-800">{item.title}</p>
-                            <p className="mb-4 text-gray-400 line-clamp-2">
+                            <p className="h-14 text-xl text-sky-800 line-clamp-2">
+                              {item.title}
+                            </p>
+                            <p className="mb-4 text-gray-400 line-clamp-3">
                               {item.description}
                             </p>
                             <p className="text-sm text-green-500">

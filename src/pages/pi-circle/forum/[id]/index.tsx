@@ -108,18 +108,17 @@ function PiCircleDetail({ id, adsParam }: Props) {
         <PageBody>
           <div className="grid gap-4 xl:grid-cols-4">
             <div className="col-span-1 lg:col-span-3">
-              <div className="flex justify-between border-b-[1px] border-pv-grey-medium3 pb-4">
-                <div className="flex h-[56px] items-center">
+              <div className="flex h-[56px] items-center">
                   <img
                     src={data?.thumbnail_image}
                     alt=""
                     className="h-[56px] w-[56px] rounded bg-pv-grey-light2 object-contain"
                   />
-                  <div className="mr-4 pl-4 font-semibold text-gray-600 text-sm xl:text-2xl">
+                  <div className="mr-4 pl-4 font-semibold text-gray-600 text-xl md:text-2xl w-full">
                     {data?.title}
                   </div>
                 </div>
-
+              <div className="flex justify-end border-b-[1px] border-pv-grey-medium3 pb-4">
                 {data?.category_name === "Forum" ? (
                   <div className="mt-12 flex p-2 xl:p-0 text-sm">
                     <div className="mr-6 flex items-center">

@@ -38,7 +38,7 @@ const NewsGridView = ({ sortBy }: Props) => {
                 />
               </CardImage>
               <CardBody>
-                <p className="text-xl text-sky-800">{item.title}</p>
+                <p className="text-xl text-sky-800 line-clamp-2">{item.title}</p>
                 {isLarge && <p className="mb-4 truncate">{item.description}</p>}
                 <p>
                   {format(

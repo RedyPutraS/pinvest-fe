@@ -63,19 +63,19 @@ const PiCastYoutubeDetail = ({ id, adsParam }: Props) => {
               </h1>
               <div className="mt-4 flex">
                 <img src="/assets/icon/channel_profile.png" alt="" />
-                <div className="ml-2 flex-grow">
+                <div className="ml-2 flex-grow my-auto">
                   <p className="font-medium text-gray-600">
                     {data?.items &&
                       data?.items[0]?.snippet.channelTitle}
                   </p>
                 </div>
-                <div className="flex rounded-lg border-[1px] border-pv-blue-light mr-3 pr-6">
+                <div className="flex rounded-lg border-[1px] border-pv-blue-light mr-3">
                   <img
                     src="/assets/icon/thumbs-up-outline.svg"
-                    className="pl-3"
+                    className="px-2 my-auto w-[40px] h-[40px]"
                     alt=""
                   />
-                  <div className="p-3 text-pv-blue-light">
+                  <div className="my-auto pr-2 text-pv-blue-light">
                     
                     {(data?.items &&
                       data?.items[0]?.statistics.likeCount) ??
@@ -123,13 +123,13 @@ const PiCastYoutubeDetail = ({ id, adsParam }: Props) => {
               />
             </div>
             <div className="col-span-2">
-              <div className="flex flex-col items-center">
+              <div className="items-center">
                 {ads
                   ?.filter((v) => v.type === "vertical")
                   .map((ad, i) => (
                     <div key={i} className="mb-6">
                       <a href={ad.url}>
-                        <img src={ad.image} alt="" />
+                        <img className="mx-auto w-full" src={ad.image} alt="" />
                       </a>
                     </div>
                   ))}
@@ -137,7 +137,10 @@ const PiCastYoutubeDetail = ({ id, adsParam }: Props) => {
               {isInitialLoading ? (
                 <h4 className="py-4 text-center text-lg">Loading...</h4>
               ) : (
-                <div className="h-[600px] overflow-y-auto">
+                <div className="h-[600px] overflow-y-auto -mt-10">
+                  <div className="relative my-4 flex justify-center whitespace-nowrap py-2 text-start text-2xl text-sky-800 transition-all before:absolute before:bottom-0 before:z-0 before:h-2 before:w-full before:rounded before:bg-sky-800">
+                    Vidio Lainnya
+                  </div>
                   <InfiniteScroll
                     style={{ overflow: "hidden" }}
                     dataLength={piCastYoutube?.pages.length ?? 0}

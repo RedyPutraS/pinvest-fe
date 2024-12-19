@@ -94,50 +94,38 @@ const EventDetail: NextPage<Props> = ({ params }) => {
                     Jadwal
                   </h2>
                   <div className="mt-4 items-center pb-4 text-lg font-semibold xl:flex xl:items-start">
-                    <div className="flex">
-                      <div className="rounded bg-gray-50 p-2">
+                    {/* Kolom Alamat */}
+                    <div className="flex items-center xl:items-start xl:w-1/2">
+                      <div className="rounded bg-gray-50 px-2 md:py-2">
                         <img
                           src="/assets/icon/map-trifold.svg"
-                          className="h-10 w-10"
+                          className="h-14 w-14 md:h-10 md:w-10"
                           alt="ticket icon"
                         />
                       </div>
-                      <div className="relative flex-row">
-                        <span className="col-span-2 ml-2 text-sm text-gray-600">
-                          Alamat
-                        </span>
-
-                        <p className="ml-2 text-sm  xl:w-96">
-                          {event?.data?.type == "offline" &&
-                            event?.data?.address}
+                      <div className="relative flex flex-col ml-2">
+                        <span className="text-sm text-gray-600">Alamat</span>
+                        <p className="text-sm xl:w-96">
+                          {event?.data?.type == "offline" && event?.data?.address}
                           {(event?.data?.type == "online-zoom" ||
                             event?.data?.type == "online-gmeet") &&
-                            "online"}
+                            "Online"}
                         </p>
-
-                        {/* <Link
-                          target="_blank"
-                          className="ml-2 whitespace-nowrap text-sm text-blue-700"
-                          href={url ?? "#"}  // Gunakan url jika ada, jika tidak, fallback ke "#" agar tidak kosong
-                        >
-                          {event?.data?.type === "offline" ? "Lihat Maps" : ""}
-                        </Link> */}
                       </div>
                     </div>
-                    <div className="flex mt-1 xl:mt-0 xl:ml-2">
+
+                    {/* Kolom Tanggal */}
+                    <div className="flex items-center xl:items-start xl:w-1/2 mt-4 xl:mt-0 xl:ml-4">
                       <div className="rounded bg-gray-50 p-2">
                         <img
                           src="/assets/icon/calendar.svg"
-                          className="h-10 w-10 "
+                          className="h-10 w-10"
                           alt="time icon"
                         />
                       </div>
-                      <div className="relative flex-row">
-                        <span className="col-span-2 ml-2 text-sm text-gray-600">
-                          Tanggal
-                        </span>
-
-                        <p className="ml-2 whitespace-nowrap text-sm text-gray-400">
+                      <div className="relative flex flex-col ml-2">
+                        <span className="text-sm text-gray-600">Tanggal</span>
+                        <p className="text-sm text-gray-400">
                           {typeof event?.data?.ticket[0]?.date === "string"
                             ? `${format(
                                 parse(
@@ -152,34 +140,6 @@ const EventDetail: NextPage<Props> = ({ params }) => {
                         </p>
                       </div>
                     </div>
-                    
-                    {/* <div className="flex">
-                      <div className="rounded bg-gray-50 p-2 xl:ml-10">
-                        <img
-                          src="/assets/icon/map-trifold.svg"
-                          className="h-auto w-10"
-                          alt="ticket icon"
-                        />
-                      </div>
-                      <div className="relative flex-row">
-                        <span className="col-span-2 ml-2 text-sm ">Alamat</span>
-                        <p className="ml-2 text-sm  xl:w-96">
-                          {event?.data?.type == "offline" &&
-                            event?.data?.address}
-                          {(event?.data?.type == "online-zoom" ||
-                            event?.data?.type == "online-gmeet") &&
-                            "online"}
-                        </p>
-
-                        <Link
-                          target="_blank"
-                          className=" ml-2 whitespace-nowrap text-sm text-blue-700"
-                          href={url ?? ""}
-                        >
-                          {event?.data?.type == "offline" ? "Lihat Maps" : ""}
-                        </Link>
-                      </div>
-                    </div> */}
                   </div>
                   {
                       url && (
@@ -213,7 +173,7 @@ const EventDetail: NextPage<Props> = ({ params }) => {
                     Deskripsi Umum
                   </h2>
                   <div className="mt-4 flex items-center border-b pb-4 font-semibold lg:text-lg">
-                    <div className="rounded bg-gray-50 p-2">
+                    <div className="rounded bg-gray-50 p-2 mr-2">
                       <img
                         src="/assets/icon/time.svg"
                         className="h-10 w-10"

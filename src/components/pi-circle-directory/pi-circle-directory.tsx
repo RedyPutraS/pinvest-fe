@@ -126,7 +126,7 @@ export const PiCircleDirectory = () => {
       </div>
 
       <div>
-        <div className="mt-6 grid grid-cols-2  gap-4 xl:mt-10 xl:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2  gap-4 xl:mt-10 xl:grid-cols-3">
           {data?.data?.map((group) => (
             <PiCircleCard
               key={group.id}
@@ -142,97 +142,100 @@ export const PiCircleDirectory = () => {
       {
         total_page > 1 && (
           <>
-            <div className="mt-5 hidden justify-center xl:flex">
-            {
-              Number(active) !== 1 && (
+            <div className="mt-5 flex justify-center">
+              {/* Tombol Sebelumnya */}
+              {Number(active) !== 1 && (
                 <Button
                   variant="text"
                   color="blue-gray"
-                  className="flex items-center gap-2 rounded-full"
+                  className="flex items-center justify-center rounded-full w-[40px] h-[30px] p-0 min-w-0 text-sm font-bold"
                   onClick={prev}
                   disabled={active === "1"}
                 >
                   <div className="flex">
-                    <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-                    {/* <span className="ml-2">Sebelumnya</span> */}
+                    <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />
                   </div>
                 </Button>
-              )
-            }
+              )}
 
-              <div className="mx-4 flex items-center gap-2">
+              {/* Pagination Buttons */}
+              <div className="mx-4 flex items-center gap-1 md:gap-2">
                 {data?.page?.links[0]?.label == null ? (
-                  <Button {...getItemProps("1")}>{data?.page?.current_page}</Button>
-                ) : (
-                  data?.page?.links?.map((items, i) => (
-                    <Button key={i} {...getItemProps(items?.label)}>
-                      {items?.label}
-                    </Button>
-                  ))
-                )}
-              </div>
-
-              {
-                Number(active) !== total_page && (
                   <Button
-                    variant="text"
-                    color="blue-gray"
-                    className="flex items-center gap-2 rounded-full"
-                    onClick={next}
-                    disabled={active == data?.page?.total_page.toString()}
+                    {...getItemProps("1")}
+                    className="rounded-3xl w-[30px] h-[30px] flex justify-center items-center text-xs p-0 min-w-0"
                   >
-                    <div className="flex">
-                      {/* <span className="mr-2">Selanjutnya</span> */}
-                      <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-                    </div>
-                  </Button>
-                )
-              }
-            </div>
-            <div className="mx-auto mt-5 flex justify-center xl:hidden">
-              {
-                Number(active) !== 1 && (
-                  <Button
-                    variant="text"
-                    color="blue-gray"
-                    className="flex items-center gap-2 rounded-full px-3 text-xs"
-                    onClick={prev}
-                    disabled={active === "1"}
-                  >
-                    <div className="flex">
-                      <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
-                      {/* <span className="ml-2">Sebelumnya</span> */}
-                    </div>
-                  </Button>
-                )
-              }
-
-              <div className="mx-4 flex items-center gap-2">
-                {data?.page?.links[0]?.label == null ? (
-                  <Button {...getItemProps("1")}>{data?.page?.current_page}</Button>
-                ) : (
-                  <Button {...getItemProps(data?.page?.current_page.toString())}>
                     {data?.page?.current_page}
                   </Button>
+                ) : (
+                  (() => {
+                    const currentPage = Number(active);  // Halaman aktif
+                    const totalPages = data?.page?.total_page;  // Total halaman
+                    const pagesToShow = [];
+
+                    // Menentukan halaman mulai dan akhir yang akan ditampilkan
+                    let startPage = Math.max(1, currentPage - 1);  // Halaman dimulai 1 halaman sebelumnya
+                    let endPage = Math.min(totalPages, currentPage + 1);  // Halaman berakhir 1 halaman setelahnya
+
+                    // Jika halaman aktif adalah halaman pertama
+                    if (currentPage === 1) {
+                      startPage = 1;
+                      endPage = Math.min(3, totalPages);  // Tampilkan sampai halaman ketiga (jika ada)
+                    }
+
+                    // Jika halaman aktif adalah halaman terakhir
+                    if (currentPage === totalPages) {
+                      startPage = Math.max(1, totalPages - 2);  // Tampilkan dari halaman terakhir ke belakang
+                      endPage = totalPages;
+                    }
+
+                    // Menambahkan halaman sebelumnya, halaman aktif, dan halaman berikutnya
+                    for (let i = startPage; i <= endPage; i++) {
+                      pagesToShow.push(i);
+                    }
+
+                    // Pastikan hanya 3 tombol yang ditampilkan
+                    if (pagesToShow.length > 3) {
+                      if (currentPage > 2) {
+                        pagesToShow.shift();  // Hapus halaman pertama jika ada lebih dari 3
+                      }
+                      if (pagesToShow.length < 3 && currentPage < totalPages - 1) {
+                        pagesToShow.push(currentPage + 2);  // Tambahkan halaman berikutnya jika kurang dari 3
+                      }
+                    }
+
+                    return pagesToShow.map((page) => (
+                      <Button
+                        key={page}
+                        {...getItemProps(page.toString())}
+                        className={`${
+                          page.toString() === active ? "bg-blue-300" : ""
+                        } rounded-3xl w-[40px] h-[30px] flex justify-center items-center text-xs p-0 min-w-0`}
+                      >
+                        {page}
+                      </Button>
+                    ));
+                  })()
                 )}
               </div>
 
-              {
-                Number(active) !== total_page && (
-                  <Button
-                    variant="text"
-                    color="blue-gray"
-                    className="flex items-center gap-2 rounded-full px-3 text-xs"
-                    onClick={next}
-                    disabled={active == data?.page?.total_page.toString()}
-                  >
-                    <div className="flex">
-                      {/* <span className="mr-2">Selanjutnya</span> */}
-                      <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-                    </div>
-                  </Button>
-                )
-              }
+              {/* Tombol Selanjutnya */}
+              {Number(active) !== total_page && (
+                <Button
+                  variant="text"
+                  color="blue-gray"
+                  className="flex items-center gap-1 rounded-full w-[40px] h-[30px] justify-center p-0 min-w-0"
+                  onClick={next}
+                  disabled={active == data?.page?.total_page.toString()}
+                >
+                  <div className="flex">
+                    <ArrowRightIcon
+                      strokeWidth={2}
+                      className="h-4 w-4" // Ganti hidden md:block
+                    />
+                  </div>
+                </Button>
+              )}
             </div>
           </>
         )

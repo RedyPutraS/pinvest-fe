@@ -11,7 +11,7 @@ import {
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 export const Login = ({ redirectRoute }: { redirectRoute: string | null }) => {
   const router = useRouter();
@@ -47,6 +47,9 @@ export const Login = ({ redirectRoute }: { redirectRoute: string | null }) => {
   };
   const [isShowPassword, setIsShowPassword] = useState(false);
 
+  // useEffect(() => {
+  //   window.location.reload();
+  // }, []);
   return (
     <>
       <Head>
@@ -58,7 +61,7 @@ export const Login = ({ redirectRoute }: { redirectRoute: string | null }) => {
           <ButtonLoginGoogle className="mt-4" />
 
           <p className="mt-4 text-center text-lg">
-            Atau masuk menggunakan email.
+            Atau menggunakan email.
           </p>
           <p className="mt-4 text-center text-sm text-red-400">{error}</p>
 

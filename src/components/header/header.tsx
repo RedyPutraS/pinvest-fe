@@ -22,12 +22,15 @@ import Input from "components/input/input";
 import { useRouter } from "next/router";
 import { useRef } from "react";
 import useStore from "app/store";
+import PopupLogin from "components/popup-login/popup-login";
 type Props = {
   onSearch: (text: string) => void;
 };
 export default function Header({ onSearch }: Props) {
+  const [refreshKey, setRefreshKey] = useState(0);
   const account = useAccount();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const auth = useAuthStore();
   const [openSearch, toggleSearch] = useState<boolean>(false);
   const { wishlistW, notifikasiN, cartC } = useStore();
@@ -102,6 +105,7 @@ export default function Header({ onSearch }: Props) {
   const onLogout = () => {
     auth.setToken("");
     auth.logout();
+    window.localStorage.setItem("logout", "1");
     if (
       ["/cart", "/wishlist", "/notification", "profile"].includes(
         router.pathname
@@ -179,7 +183,7 @@ export default function Header({ onSearch }: Props) {
         </div>
       ) : (
         <div className="flex h-full w-full items-center justify-end px-3 py-2 xl:max-w-[1440px] ">
-          <div className="hidden md:block md:w-3/5 lg:mx-4 xl:flex 2xl:mx-16">
+          <div className="hidden md:block md:w-3/5 md:mx-auto lg:mx-4 xl:flex 2xl:mx-16">
             <Input
               placeholder="Cari"
               name="searchbar"
@@ -220,56 +224,89 @@ export default function Header({ onSearch }: Props) {
               );
             })}
           </div>
-          {isLoggedIn && (
+          {isLoginPopupOpen && (
+            <PopupLogin onClose={() => setIsLoginPopupOpen(false)} />
+          )}
+          {/* {isLoggedIn && ( href="/cart" */}
             <div className="flex">
-              <Link href="/cart" className="hover:opacity-50">
-                <div className="px-3">
+            <Link
+              href={isLoggedIn ? "/cart" : "#"}
+              onClick={(e) => {
+                if (!isLoggedIn) {
+                  e.preventDefault(); // Mencegah navigasi ke "#" jika pengguna tidak login
+                  setIsLoginPopupOpen(true); // Membuka popup login
+                }
+              }}
+              className="hover:opacity-50 border-x md:border-x-2 border-r"
+            >
+                <div className="px-1 xl:px-2">
                   <div className="relative">
-                    <img src="/assets/icon/cart.svg" alt="cart" />
+                    <img src="/assets/icon/cart.svg" alt="cart" className={`h-[25px] xl:h-[37px]  ${isLoggedIn ? "" : "xl:h-[50px]"}`}/>
                     <div
                       className={cn(
-                        "absolute right-0 top-0 h-4 w-4 rounded-full bg-pv-blue-light",
+                        "absolute right-0 top-0 h-3 w-3  md:h-4 md:w-4 rounded-full bg-pv-blue-light",
                         cartCount > 0 ? "block" : "hidden"
                       )}
                     >
-                      <div className={cn("text-center text-xs text-white")}>
+                      <div className={cn("text-center text-[10px] md:text-xs text-white")}>
                         {cartCount}
                       </div>
                     </div>
                   </div>
                 </div>
               </Link>
-              <Link href="/wishlist" className="hover:opacity-50">
-                <div className="px-3">
+              {/* <Link href="/wishlist" className="hover:opacity-50"> */}
+              <Link
+                href={isLoggedIn ? "/wishlist" : "#"}
+                onClick={(e) => {
+                  if (!isLoggedIn) {
+                    e.preventDefault(); // Mencegah navigasi ke "#" jika pengguna tidak login
+                    setIsLoginPopupOpen(true); // Membuka popup login
+                  }
+                }}
+                className="hover:opacity-50 border-r md:border-r-2"
+              >
+                <div className="px-1 xl:px-2">
                   <div className="relative">
-                    <img src="/assets/icon/heart.svg" alt="wishlist" />
+                    <img src="/assets/icon/heart.svg" alt="wishlist" className={`h-[25px] xl:h-[37px]  ${isLoggedIn ? "" : "xl:h-[50px]"}`}/>
                     <div
                       className={cn(
-                        "absolute right-0 top-0 h-4 w-4 rounded-full bg-pv-blue-light",
+                        "absolute right-0 top-0 h-3 w-3  md:h-4 md:w-4 rounded-full bg-pv-blue-light",
                         wishlistCount > 0 ? "block" : "hidden"
                       )}
                     >
-                      <div className={cn("text-center text-xs text-white")}>
+                      <div className={cn("text-center text-[10px] md:text-xs text-white")}>
                         {wishlistCount}
                       </div>
                     </div>
                   </div>
                 </div>
               </Link>
-              <Link href="/notification" className="hover:opacity-50">
-                <div className="px-3">
+              {/* <Link href="/notification" className="hover:opacity-50"> */}
+              <Link
+                href={isLoggedIn ? "/notification" : "#"}
+                onClick={(e) => {
+                  if (!isLoggedIn) {
+                    e.preventDefault(); // Mencegah navigasi ke "#" jika pengguna tidak login
+                    setIsLoginPopupOpen(true); // Membuka popup login
+                  }
+                }}
+                className="hover:opacity-50 border-r md:border-r-2"
+              >
+                <div className="px-1 xl:px-2">
                   <div className="relative">
                     <img
                       src="/assets/icon/notification.svg"
                       alt="Notification"
+                      className={`h-[25px] xl:h-[37px]  ${isLoggedIn ? "" : "xl:h-[50px]"}`}
                     />
                     <div
                       className={cn(
-                        "absolute right-0 top-0 h-4 w-4 rounded-full bg-pv-blue-light",
+                        "absolute right-0 top-0 h-3 w-3  md:h-4 md:w-4 rounded-full bg-pv-blue-light",
                         unreadCount > 0 ? "block" : "hidden"
                       )}
                     >
-                      <div className={cn("text-center text-xs text-white")}>
+                      <div className={cn("text-center text-[10px] md:text-xs text-white")}>
                         {unreadCount}
                       </div>
                     </div>
@@ -277,7 +314,7 @@ export default function Header({ onSearch }: Props) {
                 </div>
               </Link>
             </div>
-          )}
+          {/* )} */}
           <div className="hidden gap-4 p-4 text-gray-600 xl:flex">
             {isLoggedIn ? (
               <Popover>
@@ -344,8 +381,8 @@ export default function Header({ onSearch }: Props) {
                     className="hover:darken flex items-center hover:bg-pv-red hover:text-white hover:brightness-75"
                     color="red"
                     onClick={() => {
-                      router.push("/auth/login");
-                      return onLogout();
+                      onLogout(); // Panggil logout
+                      window.location.replace("/auth/login"); // Lakukan hard refresh
                     }}
                   >
                     <img src="/assets/icon/logout.svg" alt="logout icon" />

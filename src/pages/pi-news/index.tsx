@@ -60,12 +60,12 @@ const PiNews = () => {
             </TabListHeader>
           </Tabs>
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <NewsBanner bannerIndex={0} />
         </div>
         <section className="container mx-auto my-10 px-4">
-          <NewsGridView />
-        </section>
+          <NewsGridView sortBy="asc" />
+        </section> */}
         <div className="my-4">
           <NewsBanner bannerIndex={1} />
         </div>
@@ -76,7 +76,7 @@ const PiNews = () => {
 
         <section className="container mx-auto my-10 px-4">
           <div className="mt-10" />
-          <NewsGridView sortBy="asc" />
+          <NewsGridView />
         </section>
         <div className="my-4">
           <NewsBanner bannerIndex={2} />

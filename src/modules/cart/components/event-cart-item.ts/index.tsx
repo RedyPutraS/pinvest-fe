@@ -9,6 +9,7 @@ import { id } from "date-fns/locale";
 import { currencyFormatter } from "utils/helpers/formatter";
 
 type Props = {
+  limit?: number;
   cartId: number;
   idEvent: number;
   image: string;
@@ -27,6 +28,7 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const EventCartItem: React.FC<Props> = ({
+  limit,
   cartId,
   idEvent,
   image,
@@ -49,7 +51,7 @@ const EventCartItem: React.FC<Props> = ({
 
   useEffect(() => {
     if (qty !== initQty) {
-      onChangeQty?.(type, cartId, debounceValue);
+      onChangeQty?.(type, cartId, qty);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceValue]);
@@ -71,8 +73,8 @@ const EventCartItem: React.FC<Props> = ({
 
       <div className="flex-1">
         <div>
-          {type === "membership" ? <p className="m-0">{title}</p> : ""}
-          <p className="m-0">{event_title}</p>
+          {type === "membership" ? <p className="m-0 text-xl md:text-[28px] xl:text-[22px] mt-4">{title}</p> : ""}
+          <p className="m-0 text-xl md:text-[28px] xl:text-[22px] mt-4">{event_title}</p>
           <RenderHtml
             html={description}
             className="m-0 text-pv-grey-medium2 line-clamp-3"
@@ -82,7 +84,7 @@ const EventCartItem: React.FC<Props> = ({
             <p className="m-0">{author}</p>
           </div>
         </div>
-        {type === "membership" ?? (
+        {type === "membership" && (
           <p className="m-0 flex items-center gap-2 text-sm ">
             Rating:
             <ReactStars
@@ -112,7 +114,7 @@ const EventCartItem: React.FC<Props> = ({
           {currencyFormatter.format(price)}
         </p>
 
-        <div className="flex items-center justify-between md:justify-center xl:justify-end h-[120px] mt-5 md:mt-0">
+        <div className="flex flex-col md:flex-row items-center justify-between md:justify-center xl:justify-end h-[120px] mt-5 md:mt-0">
           {moveToWishlist && (
             <Button
               variant="outlined"
@@ -129,11 +131,10 @@ const EventCartItem: React.FC<Props> = ({
           )}
 
           {type === "event" && typeof initQty !== "undefined" && (
-            <div className="md:ml-10 flex items-center rounded-xl border border-pv-grey-dark3 p-[2px]">
+            <div className="md:ml-10 flex items-center justify-start rounded-xl border border-pv-grey-dark3 p-[2px]">
               {onChangeQty && (
                 <Button
-                  style={{ fontSize: "30px" }}
-                  className="px-4"
+                  className="px-4 text-[15px] md:text-[20px]"
                   disabled={qty === 1}
                   onClick={() => setQty((prev) => prev - 1)}
                 >
@@ -143,9 +144,9 @@ const EventCartItem: React.FC<Props> = ({
               <p className="px-10">{qty}</p>
               {onChangeQty && (
                 <Button
-                  style={{ fontSize: "30px" }}
-                  className="px-4"
+                  className="px-4 text-[15px] md:text-[20px]"
                   onClick={() => setQty((prev) => prev + 1)}
+                  disabled={qty === limit}
                 >
                   +
                 </Button>

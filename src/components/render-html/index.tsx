@@ -9,7 +9,8 @@ type Props = {
 const style = `<style>.pv-desc small, .pv-desc strike, .pv-desc strong, .pv-desc sub, .pv-desc sup, .pv-desc tt, .pv-desc var,.pv-desc h1, .pv-desc h2, .pv-desc h3, .pv-desc h4, .pv-desc h5, .pv-desc h6, .pv-desc p, .pv-desc blockquote, .pv-desc big, .pv-desc cite, .pv-desc code, .pv-desc ol, .pv-desc ul, .pv-desc li {all: revert;}</style>`;
 
 const RenderHtml = ({ html, className, ...props }: Props) => {
-  const clean = DOMPurify.sanitize(html ?? "", {
+  const sanitizedHtml = html?.replace(/background-color:\s*[^;]+;/g, "");
+  const clean = DOMPurify.sanitize(sanitizedHtml ?? "", {
     ALLOWED_TAGS: [
       "a",
       "strong",
@@ -51,7 +52,7 @@ const RenderHtml = ({ html, className, ...props }: Props) => {
 
   return (
     <div
-      className={cn("pv-desc myCustomClass", className)}
+      className={cn("pv-desc myCustomClass mt-0", className)}
       dangerouslySetInnerHTML={{ __html: style + clean }}
       {...props}
     />
