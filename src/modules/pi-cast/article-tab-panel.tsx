@@ -1,4 +1,5 @@
 import PiNewsCard from "components/pi-news-card/pi-news-card";
+import { Spinner } from "components/spinner";
 import { useInfinitePiNews } from "modules/home/api/pi-news";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -8,14 +9,14 @@ const ArticleTabPanel = () => {
   return (
     <div className="mt-4">
       {isInitialLoading ? (
-        <h4 className="py-4 text-center text-lg">Loading...</h4>
+        <h4 className="py-4 text-center text-lg"><Spinner center /></h4>
       ) : (
         <InfiniteScroll
           style={{ overflow: "hidden" }}
           dataLength={data?.pages.length ?? 0}
           next={fetchNextPage}
           hasMore={hasNextPage || false}
-          loader={<h4 className="py-4 text-center text-lg">Loading...</h4>}
+          loader={<h4 className="py-4 text-center text-lg"><Spinner center /></h4>}
         >
           {data?.pages.map((group, gi) => (
             <div key={gi} className="grid gap-4 xl:grid-cols-3">

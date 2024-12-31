@@ -16,6 +16,7 @@ import { PiLearning } from "./program-menu-icon";
 import { fillSpace } from "utils/helpers/fillspace";
 import PiLearningSlider from "components/image-slider/pi-learning-slider";
 import { ActiveTabContext } from "../context/active-tab-context";
+import { Spinner } from "components/spinner";
 
 type Props = {
   data: {
@@ -99,7 +100,7 @@ const SectionPiLearning = ({ data }: Props) => {
   };
 
   if (loading) {
-    return <p>Loading...</p>; // Tampilkan loading saat data sedang diambil
+    return <Spinner center />; // Tampilkan loading saat data sedang diambil
   }
 
   const piarticleData = piArticles.data ?? [];

@@ -101,6 +101,8 @@ const InquiryDialog = ({ showDialog = false, onClose, id, app }: Props) => {
                 setFormData({ ...formData, file: file });
               }}
             />
+            <p className="text-sm">* File Maksimal 5MB</p>
+            {/* <div className="py-3 pt-6">File Pendukung</div> */}
           </div>
           <div className="flex justify-end">
             <button

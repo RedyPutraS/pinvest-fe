@@ -22,6 +22,7 @@ import { TabCategory } from "components/tabs/tab-category";
 import PopupBanner from "components/popup-banner";
 import { CustomHead } from "components/custom-head/custom-head";
 import { useEffect } from "react";
+import Head from "next/head";
 
 const APP = "pilearning";
 
@@ -75,7 +76,18 @@ const Detail = ({ params, adsParam }: Props) => {
 
   return (
     <>
-      <CustomHead title={meta_title} image={cover_image} />
+      <Head>
+        <title>Testing</title>
+        <meta property="og:title" content="Testing title" />
+        <meta property="og:description" content="Testing Description" />
+        <meta property="og:image" content={article?.data?.thumbnail_image} />
+        <meta property="og:url" content={`https://yourdomain.com/pi-learning/article/${article?.data?.id}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Testing title" />
+        <meta name="twitter:description" content="Testing Description" />
+        <meta name="twitter:image" content={article?.data?.thumbnail_image} />
+      </Head>
+      {/* <CustomHead title={meta_title} image={cover_image} /> */}
       <div className="sticky left-0 right-0 top-14 z-20 flex h-16 justify-center bg-white xl:top-20">
         <Tabs
           onChangeTab={(tab) => {

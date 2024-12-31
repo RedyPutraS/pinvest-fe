@@ -222,7 +222,7 @@ const OnlineCoursePage = ({ params }: Props) => {
                           alt="Airplay Icon"
                         />
                         <p className="ml-2">
-                          {data?.duration} Video Sesuai Permintaan
+                          {data?.duration} Menit Durasi Video
                         </p>
                       </span>
                     </div>
@@ -248,26 +248,20 @@ const OnlineCoursePage = ({ params }: Props) => {
                         </p>
                       </span>
                     </div>
-                    <div>
-                      <span className="inline-flex">
-                        <img
-                          src="/assets/icon/CloudCheck.png"                          
-                          width={25}
-                          alt="File Cloud Icon"
-                        />
-                        <p className="ml-2">Akses Selamanya</p>
-                      </span>
-                    </div>
-                    <div>
-                      <span className="inline-flex">
-                        <img
-                          src="/assets/icon/Trophy.png"
-                          width={25}
-                          alt="Trophy Icon"
-                        />
-                        <p className="ml-2">Sertifikat Kompetensi</p>
-                      </span>
-                    </div>
+                    {(data?.price ?? 0) == 0 ? (
+                      <div></div>
+                    ) : (
+                      <div>
+                        <span className="inline-flex">
+                          <img
+                            src="/assets/icon/Trophy.png"
+                            width={25}
+                            alt="Trophy Icon"
+                          />
+                          <p className="ml-2">Sertifikat Kompetensi</p>
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </>
               ) : (
@@ -369,7 +363,7 @@ const OnlineCoursePage = ({ params }: Props) => {
                           alt="Airplay Icon"
                         />
                         <p className="ml-2">
-                          {data?.duration} Video Sesuai Permintaan
+                          {data?.duration} Menit Durasi Video
                         </p>
                       </span>
                     </div>
@@ -395,26 +389,20 @@ const OnlineCoursePage = ({ params }: Props) => {
                         </p>
                       </span>
                     </div>
-                    <div>
-                      <span className="inline-flex">
-                        <img
-                          src="/assets/icon/CloudCheck.png"
-                          width={25}
-                          alt="File Cloud Icon"
-                        />
-                        <p className="ml-2">Akses Selamanya</p>
-                      </span>
-                    </div>
-                    <div>
-                      <span className="inline-flex">
-                        <img
-                          src="/assets/icon/Trophy.png"
-                          width={25}
-                          alt="Trophy Icon"
-                        />
-                        <p className="ml-2">Sertifikat Kompetensi</p>
-                      </span>
-                    </div>
+                    {(data?.price ?? 0) == 0 ? (
+                      <div></div>
+                    ) : (
+                      <div>
+                        <span className="inline-flex">
+                          <img
+                            src="/assets/icon/Trophy.png"
+                            width={25}
+                            alt="Trophy Icon"
+                          />
+                          <p className="ml-2">Sertifikat Kompetensi</p>
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </>
               )}
@@ -539,7 +527,7 @@ const OnlineCoursePage = ({ params }: Props) => {
                           alt="Airplay Icon"
                         />
                         <p className="ml-2">
-                          {data?.duration} Video Sesuai Permintaan
+                          {data?.duration} Menit Durasi Video
                         </p>
                       </span>
                     </div>
@@ -565,26 +553,20 @@ const OnlineCoursePage = ({ params }: Props) => {
                         </p>
                       </span>
                     </div>
-                    <div>
-                      <span className="inline-flex">
-                        <img
-                          src="/assets/icon/CloudCheck.png"
-                          width={25}
-                          alt="File Cloud Icon"
-                        />
-                        <p className="ml-2">Akses Selamanya</p>
-                      </span>
-                    </div>
-                    <div>
-                      <span className="inline-flex">
-                        <img
-                          src="/assets/icon/Trophy.png"
-                          width={25}
-                          alt="Trophy Icon"
-                        />
-                        <p className="ml-2">Sertifikat Kompetensi</p>
-                      </span>
-                    </div>
+                    {(data?.price ?? 0) == 0 ? (
+                      <div></div>
+                    ) : (
+                      <div>
+                        <span className="inline-flex">
+                          <img
+                            src="/assets/icon/Trophy.png"
+                            width={25}
+                            alt="Trophy Icon"
+                          />
+                          <p className="ml-2">Sertifikat Kompetensi</p>
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </>
               ) : (
@@ -680,7 +662,7 @@ const OnlineCoursePage = ({ params }: Props) => {
                           alt="Airplay Icon"
                         />
                         <p className="ml-2">
-                          {data?.duration} Video Sesuai Permintaan
+                          {data?.duration} Menit Durasi Video
                         </p>
                       </span>
                     </div>
@@ -706,26 +688,20 @@ const OnlineCoursePage = ({ params }: Props) => {
                         </p>
                       </span>
                     </div>
-                    <div>
-                      <span className="inline-flex">
-                        <img
-                          src="/assets/icon/CloudCheck.png"
-                          width={25}
-                          alt="File Cloud Icon"
-                        />
-                        <p className="ml-2">Akses Selamanya</p>
-                      </span>
-                    </div>
-                    <div>
-                      <span className="inline-flex">
-                        <img
-                          src="/assets/icon/Trophy.png"
-                          width={25}
-                          alt="Trophy Icon"
-                        />
-                        <p className="ml-2">Sertifikat Kompetensi</p>
-                      </span>
-                    </div>
+                    {(data?.price ?? 0) == 0 ? (
+                      <div></div>
+                    ) : (
+                      <div>
+                        <span className="inline-flex">
+                          <img
+                            src="/assets/icon/Trophy.png"
+                            width={25}
+                            alt="Trophy Icon"
+                          />
+                          <p className="ml-2">Sertifikat Kompetensi</p>
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </>
               )}

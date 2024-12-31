@@ -32,7 +32,7 @@ const SectionPiNews = ({ data }: Props) => {
   const piNewsParams: PiNewsParams = {
     page: 1,
     limit: 5,
-    category: "financialeconomic",
+    category: "",
   };
   const [newPiNewsParams, setNewPiNewsParams] = useState(piNewsParams);
   const piNews = usePiNews(newPiNewsParams);
@@ -40,9 +40,30 @@ const SectionPiNews = ({ data }: Props) => {
     (app) => app.app_name.trim() === APP_NAME.news.trim()
   );
 
+  const [categories, setCategories] = useState(appName?.category || []); // Buat state untuk kategori
+
   useEffect(() => {
-    console.log(appName?.category);
-  }, [appName?.category])
+    // Cek apakah appName dan category tersedia
+    if (appName?.category) {
+      // Buat objek baru yang ingin ditambahkan
+      const newCategory = {
+        id: 99, // ganti dengan ID yang sesuai
+        category_name: 'Kategori Baru',
+        alias: '',
+        subcategory: [],
+      };
+
+      // Menambahkan objek baru ke awal array
+      const updatedCategories = [newCategory, ...appName.category]; // Menambahkan objek baru ke awal
+
+      setCategories(updatedCategories); // Memperbarui state dengan kategori yang baru
+      console.log(updatedCategories, "Updated Categories"); // Tampilkan kategori yang diperbarui
+    }
+  }, [appName?.category]);
+
+  useEffect(() => {
+    console.log(categories, "hsajhsaj"); // Ganti appName?.category dengan categories
+  }, [categories]); 
   
   
 
@@ -61,7 +82,7 @@ const SectionPiNews = ({ data }: Props) => {
             </div>
             <Tabs
               onChangeTab={(tab) => {
-                const alias = appName?.category[tab]?.alias;
+                const alias = categories[tab]?.alias;
                 // const subcategory =
                 //   (appName as any)?.category[tab]?.subcategory[0]?.alias ?? "";
                 setActiveTab(alias || "");
@@ -71,8 +92,8 @@ const SectionPiNews = ({ data }: Props) => {
               }}
             >
               <TabList>
-                {appName?.category.map((category, i) =>
-                  category.category_name === "PiNSpire" ? null : (
+                {categories.map((category, i) =>
+                  category.category_name === "PiNSpire" || i === 0 ? null : (
                     <Tab key={i}>
                       <p className="text-[11px] md:text-xl md:font-medium mr-1">
                         {category.category_name}
@@ -85,7 +106,7 @@ const SectionPiNews = ({ data }: Props) => {
               <div className="block gap-4 xl:grid xl:grid-cols-7 ">
                 <div className="xl:col-span-5">
                   <TabPanels>
-                    {appName?.category
+                    {categories
                       .filter((cat) => cat.category_name !== piNewsParams.category)
                       .map((category) => {
                         return (

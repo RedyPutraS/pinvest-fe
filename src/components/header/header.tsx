@@ -237,11 +237,11 @@ export default function Header({ onSearch }: Props) {
                   setIsLoginPopupOpen(true); // Membuka popup login
                 }
               }}
-              className="hover:opacity-50 border-x md:border-x-2 border-r"
+              className="hover:opacity-50 border-l-[1px] md:border-l-[1px] md:h-7 lg:h-10 md:my-auto xl:-ml-1"
             >
-                <div className="px-1 xl:px-2">
+                <div className="px-1 xl:ml-2 xl:mr-1">
                   <div className="relative">
-                    <img src="/assets/icon/cart.svg" alt="cart" className={`h-[25px] xl:h-[37px]  ${isLoggedIn ? "" : "xl:h-[50px]"}`}/>
+                    <img src="/assets/icon/cart.svg" alt="cart" className={`h-[25px] xl:h-[37px] xl:-mt-1 ${isLoggedIn ? "" : "xl:h-[50px]"}`}/>
                     <div
                       className={cn(
                         "absolute right-0 top-0 h-3 w-3  md:h-4 md:w-4 rounded-full bg-pv-blue-light",
@@ -264,11 +264,11 @@ export default function Header({ onSearch }: Props) {
                     setIsLoginPopupOpen(true); // Membuka popup login
                   }
                 }}
-                className="hover:opacity-50 border-r md:border-r-2"
+                className="hover:opacity-50 md:h-7 lg:h-10 md:my-auto"
               >
                 <div className="px-1 xl:px-2">
                   <div className="relative">
-                    <img src="/assets/icon/heart.svg" alt="wishlist" className={`h-[25px] xl:h-[37px]  ${isLoggedIn ? "" : "xl:h-[50px]"}`}/>
+                    <img src="/assets/icon/heart.svg" alt="wishlist" className={`h-[25px] xl:h-[37px] xl:-mt-1  ${isLoggedIn ? "" : "xl:h-[50px]"}`}/>
                     <div
                       className={cn(
                         "absolute right-0 top-0 h-3 w-3  md:h-4 md:w-4 rounded-full bg-pv-blue-light",
@@ -291,14 +291,14 @@ export default function Header({ onSearch }: Props) {
                     setIsLoginPopupOpen(true); // Membuka popup login
                   }
                 }}
-                className="hover:opacity-50 border-r md:border-r-2"
+                className="hover:opacity-50 md:h-7 lg:h-10 md:my-auto"
               >
                 <div className="px-1 xl:px-2">
                   <div className="relative">
                     <img
                       src="/assets/icon/notification.svg"
                       alt="Notification"
-                      className={`h-[25px] xl:h-[37px]  ${isLoggedIn ? "" : "xl:h-[50px]"}`}
+                      className={`h-[25px] xl:h-[37px] xl:-mt-1  ${isLoggedIn ? "" : "xl:h-[50px]"}`}
                     />
                     <div
                       className={cn(

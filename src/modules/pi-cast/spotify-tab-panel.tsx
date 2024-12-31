@@ -1,5 +1,6 @@
 import PiCastSpotifyItem from "components/pi-cast-spotify/pi-cast-spotify-item";
 import RenderHtml from "components/render-html";
+import { Spinner } from "components/spinner";
 import {
   useInfinitePiCastSpotify,
   usePiCastSpotifyDetailPlaylist,
@@ -27,7 +28,7 @@ const SpotifyTabPanel = () => {
             dataLength={data?.pages.length ?? 0}
             next={fetchNextPage}
             hasMore={hasNextPage || false}
-            loader={<h4 className="text-center">Loading...</h4>}
+            loader={<h4 className="text-center"><Spinner center /></h4>}
           >
             {data?.pages.flatMap((group) => (
               <>

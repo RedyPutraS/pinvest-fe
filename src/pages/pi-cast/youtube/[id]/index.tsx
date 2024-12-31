@@ -16,6 +16,7 @@ import { useAds } from "modules/ads/ads";
 import { FeedbackComment } from "modules/feedback/component/comment";
 import { FeedbackRating } from "modules/feedback/component/rating";
 import { CustomHead } from "components/custom-head/custom-head";
+import { Spinner } from "components/spinner";
 const TYPE = "youtube";
 const APP = "picast";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
@@ -135,7 +136,7 @@ const PiCastYoutubeDetail = ({ id, adsParam }: Props) => {
                   ))}
               </div>
               {isInitialLoading ? (
-                <h4 className="py-4 text-center text-lg">Loading...</h4>
+                <h4 className="py-4 text-center text-lg"><Spinner center /></h4>
               ) : (
                 <div className="h-[600px] overflow-y-auto -mt-10">
                   <div className="relative my-4 flex justify-center whitespace-nowrap py-2 text-start text-2xl text-sky-800 transition-all before:absolute before:bottom-0 before:z-0 before:h-2 before:w-full before:rounded before:bg-sky-800">
@@ -147,7 +148,7 @@ const PiCastYoutubeDetail = ({ id, adsParam }: Props) => {
                     next={fetchNextPage}
                     hasMore={hasNextPage || false}
                     loader={
-                      <h4 className="py-4 text-center text-lg">Loading...</h4>
+                      <h4 className="py-4 text-center text-lg"><Spinner center /></h4>
                     }
                   >
                     {piCastYoutube?.pages.map((group, gi) => (

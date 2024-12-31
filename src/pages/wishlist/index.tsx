@@ -57,7 +57,7 @@ const Wishlist = ({}: Props) => {
         <div className="flex justify-center h-full">
           <img
             className="mx-auto my-auto h-52 md:h-64 xl:h-96 md:my-auto md:w-3/5"
-            src="./assets/img/empty-wishlist.jpg"
+            src="./assets/img/empty-wishlist.png"
             alt=""
           />
         </div>

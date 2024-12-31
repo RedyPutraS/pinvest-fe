@@ -12,6 +12,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { cn } from "utils";
 import { id } from "date-fns/locale";
 import useStore from "app/store";
+import { Spinner } from "components/spinner";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const NotificationPage = ({ params }: Props) => {
   const { data, fetchNextPage, hasNextPage, isInitialLoading, refetch } =
@@ -46,7 +47,7 @@ const NotificationPage = ({ params }: Props) => {
     <PageBody className="min-h-[550px]">
       <h1 className="text-2xl font-semibold xl:text-5xl">Notifikasi</h1>
       {isInitialLoading ? (
-        <h4 className="py-4 text-center text-lg">Loading...</h4>
+        <h4 className="py-4 text-center text-lg"><Spinner center /></h4>
       ) : (
         <div className="my-4 grid grid-cols-1 gap-4 bg-pv-white-light py-4 xl:my-8">
           <InfiniteScroll
@@ -54,7 +55,7 @@ const NotificationPage = ({ params }: Props) => {
             dataLength={data?.pages.length ?? 0}
             next={fetchNextPage}
             hasMore={hasNextPage || false}
-            loader={<h4 className="py-4 text-center text-lg">Loading...</h4>}
+            loader={<h4 className="py-4 text-center text-lg"><Spinner center /></h4>}
           >
             {data?.pages.map((group) =>
               group.map((v) => (

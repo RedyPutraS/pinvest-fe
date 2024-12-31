@@ -236,7 +236,7 @@ const NewsDetail: NextPage<Props> = ({ params, adsParam }) => {
               </div>
             </div>
 
-            <div className="w-full md:-mt-2 xl:-mt-7">
+            <div className="w-full md:-mt-2 xl:-mt-2">
               <FeedbackRating
                 type={params.type}
                 slug={params.slug}

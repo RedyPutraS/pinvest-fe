@@ -14,13 +14,14 @@ import { useRouter } from "next/router";
 import AccordionTransaksi from "components/accordion-list/accordion-transaksi";
 import RenderHtml from "components/render-html";
 import { useEffect } from "react";
+import { Spinner } from "components/spinner";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const Index = ({ params }: Props) => {
   const router = useRouter();
   const { data } = useTransactionDetail(params);
   
   if (!data) {
-    return <div>Loading...</div>;
+    return <Spinner center />;
   }
   return (
     <PageBody>

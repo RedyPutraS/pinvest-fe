@@ -279,7 +279,7 @@ const ProfilePage = ({}: Props) => {
                   </div>
 
                   <div className="hidden items-center xl:flex xl:flex-row">
-                    <div className="m-3">
+                    <div className="m-2">
                       <img
                         src="../assets/icon/contact_profile.png"
                         width={20}
@@ -291,7 +291,7 @@ const ProfilePage = ({}: Props) => {
                       {data?.first_name} {data?.last_name}
                     </div>
 
-                    <div className="m-3">
+                    <div className="m-2">
                       <img
                         src="../assets/icon/email_profile.png"
                         width={20}
@@ -300,7 +300,7 @@ const ProfilePage = ({}: Props) => {
                     </div>
 
                     <div>{data?.email}</div>
-                    <div className="m-3">
+                    <div className="m-2">
                       <img
                         src="../assets/icon/phone.svg"
                         width={20}

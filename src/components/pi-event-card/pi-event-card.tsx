@@ -116,9 +116,10 @@ export function PiEventCard({ event }: Props) {
               </p>
             </div>
           {/* uppercase online-zoom*/}
-          <div className="mt-1 text-[10px] font-semibold uppercase text-pv-blue-light xl:py-2 xl:text-[14px]">
+          <div className="mt-1 text-[10px] font-semibold uppercase text-pv-blue-light xl:pt-2 xl:text-[14px]">
             {event.type === "online-zoom" ? "online" : event.type}
           </div>
+          <div className="hidden text-lg xl:block text-[10px] xl:text-[14px] text-blue-600 font-semibold uppercase xl:-mb-2 xl:-mt-1">{event.category_name}</div>
           <div className="hidden text-lg font-normal xl:block xl:text-[20px]">
             {
               earliestPrice === 0 && latestPrice === 0 ? (
@@ -146,6 +147,7 @@ export function PiEventCard({ event }: Props) {
             {/* )} */}
           </div>
         </Link>
+        <div className="xl:hidden text-xs text-blue-600 font-semibold uppercase">{event.category_name}</div>
         <div className="flex items-center justify-between py-2 pr-2 xl:justify-end">
           <div className="text-xs font-bold xl:hidden">
             {

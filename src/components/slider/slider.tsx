@@ -96,7 +96,7 @@ export const CardSlider = ({
 }: CardSliderProps) => {
   const settings: Settings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: slidesToShow,
     slidesToScroll: slidesToScroll,

@@ -39,17 +39,13 @@ const ShareDialog = () => {
           <LinkedinShareButton url={url}>
             <LinkedinIcon size={32} round />
           </LinkedinShareButton>
-          <FacebookShareButton
-            url={url}
-            quote={"pinvest "}
-            hashtag={"#pinvest"}
-          >
+          <FacebookShareButton url={url}>
             <FacebookIcon size={32} round />
           </FacebookShareButton>
           <TwitterShareButton url={url}>
             <TwitterIcon size={32} round />
           </TwitterShareButton>
-          <WhatsappShareButton url={url} title={"pinvest"} separator=":: ">
+          <WhatsappShareButton url={url}>
             <WhatsappIcon size={32} round />
           </WhatsappShareButton>
           <button
