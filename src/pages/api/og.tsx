@@ -15,7 +15,7 @@ export default async function handler(request: NextRequest) {
     });
   }
 
-  return new ImageResponse(
+  return new  ImageResponse(
     (
       <div
         style={{
