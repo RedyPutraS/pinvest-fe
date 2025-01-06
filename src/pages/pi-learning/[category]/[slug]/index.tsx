@@ -25,6 +25,7 @@ import { useState } from "react";
 import { useCartList } from "modules/cart/api/list-cart";
 import useStore from '../../../../../src/app/store';
 import Collapse from "components/collapse";
+import MetaHead from "components/metahead/metahead";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
@@ -121,7 +122,7 @@ const Detail: NextPage<Props> = ({ params }) => {
 
   return (
     <>
-      <CustomHead title={data?.title} image={data?.cover_image} />
+      <MetaHead title={data?.title || "KeLas PiLearning"} url={`https://pinvest.co.id/${router.asPath}`} image={data?.cover_image || "/assets/img/pinvest-logo.png"} description={data?.title || "Tekan Link Untuk Detail Kelas..."} />
       <PopupBanner app={APP} />
 
       <section className="mx-auto mb-8 w-screen p-3 xl:max-w-[1440px] xl:px-[70px]">

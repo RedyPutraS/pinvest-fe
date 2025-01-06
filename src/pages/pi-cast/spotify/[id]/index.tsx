@@ -20,6 +20,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import Button from "components/button/button";
 import { useRouter } from "next/router";
 import { CustomHead } from "components/custom-head/custom-head";
+import MetaHead from "components/metahead/metahead";
 const TYPE = "spotify";
 const APP = "picast";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
@@ -66,7 +67,7 @@ const PiCastSpotifyDetail = ({ id, adsParam }: Props) => {
   };
   return (
     <>
-      <CustomHead title={data?.name} image={data?.images[0]?.url} />
+      <MetaHead title={"Spotify PiNspire"} url={`https://pinvest.co.id/${router.asPath}`} image={"/assets/img/pinvest-logo.png"} description={"Tekan Link Untuk Detail Spotify PiNspire..."} />
       <PageContext.Provider value={{ id, type: TYPE, app: APP }}>
         <InquiryDialog
           id={id}

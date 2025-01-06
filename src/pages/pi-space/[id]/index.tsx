@@ -2,6 +2,7 @@ import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { CardImage } from "components/card";
 import { CustomHead } from "components/custom-head/custom-head";
 import ShareButton from "components/icon/share-button";
+import MetaHead from "components/metahead/metahead";
 import PageBody from "components/page/page-body";
 import { PageContext } from "components/page/page-context";
 import PopupBanner from "components/popup-banner";
@@ -16,6 +17,7 @@ import type { PackageItem } from "modules/pi-space/api/pi-space-article";
 import { usePiSpaceArticle } from "modules/pi-space/api/pi-space-article";
 import PackageCard from "modules/pi-space/components/package-card";
 import type { InferGetServerSidePropsType } from "next";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const TYPE = "article";
@@ -23,6 +25,7 @@ const APP = "pispace";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const PiSpaceDetail = ({ id, adsParam }: Props) => {
+  const router = useRouter();
   const auth = useAuthStore();
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const { data } = usePiSpaceArticle(id as string);
@@ -34,7 +37,7 @@ const PiSpaceDetail = ({ id, adsParam }: Props) => {
       {isLoginPopupOpen && (
         <PopupLogin onClose={() => setIsLoginPopupOpen(false)} />
       )}
-      <CustomHead title={data?.title} image={data?.cover_image} />
+      <MetaHead title={data?.title || "PiSpace"} url={`https://pinvest.co.id/${router.asPath}`} image={data?.cover_image || "/assets/img/pinvest-logo.png"} description={data?.description || "Tekan Link Untuk Detail PiSpace..."} />
       <PageContext.Provider value={{ id, type: TYPE, app: APP }}>
         <InquiryDialog
           id={id}

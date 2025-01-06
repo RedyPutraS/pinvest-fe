@@ -27,9 +27,12 @@ import { APP_NAME } from "utils/constants";
 import PopupBanner from "components/popup-banner";
 import Cover from "modules/pi-learning/components/detail/cover";
 import { useEffect, useState } from "react";
+import MetaHead from "components/metahead/metahead";
+import { useRouter } from "next/router";
 const APP = "pinews";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const NewsDetail: NextPage<Props> = ({ params, adsParam }) => {
+  const router = useRouter();
   const news = useNewsDetail(params);
   const { data: ads } = useAds(adsParam);
   const [arrID, setArrID] = useState<number[]>([]);
@@ -101,10 +104,7 @@ const NewsDetail: NextPage<Props> = ({ params, adsParam }) => {
         )
       }
       <PopupBanner app={APP} />
-
-      <Head>
-        <title>{news.data?.title ?? ""}</title>
-      </Head>
+      <MetaHead title={"PiNews"} url={`https://pinvest.co.id/${router.asPath}`} image={"/assets/img/pinvest-logo.png"} description={"Tekan Link Untuk Detail PiNews..."} />
       <section className="container mx-auto my-10 px-4">
         {/* <div className="relative mt-10 aspect-video overflow-hidden rounded-lg">
           <Image

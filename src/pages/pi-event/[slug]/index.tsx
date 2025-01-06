@@ -25,6 +25,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useStore from '../../../../src/app/store';
+import MetaHead from "components/metahead/metahead";
 
 const APP = "picircle";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
@@ -66,7 +67,7 @@ const EventDetail: NextPage<Props> = ({ params }) => {
 
   return (
     <>
-      <CustomHead title={event.data?.title} image={event.data?.cover_image} />
+      <MetaHead title={"PiEvent"} url={`https://pinvest.co.id/${router.asPath}`} image={"/assets/img/pinvest-logo.png"} description={"Tekan Link Untuk Detail PiEvent..."} />
       <PopupBanner app={APP} />
 
       <section className="mx-auto mb-8 w-screen p-3 xl:max-w-[1440px] xl:px-[70px]">

@@ -9,16 +9,19 @@ import { CustomHead } from "components/custom-head/custom-head";
 import ShareButton from "components/icon/share-button";
 import Button from "components/button/button";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import MetaHead from "components/metahead/metahead";
 
 const TYPE = "article";
 const APP = "picapital";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 function PiCapitalDetail({ adsParam }: Props) {
+  const router = useRouter();
   const { data: ads } = useAds(adsParam);
   return (
     <>
-      <CustomHead title="" image={""} />
+      <MetaHead title={"PiCapital Danamart"} url={`https://pinvest.co.id/${router.asPath}`} image={"/assets/img/pinvest-logo.png"} description={"Tekan Link Untuk Detail PiCapital Danamart..."} />
       <PageContext.Provider value={{ id: "id", type: TYPE, app: APP }}>
         <PopupBanner app={APP} />
         <PageHeader className="bg-transparent">

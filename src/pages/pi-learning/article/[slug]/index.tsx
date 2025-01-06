@@ -23,11 +23,15 @@ import PopupBanner from "components/popup-banner";
 import { CustomHead } from "components/custom-head/custom-head";
 import { useEffect } from "react";
 import Head from "next/head";
+import MetaHead from "components/metahead/metahead";
+import { useRouter } from "next/router";
 
 const APP = "pilearning";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
+
 const Detail = ({ params, adsParam }: Props) => {
+  const router = useRouter();
   const article = useArticleDetail(params);
   const { data: ads } = useAds(adsParam);
   const articleLatest = useArticlesRelated({
@@ -76,22 +80,23 @@ const Detail = ({ params, adsParam }: Props) => {
 
   return (
     <>
-      <Head>
-        <title>Testing</title>
-        <meta property="og:title" content="Testing title" />
-        <meta property="og:description" content="Testing Description" />
+      <MetaHead title={article?.data?.title || "Artikel PiLearning"} url={`https://pinvest.co.id/${router.asPath}`} image={article?.data?.thumbnail_image || "/assets/img/pinvest-logo.png"} description={article?.data?.description || "Tekan Link Untuk Detail Artikel..."} />
+      {/* <Head>
+        <title>{article?.data?.title || "ASW"}</title>
+        <meta property="og:title" content={article?.data?.title} />
+        <meta property="og:description" content={article?.data?.description} />
         <meta property="og:image" content={article?.data?.thumbnail_image} />
-        <meta property="og:url" content={`https://yourdomain.com/pi-learning/article/${article?.data?.id}`} />
+        <meta property="og:url" content={`https://pinvest.co.id/pi-learning/article/${article?.data?.id}`} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Testing title" />
-        <meta name="twitter:description" content="Testing Description" />
+        <meta name="twitter:title" content={article?.data?.title} />
+        <meta name="twitter:description" content={article?.data?.description} />
         <meta name="twitter:image" content={article?.data?.thumbnail_image} />
-      </Head>
+      </Head> */}
       {/* <CustomHead title={meta_title} image={cover_image} /> */}
       <div className="sticky left-0 right-0 top-14 z-20 flex h-16 justify-center bg-white xl:top-20">
         <Tabs
           onChangeTab={(tab) => {
-            const category = "article" || "";
+            const category = "article";
             onChangeTab(tab, category);
           }}
         >

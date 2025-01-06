@@ -17,6 +17,7 @@ import { FeedbackComment } from "modules/feedback/component/comment";
 import { FeedbackRating } from "modules/feedback/component/rating";
 import { CustomHead } from "components/custom-head/custom-head";
 import { Spinner } from "components/spinner";
+import MetaHead from "components/metahead/metahead";
 const TYPE = "youtube";
 const APP = "picast";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
@@ -36,10 +37,7 @@ const PiCastYoutubeDetail = ({ id, adsParam }: Props) => {
   const { data: ads } = useAds(adsParam);
   return (
     <>
-      <CustomHead
-        title={data?.items && data?.items[0]?.snippet.title}
-        image={data?.items[0]?.snippet.thumbnails.default.url}
-      />
+      <MetaHead title={"Youtube PiNspire"} url={`https://pinvest.co.id/${router.asPath}`} image={"/assets/img/pinvest-logo.png"} description={"Tekan Link Untuk Detail Youtube PiNspire..."} />
       <PageContext.Provider value={{ id, type: TYPE, app: APP }}>
         <InquiryDialog
           id={id}

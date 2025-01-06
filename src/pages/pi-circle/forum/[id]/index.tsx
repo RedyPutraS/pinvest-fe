@@ -2,6 +2,7 @@ import { QueryClient, dehydrate } from "@tanstack/react-query";
 import Button from "components/button/button";
 import { CustomHead } from "components/custom-head/custom-head";
 import ShareButton from "components/icon/share-button";
+import MetaHead from "components/metahead/metahead";
 import PageBody from "components/page/page-body";
 import { PageContext } from "components/page/page-context";
 import PageHeader from "components/page/page-header";
@@ -22,6 +23,7 @@ import {
 import { usePiCircleArticleDetail } from "modules/pi-circle/pi-circle-article-detail";
 import type { InferGetServerSidePropsType } from "next";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 import LoginPage from "pages/auth/login";
 import { useState } from "react";
 const TYPE = "article";
@@ -29,6 +31,7 @@ const APP = "picircle";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 function PiCircleDetail({ id, adsParam }: Props) {
+  const router = useRouter();
   const auth = useAuthStore();
   const { data } = usePiCircleArticleDetail(id as string);
   const [inquiryDialogOpen, setInquiryDialogOpen] = useState(false);
@@ -88,7 +91,7 @@ function PiCircleDetail({ id, adsParam }: Props) {
           </div>
         </div>
       )}
-      <CustomHead title={data?.title} image={data?.cover_image} />
+      <MetaHead title={data?.title || "Forum PiCircle"} url={`https://pinvest.co.id/${router.asPath}`} image={data?.cover_image || "/assets/img/pinvest-logo.png"} description={data?.description || "Tekan Link Untuk Detail Forum..."} />
       <PageContext.Provider value={{ id, type: TYPE, app: APP }}>
         <InquiryDialog
           id={id}
