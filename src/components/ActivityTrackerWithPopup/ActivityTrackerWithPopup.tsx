@@ -67,18 +67,21 @@ const ActivityTrackerWithPopup: React.FC = () => {
         const checkPopupInterval = setInterval(() => {
             const cookies = parseCookies();
             const rejectTime = cookies[cookieRejectTime];
+            
 
             // Cek apakah waktu penolakan sudah lebih dari 1 menit
-            if (rejectTime) {
-                const currentTime = new Date().getTime();
-                const timeElapsed = currentTime - parseInt(rejectTime);
-
-                if (timeElapsed >= 60 * 1000) { // Jika lebih dari 1 menit
-                    setShowPopup(true); // Tampilkan pop-up lagi
+            if (!cookies[cookieName]) {
+                if (rejectTime) {
+                    const currentTime = new Date().getTime();
+                    const timeElapsed = currentTime - parseInt(rejectTime);
+                    
+                    if (timeElapsed >= 60 * 1000) { // Jika lebih dari 1 menit
+                        setShowPopup(true); // Tampilkan pop-up lagi
+                    }
+                } else if (!cookies[cookieName]) {
+                    // Tampilkan pop-up jika user_activity tidak ada
+                    setShowPopup(true);
                 }
-            } else if (!cookies[cookieName]) {
-                // Tampilkan pop-up jika user_activity tidak ada
-                setShowPopup(true);
             }
         }, 60 * 1000); // 1 menit
 

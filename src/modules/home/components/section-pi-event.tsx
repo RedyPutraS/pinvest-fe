@@ -41,7 +41,9 @@ const SectionPiEvent = ({ data }: Props) => {
   const appName = data?.find(
     (app) => app.app_name.trim() === APP_NAME.event.trim()
   );
-
+  useEffect(() => {
+    console.log(piEvents.data);
+  }, [piEvents.data])
   const onChangeTab = (tab: number) => {
     let param = {};
     let category = "all";
