@@ -26,7 +26,8 @@ const Home = ({}: Props) => {
     <>
       <Head>
         <title>Pinvest</title>
-        <meta name="description" content="Pinvest" />
+        {/* <meta name="description" content="Pinvest" /> */}
+        {/* <link rel="icon" href="/assets/img/pinvest-logo.png" /> */}
       </Head>
       <PopupBanner app={APP} />
       <SectionBanner />

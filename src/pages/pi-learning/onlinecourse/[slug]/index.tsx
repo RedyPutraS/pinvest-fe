@@ -179,7 +179,7 @@ const OnlineCoursePage = ({ params }: Props) => {
   return (
     <>
       {isOpen && <PopupLogin onClose={() => setIsOpen(false)} />}
-      <MetaHead title={data?.title || "Kursus Online PiLearning"} url={`https://pinvest.co.id/${router.asPath}`} image={data?.thumbnail_image || "/assets/img/pinvest-logo.png"} description={data?.meta_description || "Tekan Link Untuk Detail Kursus Online..."} />
+      <MetaHead title={data?.title || "Kursus Online PiLearning"} url={`https://pinvest.co.id/${router.asPath}`} image={"/assets/img/pinvest-logo.png"} description={data?.meta_description || "Tekan Link Untuk Detail Kursus Online..."} />
       <PopupBanner app={APP} />
       <div>
         <section className="relative mx-auto block h-[200px] md:h-[300px] lg:h-[500px] w-[98%]">

@@ -122,7 +122,7 @@ const Detail: NextPage<Props> = ({ params }) => {
 
   return (
     <>
-      <MetaHead title={data?.title || "KeLas PiLearning"} url={`https://pinvest.co.id/${router.asPath}`} image={data?.cover_image || "/assets/img/pinvest-logo.png"} description={data?.title || "Tekan Link Untuk Detail Kelas..."} />
+      <MetaHead title={data?.title || "KeLas PiLearning"} url={`https://pinvest.co.id/${router.asPath}`} image={"/assets/img/pinvest-logo.png"} description={data?.title || "Tekan Link Untuk Detail Kelas..."} />
       <PopupBanner app={APP} />
 
       <section className="mx-auto mb-8 w-screen p-3 xl:max-w-[1440px] xl:px-[70px]">

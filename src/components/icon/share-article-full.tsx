@@ -89,7 +89,7 @@ const ShareArticleFull = ({ type = "icon", path = "", className }: Props) => {
             <TwitterShareButton url={url}>
               <TwitterIcon size={32} round />
             </TwitterShareButton>
-            <WhatsappShareButton url={url} title={"pinvest"} separator=":: ">
+            <WhatsappShareButton url={url}>
               <WhatsappIcon size={32} round />
             </WhatsappShareButton>
             <button

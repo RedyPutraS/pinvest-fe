@@ -37,7 +37,7 @@ const PiSpaceDetail = ({ id, adsParam }: Props) => {
       {isLoginPopupOpen && (
         <PopupLogin onClose={() => setIsLoginPopupOpen(false)} />
       )}
-      <MetaHead title={data?.title || "PiSpace"} url={`https://pinvest.co.id/${router.asPath}`} image={data?.cover_image || "/assets/img/pinvest-logo.png"} description={data?.description || "Tekan Link Untuk Detail PiSpace..."} />
+      <MetaHead title={data?.title || "PiSpace"} url={`https://pinvest.co.id/${router.asPath}`} image={"/assets/img/pinvest-logo.png"} description={data?.description || "Tekan Link Untuk Detail PiSpace..."} />
       <PageContext.Provider value={{ id, type: TYPE, app: APP }}>
         <InquiryDialog
           id={id}

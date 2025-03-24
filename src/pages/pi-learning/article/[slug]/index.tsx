@@ -80,7 +80,7 @@ const Detail = ({ params, adsParam }: Props) => {
 
   return (
     <>
-      <MetaHead title={article?.data?.title || "Artikel PiLearning"} url={`https://pinvest.co.id/${router.asPath}`} image={article?.data?.thumbnail_image || "/assets/img/pinvest-logo.png"} description={article?.data?.description || "Tekan Link Untuk Detail Artikel..."} />
+      <MetaHead title={article?.data?.title || "Artikel PiLearning"} url={`https://pinvest.co.id/${router.asPath}`} image={"/assets/img/pinvest-logo.png"} description={article?.data?.description || "Tekan Link Untuk Detail Artikel..."} />
       {/* <Head>
         <title>{article?.data?.title || "ASW"}</title>
         <meta property="og:title" content={article?.data?.title} />

@@ -91,7 +91,7 @@ function PiCircleDetail({ id, adsParam }: Props) {
           </div>
         </div>
       )}
-      <MetaHead title={data?.title || "Forum PiCircle"} url={`https://pinvest.co.id/${router.asPath}`} image={data?.cover_image || "/assets/img/pinvest-logo.png"} description={data?.description || "Tekan Link Untuk Detail Forum..."} />
+      <MetaHead title={data?.title || "Forum PiCircle"} url={`https://pinvest.co.id/${router.asPath}`} image={"/assets/img/pinvest-logo.png"} description={data?.description || "Tekan Link Untuk Detail Forum..."} />
       <PageContext.Provider value={{ id, type: TYPE, app: APP }}>
         <InquiryDialog
           id={id}
